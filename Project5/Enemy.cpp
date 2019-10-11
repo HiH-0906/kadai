@@ -5,9 +5,9 @@
 void Enemy::Init()
 {
 	AnimVector data;
-	data.emplace_back(IMAGE_ID("·¬×")[10], 30);
-	data.emplace_back(IMAGE_ID("·¬×")[11], 60);
-	SetAnim("NORMAL", data);
+	data.emplace_back(IMAGE_ID("·¬×")[10 + 10 * static_cast<int>(_type)], 30);
+	data.emplace_back(IMAGE_ID("·¬×")[11 + 10 * static_cast<int>(_type)], 60);
+	SetAnim(STATE::NORMAL, data);
 
 	data.emplace_back(IMAGE_ID("“G”š”­")[0], 10);
 	data.emplace_back(IMAGE_ID("“G”š”­")[1], 15);
@@ -15,9 +15,9 @@ void Enemy::Init()
 	data.emplace_back(IMAGE_ID("“G”š”­")[3], 25);
 	data.emplace_back(IMAGE_ID("“G”š”­")[4], 30);
 	data.emplace_back(-1, 35);
-	SetAnim("BLAST", data);
+	SetAnim(STATE::DEATH, data);
 
-	animKey("NORMAL");
+	state(STATE::NORMAL);
 }
 
 Enemy::Enemy()
@@ -25,11 +25,13 @@ Enemy::Enemy()
 	Init();
 }
 
-Enemy::Enemy(EnemyState &enemyState)
+Enemy::Enemy(EnemyState &state)
 {
-	_type = std::get<static_cast<int>(ENEMY_STATE::TYPE)>(enemyState);
-	_pos = std::get<static_cast<int>(ENEMY_STATE::VECTOR)>(enemyState);
-	_size = std::get<static_cast<int>(ENEMY_STATE::SIZE)>(enemyState);
+	// ˆø”‚Å‚à‚ç‚Á‚½’l‚É‚æ‚é‰Šú‰»
+	_type = std::get<static_cast<int>(ENEMY_STATE::TYPE)>(state);
+	_pos = std::move(std::get<static_cast<int>(ENEMY_STATE::VECTOR)>(state));
+	_size = std::move(std::get<static_cast<int>(ENEMY_STATE::SIZE)>(state));
+	Init();
 }
 
 

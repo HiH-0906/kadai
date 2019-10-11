@@ -25,7 +25,7 @@ class Enemy :
 {
 public:
 	Enemy();
-	Enemy(EnemyState &enemyState);
+	Enemy(EnemyState &state);
 	~Enemy();
 private:
 	void Init();

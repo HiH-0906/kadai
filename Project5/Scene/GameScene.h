@@ -11,6 +11,6 @@ public:
 	~GameScene();
 	virtual unipueBase Update(unipueBase own) override final;
 private:
-	std::vector<Obj*>obj;
+	std::vector<sharedObj> _objList;							// List‚Å‚Í‚È‚­Vector
 };
 

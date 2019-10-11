@@ -8,19 +8,19 @@ void Player::Init(void)
 	data.reserve(5);
 	data.emplace_back(IMAGE_ID("·¬×")[0], 30);
 	data.emplace_back(IMAGE_ID("·¬×")[1], 60);
-	SetAnim("NORMAL", data);
+	SetAnim(STATE::NORMAL, data);
 
 	data.reserve(1);
 	data.emplace_back(IMAGE_ID("·¬×")[2], 0);
-	SetAnim("EX", data);
-	data.emplace_back(IMAGE_ID("PL”š”­")[0], 20);
-	data.emplace_back(IMAGE_ID("PL”š”­")[1], 25);
-	data.emplace_back(IMAGE_ID("PL”š”­")[2], 30);
-	data.emplace_back(IMAGE_ID("PL”š”­")[3], 35);
+	SetAnim(STATE::EX, data);
+	data.emplace_back(IMAGE_ID("PL”š”­")[0], 10);
+	data.emplace_back(IMAGE_ID("PL”š”­")[1], 15);
+	data.emplace_back(IMAGE_ID("PL”š”­")[2], 20);
+	data.emplace_back(IMAGE_ID("PL”š”­")[3], 25);
 	data.emplace_back(-1, 40);
-	SetAnim("BLAST", data);
+	SetAnim(STATE::DEATH, data);
 
-	animKey("NORMAL");
+	state(STATE::NORMAL);
 }
 
 Player::Player()
