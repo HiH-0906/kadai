@@ -17,6 +17,7 @@ void Enemy::Init()
 	data.emplace_back(-1, 35);
 	SetAnim(STATE::DEATH, data);
 
+
 	state(STATE::NORMAL);
 }
 
@@ -32,6 +33,18 @@ Enemy::Enemy(EnemyState &state)
 	_pos = std::move(std::get<static_cast<int>(ENEMY_STATE::VECTOR)>(state));
 	_size = std::move(std::get<static_cast<int>(ENEMY_STATE::SIZE)>(state));
 	Init();
+}
+
+void Enemy::Update(void)
+{
+	if (DestroyProc())
+	{
+		return;
+	}
+	if (rand() % 300 == 0)
+	{
+		SetAlive(false);
+	}
 }
 
 

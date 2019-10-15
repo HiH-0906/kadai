@@ -6,6 +6,8 @@
 
 Obj::Obj()
 {
+	_alive = true;
+	_dead = false;
 	_animFrame = 0;
 	_animCount = 0;
 }
@@ -88,8 +90,22 @@ bool Obj::isAnimEnd(void)
 	return false;
 }
 
-void Obj::Update(void)
+bool Obj::DestroyProc(void)
 {
+	// ¶‚«‚Ä‚é‚©
+	if (_alive)
+	{
+		// ¶‚«‚Ä‚½‚çreturn
+		return false;
+	}
+	// ±ÆÒ°¼®ÝI—¹‚µ‚Ä‚¢‚é‚©
+	if (isAnimEnd())
+	{
+		// I—¹‚µ‚Ä‚¢‚½‚çÌ×¸ÞµÝ
+		_dead = true;
+	}
+	// Ž€‚ñ‚Å‚½‚çtrue
+	return true;
 }
 
 void Obj::Draw(void)
@@ -113,9 +129,7 @@ void Obj::Draw(void)
 		// ¶³ÝÀ‚Æ±ÆÒ°¼®ÝÌÚ°Ñ‚ð”ä‚×‚ÄØ‚è‘Ö‚¦À²ÐÝ¸Þ‚È‚çØ‚è‘Ö‚¦
 		if (_animCount >= _animMap[_state][_animFrame].second)
 		{
-
 			_animFrame++;
-
 		}
 
 		// ”ÍˆÍŠOÁª¯¸

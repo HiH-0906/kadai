@@ -21,7 +21,7 @@ class Obj
 {
 public:
 	Obj();
-	void Update(void);
+	virtual void Update(void) = 0;								// 純粋仮想関数
 	void Draw(void);											// ｱﾆﾒｰｼｮﾝありの描画
 	void Draw(int id);											// ｱﾆﾒｰｼｮﾝなしの描画
 	virtual ~Obj();
@@ -41,6 +41,7 @@ private:
 	unsigned int _animCount;									// ｶｳﾝﾄ
 
 protected:
+	bool DestroyProc(void);										// 生き死にとｱﾆﾒｰｼｮﾝ終了確認関数
 	bool _alive;												// 生きているか
 	bool _dead;													// 死んでいるか
 	Vector2 _pos;												// 座標

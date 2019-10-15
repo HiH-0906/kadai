@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <DxLib.h>
+#include <time.h>
 #include <_DebugConOut.h>
 #include "GameScene.h"
 #include <ImageMng.h>
@@ -9,6 +10,7 @@
 
 GameScene::GameScene()
 {
+	srand((unsigned int)time(NULL));
 	lpImageMng.GetID("ｷｬﾗ", "image/char.png", { 30,32 }, { 10, 10 });
 	lpImageMng.GetID("弾", "image/shot.png", {8, 3}, { 1, 2});
 	lpImageMng.GetID("敵爆発", "image/en_blast.png", { 64,64 }, { 5, 1 });
@@ -16,11 +18,18 @@ GameScene::GameScene()
 
 	TREACE("ｹﾞｰﾑｼｰﾝの生成");
 	_objList.emplace_back(
-		new Player({ 100,100 }, { 0,0 })
+		new Player({ 100,400 }, { 0,0 })
 	);
-	_objList.emplace_back(
-		new Player({ 250,250 }, { 0,0 })
-	);
+	for (int y = 0; y < 5; y++)
+	{
+		for (int x = 0; x < 5; x++)
+		{
+			EnemyState state = { static_cast<ENEMY_TYPE>(rand() % static_cast<int>(ENEMY_TYPE::MAX)),{ 50 + x * 50 ,100 + y * 50 },{ 0,0 } };
+			_objList.emplace_back(
+				new Enemy(state)
+			);
+		}
+	}
 }
 
 
@@ -30,10 +39,16 @@ GameScene::~GameScene()
 
 unipueBase GameScene::Update(unipueBase own)
 {
-	// 先頭を取り出し、最後の要素まで回してくれる
 	for (auto data : _objList)
 	{
-		// ｽﾏｰﾄﾎﾟｲﾝﾀへのアクセス方法はどちらどもよい
+		(*data).Update();
+	}
+
+
+	// 先頭を取り出し、最後の要素まで回してくれる
+	for (auto data : _objList)
+	{		
+		// ｽﾏｰﾄﾎﾟｲﾝﾀへのｱｸｾｽ方法はｱﾛｰ又はｱｽﾀﾘｽｸどちらでもよい
 		if (CheckHitKey(KEY_INPUT_SPACE))
 		{
 			(*data).SetAlive(false);
@@ -41,11 +56,15 @@ unipueBase GameScene::Update(unipueBase own)
 		data->Draw();
 	}
 
-	std::remove_if(
-		_objList.begin(),									// ﾁｪｯｸ範囲の開始地点
-		_objList.end(),										// ﾁｪｯｸ範囲の終了地点
-		[](sharedObj&obj) {return (*obj).isDead(); }		// ﾚｯﾂﾗﾑﾀﾞ式
-		);
+	//auto prg = [](sharedObj&obj) {return (*obj).isDead(); };		// 何回も呼び出す場合は代入するといい感じ
+	//prg(*_objList.begin());
 
+	// いらなくなったobjを削除
+	_objList.erase(std::remove_if(
+							_objList.begin(),											// ﾁｪｯｸ範囲の開始地点
+							_objList.end(),												// ﾁｪｯｸ範囲の終了地点
+							[](sharedObj& obj) {return (*obj).isDead(); }				// ﾚｯﾂﾗﾑﾀﾞ式 死んでる物があるか確認
+						), 
+					_objList.end());
 	return std::move(own);
 }
