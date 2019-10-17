@@ -1,5 +1,4 @@
 #ifdef _DEBUG
-#include <Windows.h>
 #include "_DebugConOut.h"
 
 

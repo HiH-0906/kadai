@@ -1,12 +1,12 @@
 #pragma once
 #ifdef _DEBUG
 
-
+#include <Windows.h>
 #include <memory>
 
 // ﾃﾞﾊﾞｯｸﾒｯｾｰｼﾞ用定義　　ﾃﾞﾊﾞｯｸﾓｰﾄﾞで書き間違い等があったらｳｨﾝﾄﾞｳを表示
 #define AST(){\
-	CHAR ast_mes[256];\
+	char ast_mes[256];\
 	wsprintf(ast_mes,"%s %d行目\0",__FILE__,__LINE__);\
 	MessageBox(0,ast_mes,"ｱｻｰﾄ表示",MB_OK);\
 	}
