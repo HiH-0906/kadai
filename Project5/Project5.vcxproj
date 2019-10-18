@@ -128,6 +128,7 @@
   <ItemGroup>
     <ClCompile Include="common\ImageMng.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="State\InputId.cpp" />
     <ClCompile Include="State\KeyState.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="State\InputState.cpp" />
@@ -143,6 +144,7 @@
   <ItemGroup>
     <ClInclude Include="common\ImageMng.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="State\InputId.h" />
     <ClInclude Include="State\KeyState.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="State\InputState.h" />
