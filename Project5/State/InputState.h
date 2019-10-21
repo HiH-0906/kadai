@@ -10,6 +10,7 @@ class InputState
 public:
 	InputState();
 	virtual ~InputState();
+	virtual void Update(void) = 0;					// ±¯ÌßÃŞ°ÄŠÖ”
 	const KeyMap& state(void)const;					// _stateŠÛXæ“¾
 	const KeyPair& state(INPUT_ID id)const;			// _state“à‚ÌKeyPair‚ğæ“¾
 	bool state(INPUT_ID id, int data);				// _state‚ÌXV
