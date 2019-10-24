@@ -4,6 +4,7 @@
 
 void Enemy::Init()
 {
+	// ´ÈĞ°±ÆÒ°¼®İÃŞ°Àì¬
 	AnimVector data;
 	data.emplace_back(IMAGE_ID("·¬×")[10 + 10 * static_cast<int>(_type)], 30);
 	data.emplace_back(IMAGE_ID("·¬×")[11 + 10 * static_cast<int>(_type)], 60);

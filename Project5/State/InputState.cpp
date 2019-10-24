@@ -3,6 +3,7 @@
 
 InputState::InputState()
 {
+	// ‰Šú’l¾¯Ä
 	for (auto id:INPUT_ID())
 	{
 		_state.try_emplace(id, KeyPair{ 0,1 });

@@ -55,6 +55,7 @@ SceneMng::~SceneMng()
 void SceneMng::Ran(void)
 {
 	SysInit();
+	// ’∆∞∏Œﬂ≤›¿çÏê¨
 	_activeScene = std::make_unique<GameScene>();
 	while (ProcessMessage() == 0 && CheckHitKey(KEY_INPUT_ESCAPE) == 0)
 	{

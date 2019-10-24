@@ -10,13 +10,15 @@
 
 GameScene::GameScene()
 {
+	// ¹Ş°Ñ¼°İ—p‚Ì‰æ‘œ“o˜^
 	srand((unsigned int)time(NULL));
 	lpImageMng.GetID("·¬×", "image/char.png", { 30,32 }, { 10, 10 });
 	lpImageMng.GetID("’e", "image/shot.png", {8, 3}, { 1, 2});
 	lpImageMng.GetID("“G”š”­", "image/en_blast.png", { 64,64 }, { 5, 1 });
 	lpImageMng.GetID("PL”š”­", "image/pl_blast.png", { 64,64 }, { 4, 1 });
-
+	// ºİ¿°Ù‚Ö‚Ì•\¦
 	TREACE("¹Ş°Ñ¼°İ‚Ì¶¬");
+	// Ø½Ä‚Ö‚Ì•\¦“o˜^
 	_objList.emplace_back(
 		new Player({ 100,400 }, { 0,0 })
 	);
@@ -39,6 +41,7 @@ GameScene::~GameScene()
 
 unipueBase GameScene::Update(unipueBase own)
 {
+	// ”ÍˆÍfor•¶
 	for (auto data : _objList)
 	{
 		(*data).Update();
