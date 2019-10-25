@@ -27,6 +27,7 @@ KeyState::KeyState()
 
 	// ﾒﾝﾊﾞｰ関数ﾎﾟｲﾝﾀへ代入 明示的に名前空間を書かないとﾀﾞﾒ
 	func = &KeyState::RefKeyData;
+	id = INPUT_ID::LEFT;
 }
 
 
@@ -63,27 +64,38 @@ void KeyState::RefKeyData(void)
 		{
 			state(id, 0);
 		}
+		id = INPUT_ID::LEFT;
 	}
 }
 
 void KeyState::SetKeyConfig(void)
 {
-	int num = 0;
-	// F1ｷｰで切り替え
-	if (_buf[KEY_INPUT_F1] && !modeKeyOld)
+	bool flag = true;
+	for (int i = 0; i < 256; i++)
+	{
+		if (_buf[i]&&(i!=KEY_INPUT_F1))
+		{
+			for (auto tmp : INPUT_ID())
+			{
+				if (_keyCon[static_cast<int>(tmp)] == i)
+				{
+					flag = false;
+				}
+			}
+			if (flag)
+			{
+				_keyCon[static_cast<int>(id)] = i;
+				++id;
+				TREACE("%d\n", id);
+			}
+		}
+	}
+	// 切り替え
+	if (id >= INPUT_ID::MAX)
 	{
 		// ﾒﾝﾊﾞ関数ﾎﾟｲﾝﾀの切り替え
 		func = &KeyState::RefKeyData;
-		TREACE("ｷｰｺﾝﾌｨｸﾞ終了だよー\n")
-	}
-
-	for (int i = 0; i < 256; i++)
-	{
-		if (_buf[i])
-		{
-			_keyCon[num] = i;
-			num++;
-			break;
-		}
+		TREACE("ｷｰｺﾝﾌｨｸﾞ終了だよー\n");
+		id = INPUT_ID::LEFT;
 	}
 }

@@ -17,5 +17,6 @@ private:
 	std::vector<int> _keyConDef;				// ÃŞÌ«ÙÄ·°ºİÌ¨¸Şî•ñ
 	char _buf[256];								// ·°‰Ÿ‰ºî•ñŠi”[—p
 	int modeKeyOld;								// F1—p‚Ìµ°ÙÄŞ
+	INPUT_ID id;
 };
 
