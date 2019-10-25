@@ -23,6 +23,7 @@ KeyState::KeyState()
 
 	// ｷｰｺﾝﾌｨｸﾞﾃﾞｰﾀをｺﾋﾟｰ
 	_keyCon = _keyConDef;
+	modeKeyOld = 1;
 
 	// ﾒﾝﾊﾞｰ関数ﾎﾟｲﾝﾀへ代入 明示的に名前空間を書かないとﾀﾞﾒ
 	func = &KeyState::RefKeyData;
@@ -37,6 +38,7 @@ void KeyState::Update(void)
 {
 	// 1ﾌﾚｰﾑ前ｷｰ情報格納
 	SetOld();
+	modeKeyOld = _buf[KEY_INPUT_F1];
 	// 全ｷｰの押下情報取得
 	GetHitKeyStateAll(_buf);
 	// 関数呼び出し
@@ -46,26 +48,42 @@ void KeyState::Update(void)
 void KeyState::RefKeyData(void)
 {
 	// ﾃﾞｰﾀの書き込み
-	int i = 0;
 	for (auto id : INPUT_ID())
 	{
-		state(id,_buf[_keyCon[i]]);
-		i++;
+		state(id,_buf[_keyCon[static_cast<size_t>(id)]]);
 	}
-	if (_buf[KEY_INPUT_F1] == 1)
+	// F1ｷｰで切り替え
+	if (_buf[KEY_INPUT_F1] && !modeKeyOld)
 	{
+		// ﾒﾝﾊﾞ関数ﾎﾟｲﾝﾀの切り替え
 		func = &KeyState::SetKeyConfig;
-		TREACE("\nSetKeyConfigだよー")
+		TREACE("ｷｰｺﾝﾌｨｸﾞ開始だよー\n")
+		// 0ｸﾘｱ
+		for (auto id : INPUT_ID())
+		{
+			state(id, 0);
+		}
 	}
 }
 
 void KeyState::SetKeyConfig(void)
 {
+	int num = 0;
+	// F1ｷｰで切り替え
+	if (_buf[KEY_INPUT_F1] && !modeKeyOld)
+	{
+		// ﾒﾝﾊﾞ関数ﾎﾟｲﾝﾀの切り替え
+		func = &KeyState::RefKeyData;
+		TREACE("ｷｰｺﾝﾌｨｸﾞ終了だよー\n")
+	}
+
 	for (int i = 0; i < 256; i++)
 	{
 		if (_buf[i])
 		{
-
+			_keyCon[num] = i;
+			num++;
+			break;
 		}
 	}
 }

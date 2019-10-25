@@ -24,7 +24,7 @@ void Player::Init(void)
 	SetAnim(STATE::DEATH, data);
 
 	// ﾕﾆｰｸﾎﾟｲﾝﾀ 中身は後 c++14以降
-	_input = std::make_unique<KeyState>();
+	_input = std::make_shared<KeyState>();
 	//// 上が使えなかった場合 覚えておこう
 	//_input.reset(new KeyState());
 
@@ -57,20 +57,26 @@ void Player::Update(void)
 	(*_input).Update();
 
 	// ﾗﾑﾀﾞ式で移動制御　引数で方向管理することによって処理を1つしか書かなくてよい
-	auto move = [](const int keyID,int& pNum,const int speed) {
-		if(CheckHitKey(keyID))
+						// weak_ptrは見ることしかできない 合法的な参照 shared等が存在してるか確認できる
+	auto move = [](std::weak_ptr<InputState> keyData,INPUT_ID id,int& pNum,const int speed) {
+		// 監視対象が生きているか確認 0以外で死んでる
+		if (!keyData.expired())
 		{
-			pNum += speed;
+			// 監視対象取得
+			if ((*keyData.lock()).state(id).first)
+			{
+				pNum += speed;
+			}
 		}
 	};
-	// 上
-	move(KEY_INPUT_UP,    _pos.y, -2);
-	// 下
-	move(KEY_INPUT_DOWN,  _pos.y, +2);
 	// 左
-	move(KEY_INPUT_LEFT,  _pos.x, -2);
+	move(_input, INPUT_ID::LEFT, _pos.x, -2);
 	// 右
-	move(KEY_INPUT_RIGHT, _pos.x, +2);
+	move(_input, INPUT_ID::RIGHT, _pos.x, +2);
+	// 上
+	move(_input, INPUT_ID::UP, _pos.y, -2);
+	// 下
+	move(_input, INPUT_ID::DOWN, _pos.y, +2);
 }
 
 
