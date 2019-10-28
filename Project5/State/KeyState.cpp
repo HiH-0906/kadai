@@ -19,9 +19,10 @@ KeyState::KeyState()
 	_keyConDef.emplace_back(KEY_INPUT_A);
 	_keyConDef.emplace_back(KEY_INPUT_S);
 	
+
 	// Ãß≤Ÿì«Ç›çûÇ›â”èä
 	FILE* fp = nullptr;
-	if (fopen_s(&fp, "data/key.dat", "r") != 0)
+	if (fopen_s(&fp, "data/key.dat", "rb") != 0)
 	{
 		// ∑∞∫›Ã®∏ﬁ√ﬁ∞¿Ç∫Àﬂ∞
 		_keyCon = _keyConDef;
@@ -29,9 +30,10 @@ KeyState::KeyState()
 	}
 	else
 	{
-		fread(_keyCon.data(),
+		_keyCon.resize(static_cast<int>(end(INPUT_ID())));
+		fread(&_keyCon[0],
 			sizeof(_keyCon[0]),
-			static_cast<size_t>(end(INPUT_ID())),
+			static_cast<int>(end(INPUT_ID())),
 			fp);
 		fclose(fp);															// Ãß≤ŸÇï¬Ç∂ÇÈ
 	}
@@ -120,13 +122,14 @@ void KeyState::SetKeyConfig(void)
 				// “› ﬁä÷êîŒﬂ≤›¿ÇÃïœçX
 				func = &KeyState::RefKeyData;
 				FILE* fp = nullptr;
-				if (fopen_s(&fp, "data/key.dat", "w") == 0)
+				if (fopen_s(&fp, "data/key.dat", "wb") == 0)
 				{
 					fwrite(&_keyCon[0],
-						sizeof(int),
-						static_cast<size_t>(end(INPUT_ID())),
+						sizeof(_keyCon[0]),
+						static_cast<int>(end(INPUT_ID())),
 						fp
 					);
+					fclose(fp);
 				}
 				break;
 			}
