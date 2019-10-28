@@ -20,14 +20,26 @@ KeyState::KeyState()
 	_keyConDef.emplace_back(KEY_INPUT_S);
 	
 	// ﾌｧｲﾙ読み込み箇所
+	FILE* fp = nullptr;
+	if (fopen_s(&fp, "data/key.dat", "r") != 0)
+	{
+		// ｷｰｺﾝﾌｨｸﾞﾃﾞｰﾀをｺﾋﾟｰ
+		_keyCon = _keyConDef;
+		_modeKeyOld = 1;
+	}
+	else
+	{
+		fread(_keyCon.data(),
+			sizeof(_keyCon[0]),
+			static_cast<size_t>(end(INPUT_ID())),
+			fp);
+		fclose(fp);															// ﾌｧｲﾙを閉じる
+	}
 
-	// ｷｰｺﾝﾌｨｸﾞﾃﾞｰﾀをｺﾋﾟｰ
-	_keyCon = _keyConDef;
-	modeKeyOld = 1;
 
 	// ﾒﾝﾊﾞｰ関数ﾎﾟｲﾝﾀへ代入 明示的に名前空間を書かないとﾀﾞﾒ
 	func = &KeyState::RefKeyData;
-	id = INPUT_ID::LEFT;
+	_configID = INPUT_ID::LEFT;
 }
 
 
@@ -39,7 +51,7 @@ void KeyState::Update(void)
 {
 	// 1ﾌﾚｰﾑ前ｷｰ情報格納
 	SetOld();
-	modeKeyOld = _buf[KEY_INPUT_F1];
+	_modeKeyOld = _buf[KEY_INPUT_F1];
 	// 全ｷｰの押下情報取得
 	GetHitKeyStateAll(_buf);
 	// 関数呼び出し
@@ -54,48 +66,71 @@ void KeyState::RefKeyData(void)
 		state(id,_buf[_keyCon[static_cast<size_t>(id)]]);
 	}
 	// F1ｷｰで切り替え
-	if (_buf[KEY_INPUT_F1] && !modeKeyOld)
+	if (_buf[KEY_INPUT_F1] && !_modeKeyOld)
 	{
 		// ﾒﾝﾊﾞ関数ﾎﾟｲﾝﾀの切り替え
 		func = &KeyState::SetKeyConfig;
-		TREACE("ｷｰｺﾝﾌｨｸﾞ開始だよー\n")
-		// 0ｸﾘｱ
-		for (auto id : INPUT_ID())
-		{
-			state(id, 0);
-		}
-		id = INPUT_ID::LEFT;
+		TREACE("ｷｰｺﾝﾌｨｸﾞ開始だよー\n");
+		_configID = INPUT_ID::LEFT;
+		TREACE("次%d/%d番目のｷｰだよー\n", static_cast<int>(_configID) + 1, end(INPUT_ID()));
 	}
 }
 
 void KeyState::SetKeyConfig(void)
 {
-	bool flag = true;
-	for (int i = 0; i < 256; i++)
+	// 0ｸﾘｱ
+	for (auto id : INPUT_ID())
 	{
-		if (_buf[i]&&(i!=KEY_INPUT_F1))
+		state(id, 0);
+	}
+
+	auto CheckKey = [&](int id) {
+		// 既に入力しているところまでのfor文
+		for (auto ckId = begin(INPUT_ID()); ckId < _configID; ++ckId)
 		{
-			for (INPUT_ID tmp = INPUT_ID::LEFT; tmp < id; ++tmp)
+			// 被っているかﾁｪｯｸ
+			if (_keyCon[static_cast<int>(ckId)] == id)
 			{
-				if (_keyCon[static_cast<int>(tmp)] == i)
-				{
-					flag = false;
-				}
-			}
-			if (flag)
-			{
-				_keyCon[static_cast<int>(id)] = i;
-				++id;
-				TREACE("%d\n", id);
+				return false;
 			}
 		}
-	}
-	// 切り替え
-	if (id >= INPUT_ID::MAX)
+		return true;
+	};
+
+	// 全ｷｰﾁｪｯｸ
+	for (int id = 0; id < sizeof(_buf); id++)
 	{
-		// ﾒﾝﾊﾞ関数ﾎﾟｲﾝﾀの切り替え
-		func = &KeyState::RefKeyData;
-		TREACE("ｷｰｺﾝﾌｨｸﾞ終了だよー\n");
-		id = INPUT_ID::LEFT;
+		// 被ってないかﾁｪｯｸ
+		if (!CheckKey(id))
+		{
+			// 被っていたらcontinue
+			continue;
+		}
+		// 押されているｷｰ探し
+		if (_buf[id] && (!_buf[KEY_INPUT_F1]))
+		{
+			_keyCon[static_cast<int>(_configID)] = id;
+			// 前演算じゃないとなんのｵｰﾊﾞｰﾛｰﾄﾞかわからないのでNG
+			++_configID;
+			TREACE("%dを設定したよー\n", id);
+			// 切り替え
+			if (_configID == end(_configID))
+			{
+				TREACE("ｷｰｺﾝﾌｨｸﾞ終了だよー\n");
+				// ﾒﾝﾊﾞ関数ﾎﾟｲﾝﾀの変更
+				func = &KeyState::RefKeyData;
+				FILE* fp = nullptr;
+				if (fopen_s(&fp, "data/key.dat", "w") == 0)
+				{
+					fwrite(&_keyCon[0],
+						sizeof(int),
+						static_cast<size_t>(end(INPUT_ID())),
+						fp
+					);
+				}
+				break;
+			}
+			TREACE("次%d/%d番目のｷｰだよー\n", static_cast<int>(_configID) + 1, end(INPUT_ID()));
+		}
 	}
 }
