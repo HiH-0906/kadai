@@ -3,7 +3,7 @@
 #include <vector>
 #include <memory>
 #include <map>
-#include <Vector2.h>
+#include <common/Vector2.h>
 
 enum class STATE
 {
@@ -44,7 +44,7 @@ protected:
 	bool DestroyProc(void);										// 生き死にとｱﾆﾒｰｼｮﾝ終了確認関数
 	bool _alive;												// 生きているか
 	bool _dead;													// 死んでいるか
-	Vector2 _pos;												// 座標
-	Vector2 _size;												// 当たり判定用ｻｲｽﾞ
+	Vector2Template<int> _pos;								// 座標
+	Vector2Template<int> _size;									// 当たり判定用ｻｲｽﾞ
 };
 

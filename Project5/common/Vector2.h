@@ -1,61 +1,79 @@
 #pragma once
-class Vector2
+// é©çÏ√›Ãﬂ⁄∞ƒ
+template<class T> class Vector2Template
 {
 public:
-	Vector2();
-	Vector2(int x, int y);
-	~Vector2();
-	int x;
-	int y;
+	Vector2Template();
+	Vector2Template(T x, T y);
+	~Vector2Template();
+	T x;
+	T y;
 
 	// ë„ì¸ââéZéq
-	Vector2& operator = (const Vector2& vec);
+	Vector2Template& operator = (const Vector2Template& vec);
 
 	// ìYÇ¶éöââéZéq
-	int& operator [] (int i);
+	T& operator [] (T i);
 
 	// î‰ärââéZéq
-	bool operator == (const Vector2& vec) const;
-	bool operator != (const Vector2& vec) const;
-	bool operator > (const Vector2& vec) const;
-	bool operator >= (const Vector2& vec) const;
-	bool operator < (const Vector2& vec) const;
-	bool operator <= (const Vector2& vec) const;
+	bool operator == (const Vector2Template& vec) const;
+	bool operator != (const Vector2Template& vec) const;
+	bool operator > (const Vector2Template& vec) const;
+	bool operator >= (const Vector2Template& vec) const;
+	bool operator < (const Vector2Template& vec) const;
+	bool operator <= (const Vector2Template& vec) const;
 
 	// íPçÄââéZéq
-	Vector2& operator += (const Vector2& vec);
-	Vector2& operator -= (const Vector2& vec);
-	Vector2& operator *= (const Vector2& vec);
-	Vector2& operator /= (const Vector2& vec);
-	Vector2& operator *= (int k);
-	Vector2& operator /= (int k);
-	Vector2 operator + () const;
-	Vector2 operator - () const;
+	Vector2Template& operator += (const Vector2Template& vec);
+	Vector2Template& operator -= (const Vector2Template& vec);
+	Vector2Template& operator *= (const Vector2Template& vec);
+	Vector2Template& operator /= (const Vector2Template& vec);
+	Vector2Template& operator *= (T k);
+	Vector2Template& operator /= (T k);
+	Vector2Template operator + () const;
+	Vector2Template operator - () const;
 };
 
 // Õﬁ∏ƒŸÇÃââéZ
 
 // Vector2 + int
-Vector2 operator+(const Vector2& u, int k);
+template<class T>
+Vector2Template<T> operator+(const Vector2Template<T>& u, T k);
 // Vector2 - int
-Vector2 operator-(const Vector2& u, int k);
+template<class T>
+Vector2Template<T> operator-(const Vector2Template<T>& u, T k);
 // Vector2 * int
-Vector2 operator*(const Vector2& u, int k);
+template<class T>
+Vector2Template<T> operator*(const Vector2Template<T>& u, T k);
 // Vector2 / int
-Vector2 operator/(const Vector2& u, int k);
+template<class T>
+Vector2Template<T> operator/(const Vector2Template<T>& u, T k);
 // Vector2 % int
-Vector2 operator%(const Vector2& u, int k);
+template<class T>
+Vector2Template<T> operator%(const Vector2Template<T>& u, T k);
 
 // Vector2 + Vector2
-Vector2 operator+(const Vector2& u, const Vector2& v);
+template<class T>
+Vector2Template<T> operator+(const Vector2Template<T>& u, const Vector2Template<T>& v);
 // Vector2 - Vector2
-Vector2 operator-(const Vector2& u, const Vector2& v);
+template<class T>
+Vector2Template<T> operator-(const Vector2Template<T>& u, const Vector2Template<T>& v);
 // Vector2 * Vector2
-Vector2 operator*(const Vector2& u, const Vector2& v);
+template<class T>
+Vector2Template<T> operator*(const Vector2Template<T>& u, const Vector2Template<T>& v);
 // Vector2 / Vector2
-Vector2 operator/(const Vector2& u, const Vector2& v);
+template<class T>
+Vector2Template<T> operator/(const Vector2Template<T>& u, const Vector2Template<T>& v);
 // Vector2 % Vector2
-Vector2 operator%(const Vector2& u, const Vector2& v);
+template<class T>
+Vector2Template<T> operator%(const Vector2Template<T>& u, const Vector2Template<T>& v);
 
 // int * Vector2
-Vector2 operator*(int k, const Vector2& v);
+template<class T>
+Vector2Template<T> operator*(int k, const Vector2Template<T>& v);
+
+using Vector2 = Vector2Template<int>;
+using Vector2Dbl = Vector2Template<double>;
+using Vector2Flt = Vector2Template<float>;
+
+#include <common/Detail/Vector2.h>

@@ -1,6 +1,7 @@
 #pragma once
 #include <tuple>
 #include "Obj.h"
+#include "EnemyMove.h"
 
 enum class ENEMY_TYPE
 {
@@ -18,7 +19,7 @@ enum class ENEMY_STATE
 	MAX
 };
 
-using EnemyState = std::tuple<ENEMY_TYPE, Vector2, Vector2>;
+using EnemyState = std::tuple<ENEMY_TYPE, Vector2Template<int>, Vector2Template<int>>;
 
 class Enemy :
 	public Obj
@@ -29,7 +30,8 @@ public:
 	void Update(void) override;
 	~Enemy();
 private:
+	EnemyMove moveCtl{ _pos };					// ´ÈĞ°‚Ì“®‚«ŠÇ——pObj
 	void Init();
-	ENEMY_TYPE _type;
+	ENEMY_TYPE _type;							// ´ÈĞ°type¯•Ê—p
 };
 

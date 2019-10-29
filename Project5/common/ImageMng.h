@@ -2,7 +2,7 @@
 #include <memory>
 #include <map>
 #include <vector>
-#include <Vector2.h>
+#include <common/Vector2.h>
 
 using VecInt = std::vector<int>;
 
@@ -20,7 +20,7 @@ public:
 	const VecInt& GetID(const std::string& key);										// ゲーム内検索用
 	const VecInt& GetID(const std::string& key,const std::string& fileName);			// 一枚絵用
 	const VecInt& GetID(const std::string& key, const std::string& fileName,			// 分割用
-						const Vector2& divSize,const Vector2& divCnt);
+						const Vector2Template<int>& divSize,const Vector2Template<int>& divCnt);
 
 private:
 	struct ImageMngDeleter																// ｶｽﾀﾑﾃﾞﾘｰﾀｰ

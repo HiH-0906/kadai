@@ -36,7 +36,7 @@ Player::Player()
 	Init();
 }
 
-Player::Player(Vector2 pos, Vector2 size)
+Player::Player(Vector2Template<int> pos, Vector2Template<int> size)
 {
 	_pos = pos;
 	_size = size;
