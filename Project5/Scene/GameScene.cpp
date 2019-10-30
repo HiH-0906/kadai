@@ -26,7 +26,7 @@ GameScene::GameScene()
 	{
 		for (int x = 0; x < 5; x++)
 		{
-			EnemyState state = { static_cast<ENEMY_TYPE>(rand() % static_cast<int>(ENEMY_TYPE::MAX)),{ 50 + x * 50 ,100 + y * 50 },{ 0,0 } };
+			EnemyState state = { static_cast<ENEMY_TYPE>(rand() % static_cast<int>(ENEMY_TYPE::MAX)),{ static_cast <double>(50 + x * 50) , static_cast <double>((100 + y * 50)) },{ 0,0 } };
 			_objList.emplace_back(
 				new Enemy(state)
 			);

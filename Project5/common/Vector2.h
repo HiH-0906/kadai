@@ -72,7 +72,7 @@ Vector2Template<T> operator%(const Vector2Template<T>& u, const Vector2Template<
 template<class T>
 Vector2Template<T> operator*(int k, const Vector2Template<T>& v);
 
-using Vector2 = Vector2Template<int>;
+using Vector2Int = Vector2Template<int>;
 using Vector2Dbl = Vector2Template<double>;
 using Vector2Flt = Vector2Template<float>;
 

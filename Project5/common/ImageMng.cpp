@@ -22,7 +22,7 @@ const VecInt & ImageMng::GetID(const std::string & key, const std::string & file
 	return imgMap[key];
 }
 
-const VecInt & ImageMng::GetID(const std::string & key, const std::string & fileName, const Vector2Template<int> & divSize, const Vector2Template<int> & divCnt)
+const VecInt & ImageMng::GetID(const std::string & key, const std::string & fileName, const Vector2Int & divSize, const Vector2Int & divCnt)
 {
 	// ‚·‚Å‚É‚ ‚é‚©Áª¯¸
 	if (imgMap.find(key) == imgMap.end())

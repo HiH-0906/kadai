@@ -44,7 +44,7 @@ protected:
 	bool DestroyProc(void);										// 生き死にとｱﾆﾒｰｼｮﾝ終了確認関数
 	bool _alive;												// 生きているか
 	bool _dead;													// 死んでいるか
-	Vector2Template<int> _pos;								// 座標
-	Vector2Template<int> _size;									// 当たり判定用ｻｲｽﾞ
+	Vector2Dbl _pos;											// 座標
+	Vector2Int _size;											// 当たり判定用ｻｲｽﾞ
 };
 

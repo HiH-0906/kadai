@@ -6,10 +6,10 @@ class EnemyMove
 {
 
 public:
-	EnemyMove(Vector2Template<int>& pos);		// 今回はわかりやすくするために参照で受け取る 本当はGetSetがあるといい
+	EnemyMove(Vector2Dbl& pos);		// 今回はわかりやすくするために参照で受け取る 本当はGetSetがあるといい
 	~EnemyMove();
 	void Update(void);				// 
 private:
-	Vector2Template<int>& _pos;					// もらったｴﾈﾐｰのposの場所保存
+	Vector2Dbl& _pos;					// もらったｴﾈﾐｰのposの場所保存
 };
 

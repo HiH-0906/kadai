@@ -36,7 +36,7 @@ Player::Player()
 	Init();
 }
 
-Player::Player(Vector2Template<int> pos, Vector2Template<int> size)
+Player::Player(Vector2Dbl pos, Vector2Int size)
 {
 	_pos = pos;
 	_size = size;
@@ -58,7 +58,7 @@ void Player::Update(void)
 
 	// ﾗﾑﾀﾞ式で移動制御　引数で方向管理することによって処理を1つしか書かなくてよい
 						// weak_ptrは見ることしかできない 合法的な参照 shared等が存在してるか確認できる
-	auto move = [](std::weak_ptr<InputState> keyData,INPUT_ID id,int& pNum,const int speed) {
+	auto move = [](std::weak_ptr<InputState> keyData,INPUT_ID id,double& pNum,const int speed) {
 		// 監視対象が生きているか確認 0以外で死んでる
 		if (!keyData.expired())
 		{
