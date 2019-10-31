@@ -1,4 +1,5 @@
 #include "EnemyMove.h"
+#include <_DebugConOut.h>
 
 
 EnemyMove::EnemyMove(Vector2Dbl & pos): _pos(pos)			// éQè∆ÇÕë∂ç›ÇµÇƒÇ»Ç¢Ç∆Ç¢ÇØÇ»Ç¢ÇÃÇ≈Ç±Ç±Ç…èëÇ≠
@@ -46,6 +47,27 @@ void EnemyMove::SetMovePrg(void)
 	_startPos = _pos;
 	_endPos = _aim[_aimCnt].second;
 
+	switch (_aim[_aimCnt].first)
+	{
+	case MOVE_TYPE::WAIT:
+		_move = EnemyMove::Wait;
+		break;
+	case MOVE_TYPE::SIGMOID:
+		_move = EnemyMove::MoveSigmoid;
+		break;
+	case MOVE_TYPE::SPIRAL:
+		_move = EnemyMove::MoveSpiral;
+		break;
+	case MOVE_TYPE::PITIN:
+		_move = EnemyMove::PitIn;
+		break;
+	case MOVE_TYPE::LR:
+		_move = EnemyMove::MoveLR;
+		break;
+	default:
+		AST();
+		break;
+	}
 }
 
 void EnemyMove::MoveSigmoid(void)
