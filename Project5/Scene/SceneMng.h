@@ -5,15 +5,17 @@
 #include <common/Vector2.h>
 #include "BaseScene.h"
 
-using DrawQueT = std::tuple<int, int, int>;
+//							image x		y		âÒì]äp
+using DrawQueT = std::tuple<int, double, double, double>;
 
 #define lpSceneMng SceneMng::GetInstance()
 
 enum class DRAW_QUE
 {
-	IMAGE,
-	X,
-	Y
+	IMAGE,					// ≤“∞ºﬁ
+	X,						// Xç¿ïW
+	Y,						// Yç¿ïW
+	RAD						// äpìx
 };
 
 class SceneMng

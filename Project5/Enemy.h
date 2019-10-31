@@ -18,8 +18,8 @@ enum class ENEMY_STATE
 	SIZE,
 	MAX
 };
-
-using EnemyState = std::tuple<ENEMY_TYPE, Vector2Dbl, Vector2Int>;
+//								type		pos			size
+using EnemyState = std::tuple<ENEMY_TYPE, Vector2Dbl, Vector2Dbl>;
 
 class Enemy :
 	public Obj

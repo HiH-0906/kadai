@@ -20,7 +20,7 @@ public:
 	const VecInt& GetID(const std::string& key);										// ゲーム内検索用
 	const VecInt& GetID(const std::string& key,const std::string& fileName);			// 一枚絵用
 	const VecInt& GetID(const std::string& key, const std::string& fileName,			// 分割用
-						const Vector2Template<int>& divSize,const Vector2Template<int>& divCnt);
+						const Vector2& divSize,const Vector2& divCnt);
 
 private:
 	struct ImageMngDeleter																// ｶｽﾀﾑﾃﾞﾘｰﾀｰ

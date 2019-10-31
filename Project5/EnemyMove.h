@@ -1,15 +1,43 @@
 #pragma once
 
-#include <common/Vector2.h>
+#include <Vector2.h>
+#include <vector>
+
+enum class MOVE_TYPE
+{
+	WAIT,
+	SIGMOID,
+	SPIRAL,
+	PITIN,
+	LR
+};
+
+using MoveState = std::vector<std::pair<MOVE_TYPE, Vector2Dbl>>;		// 行動目的地管理用型
 
 class EnemyMove
 {
 
 public:
-	EnemyMove(Vector2Dbl& pos);		// 今回はわかりやすくするために参照で受け取る 本当はGetSetがあるといい
+	EnemyMove(Vector2Dbl& pos);								// 今回はわかりやすくするために参照で受け取る 本当はGetSetがあるといい
 	~EnemyMove();
-	void Update(void);				// 
+	void Update(void);										// 更新
+	bool SetMoveState(MoveState& state, bool newFlag);		// 行動ｾｯﾄ関数
 private:
-	Vector2Dbl& _pos;					// もらったｴﾈﾐｰのposの場所保存
+	void SetMovePrg(void);									// 行動切り替え
+
+	void(EnemyMove::*_move)(void);							// ﾒﾝﾊﾞ関数ﾎﾟｲﾝﾀ move系
+	void MoveSigmoid(void);									// ｼｸﾞﾓｲﾄﾞ
+	void MoveSpiral(void);									// 魔法陣ｸﾙｸﾙ
+	void PitIn(void);										// ﾋﾟｯﾄｲﾝ
+	void Wait(void);										// 待機
+	void MoveLR(void);										// 左右
+
+	MoveState _aim;											// 目標地点
+	int _aimCnt;											// どの目的地かｶｳﾝﾄ
+
+	Vector2Dbl _startPos;									// 各移動関数のｽﾀｰﾄ地点
+	Vector2Dbl _endPos;										// 各移動関数のｴﾝﾄﾞ地点
+
+	Vector2Dbl& _pos;										// もらったｴﾈﾐｰのposの場所保存
 };
 

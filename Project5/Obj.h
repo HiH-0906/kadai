@@ -45,6 +45,7 @@ protected:
 	bool _alive;												// 生きているか
 	bool _dead;													// 死んでいるか
 	Vector2Dbl _pos;											// 座標
-	Vector2Int _size;											// 当たり判定用ｻｲｽﾞ
+	Vector2Dbl _size;											// 当たり判定用ｻｲｽﾞ
+	double _rad;												// 角度
 };
 

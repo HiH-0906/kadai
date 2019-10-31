@@ -36,7 +36,7 @@ Player::Player()
 	Init();
 }
 
-Player::Player(Vector2Dbl pos, Vector2Int size)
+Player::Player(Vector2Dbl pos, Vector2Dbl size)
 {
 	_pos = pos;
 	_size = size;

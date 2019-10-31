@@ -15,10 +15,10 @@ void SceneMng::Draw(void)
 	for (auto dQue:_drawList)
 	{
 		DrawRotaGraph(
-			std::get<static_cast<int>(DRAW_QUE::X)>(dQue),
-			std::get<static_cast<int>(DRAW_QUE::Y)>(dQue),
+			static_cast<int>(std::get<static_cast<int>(DRAW_QUE::X)>(dQue)),
+			static_cast<int>(std::get<static_cast<int>(DRAW_QUE::Y)>(dQue)),
 			1.0,
-			0,
+			std::get<static_cast<int>(DRAW_QUE::RAD)>(dQue),
 			std::get<static_cast<int>(DRAW_QUE::IMAGE)>(dQue),
 			true);
 	}
