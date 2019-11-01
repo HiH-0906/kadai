@@ -26,7 +26,16 @@ GameScene::GameScene()
 	{
 		for (int x = 0; x < 5; x++)
 		{
-			EnemyState state = { static_cast<ENEMY_TYPE>(rand() % static_cast<int>(ENEMY_TYPE::MAX)),{ static_cast <double>(50 + x * 50) , static_cast <double>((100 + y * 50)) },{ 0,0 } };
+			// ë„ì¸Ç∑ÇÈÇΩÇﬂÇÃ√ﬁ∞¿çÏê¨
+			MoveState tmpEnemyState;
+			tmpEnemyState.emplace_back(MOVE_TYPE::WAIT, Vector2Dbl{180.0,0.0});
+			tmpEnemyState.emplace_back(MOVE_TYPE::LR, Vector2Dbl{ 180.0,0.0 });
+
+			EnemyState state = { static_cast<ENEMY_TYPE>(rand() % static_cast<int>(ENEMY_TYPE::MAX)),							// ¿≤ÃﬂÇÃê›íË
+								{ static_cast <double>(50 + x * 50) , static_cast <double>((100 + y * 50)) },					// ç¿ïWÇÃê›íË
+								{ 0,0 },																							// ª≤ΩﬁÇÃê›íË
+								tmpEnemyState
+								};
 			_objList.emplace_back(
 				new Enemy(state)
 			);

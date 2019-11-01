@@ -30,9 +30,10 @@ Enemy::Enemy()
 Enemy::Enemy(EnemyState &state)
 {
 	// ˆø”‚Å‚à‚ç‚Á‚½’l‚É‚æ‚é‰Šú‰»
-	_type = std::get<static_cast<int>(ENEMY_STATE::TYPE)>(state);
-	_pos = std::move(std::get<static_cast<int>(ENEMY_STATE::VECTOR)>(state));
-	_size = std::move(std::get<static_cast<int>(ENEMY_STATE::SIZE)>(state));
+	_type = std::get<static_cast<int>(ENEMY_STATE::TYPE)>(state);								// À²Ìß‚Ìİ’è
+	_pos = std::move(std::get<static_cast<int>(ENEMY_STATE::VECTOR)>(state));					// À•W‚Ìİ’è
+	_size = std::move(std::get<static_cast<int>(ENEMY_STATE::SIZE)>(state));					// »²½Ş‚Ìİ’è
+	_moveCtl.SetMoveState(std::get<static_cast<int>(ENEMY_STATE::AIM)>(state),true);			// s“®‚Ìİ’è
 	Init();
 }
 
@@ -42,7 +43,7 @@ void Enemy::Update(void)
 	{
 		return;
 	}
-	moveCtl.Update();
+	_moveCtl.Update();
 	//if (rand() % 300 == 0)
 	//{
 	//	SetAlive(false);

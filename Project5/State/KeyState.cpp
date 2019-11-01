@@ -61,7 +61,7 @@ void KeyState::Update(void)
 	_modeKeyOld = _buf[KEY_INPUT_F1];
 	// 全ｷｰの押下情報取得
 	GetHitKeyStateAll(_buf);
-	// 関数呼び出し
+	// 関数呼び出し 優先度の問題で()で囲む
 	(this->*func)();
 }
 

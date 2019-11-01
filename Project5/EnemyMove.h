@@ -29,8 +29,10 @@ private:
 	void MoveSigmoid(void);									// ｼｸﾞﾓｲﾄﾞ
 	void MoveSpiral(void);									// 魔法陣ｸﾙｸﾙ
 	void PitIn(void);										// ﾋﾟｯﾄｲﾝ
-	void Wait(void);										// 待機
+	void Wait(void);										// 待機 aim[_aimCnt].secondの値まで回る
 	void MoveLR(void);										// 左右
+
+	int count;												// wait用ｶｳﾝﾄ
 
 	MoveState _aim;											// 目標地点
 	int _aimCnt;											// どの目的地かｶｳﾝﾄ
