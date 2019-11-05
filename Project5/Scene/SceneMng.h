@@ -47,9 +47,9 @@ public:
 
 	void Ran(void);								// Ù°Ìß
 
-	bool AddDrawQue(DrawQueT dQue);							// ·­°‚ð—­‚ß‚é
+	bool AddDrawQue(DrawQueT dQue);				// ·­°‚ð—­‚ß‚é
 
-	const Vector2Template<int> ScreenSize;					// ½¸Ø°Ý»²½Þ reedonly
+	const Vector2 ScreenSize;					// ½¸Ø°Ý»²½Þ reedonly
 private:
 	static SceneMng* sInstance;					// Îß²ÝÀ
 

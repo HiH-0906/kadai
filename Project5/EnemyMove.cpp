@@ -91,6 +91,18 @@ void EnemyMove::MoveSpiral(void)
 
 void EnemyMove::PitIn(void)
 {
+	// 2点間
+	double num = ((_endPos.x - _pos.x)*(_endPos.x - _pos.x) + (_endPos.y - _pos.y)*(_endPos.y - _pos.y));
+	_pos = _endPos;
+
+	// 移動しきったか判定
+	if (_pos == _endPos)
+	{
+		// 行動切り替え
+		SetMovePrg();
+		// 一応切り替え表示
+		TREACE("Pitin終了だよー\n");
+	}
 }
 
 void EnemyMove::Wait(void)
@@ -109,5 +121,5 @@ void EnemyMove::Wait(void)
 
 void EnemyMove::MoveLR(void)
 {
-	_pos.x++;
+	/*_pos.x++;*/
 }
