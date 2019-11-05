@@ -33,6 +33,7 @@ Enemy::Enemy(EnemyState &state)
 	_type = std::get<static_cast<int>(ENEMY_STATE::TYPE)>(state);								// À²Ìß‚Ìİ’è
 	_pos = std::move(std::get<static_cast<int>(ENEMY_STATE::VECTOR)>(state));					// À•W‚Ìİ’è
 	_size = std::move(std::get<static_cast<int>(ENEMY_STATE::SIZE)>(state));					// »²½Ş‚Ìİ’è
+	_rad = std::move(std::get<static_cast<int>(ENEMY_STATE::RAD)>(state));
 	_moveCtl.SetMoveState(std::get<static_cast<int>(ENEMY_STATE::AIM)>(state),true);			// s“®‚Ìİ’è
 	Init();
 }

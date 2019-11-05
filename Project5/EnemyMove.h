@@ -18,7 +18,7 @@ class EnemyMove
 {
 
 public:
-	EnemyMove(Vector2Dbl& pos);								// 今回はわかりやすくするために参照で受け取る 本当はGetSetがあるといい
+	EnemyMove(Vector2Dbl& pos,double& rad);					// 今回はわかりやすくするために参照で受け取る 本当はGetSetがあるといい
 	~EnemyMove();
 	void Update(void);										// 更新
 	bool SetMoveState(MoveState& state, bool newFlag);		// 行動ｾｯﾄ関数
@@ -41,5 +41,6 @@ private:
 	Vector2Dbl _endPos;										// 各移動関数のｴﾝﾄﾞ地点
 
 	Vector2Dbl& _pos;										// もらったｴﾈﾐｰのposの場所保存
+	double& _rad;
 };
 

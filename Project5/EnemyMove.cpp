@@ -2,7 +2,7 @@
 #include <_DebugConOut.h>
 
 
-EnemyMove::EnemyMove(Vector2Dbl & pos): _pos(pos)			// 参照は存在してないといけないのでここに書く
+EnemyMove::EnemyMove(Vector2Dbl & pos,double & rad): _pos(pos),_rad(rad)			// 参照は存在してないといけないのでここに書く
 {
 	_move = nullptr;
 	_aimCnt = -1;
@@ -70,6 +70,7 @@ void EnemyMove::SetMovePrg(void)
 		break;
 	case MOVE_TYPE::PITIN:
 		_move = &EnemyMove::PitIn;
+		count = 0;
 		break;
 	case MOVE_TYPE::LR:
 		_move = &EnemyMove::MoveLR;
@@ -92,17 +93,23 @@ void EnemyMove::MoveSpiral(void)
 void EnemyMove::PitIn(void)
 {
 	// 2点間
-	double num = ((_endPos.x - _pos.x)*(_endPos.x - _pos.x) + (_endPos.y - _pos.y)*(_endPos.y - _pos.y));
-	_pos = _endPos;
+	_pos.x += (_endPos.x - _startPos.x) / 60.0;
+	_pos.y += (_endPos.y - _startPos.y) / 60.0;
 
+	if (count > 60.0)
+	{
+		_pos = _endPos;
+	}
 	// 移動しきったか判定
 	if (_pos == _endPos)
 	{
 		// 行動切り替え
 		SetMovePrg();
+		_rad = 0;
 		// 一応切り替え表示
 		TREACE("Pitin終了だよー\n");
 	}
+	count++;
 }
 
 void EnemyMove::Wait(void)
