@@ -244,7 +244,7 @@ Vector2Template<T> operator*(int k, const Vector2Template<T> & v)
 }
 
 template<class T>
-inline Vector2Template<T> abs(Vector2Template<T>& vec)
+inline Vector2Template<T> abs(const Vector2Template<T>& u)
 {
-	return { abs(vec.x),abs(vec.y) };
+	return { abs(u.x),abs(u.y) };
 }

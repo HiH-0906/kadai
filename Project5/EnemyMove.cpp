@@ -97,7 +97,7 @@ void EnemyMove::PitIn(void)
 	_lenght = _endPos - _pos;
 
 	// 1 ÌÚ°Ñ‚Éi‚Þ‹——£‚æ‚è_endPos‚Ü‚Å‚Ì‹——£‚ª’Z‚¢‚È‚çˆÚ“®I—¹
-	if (abs(_lenght)>=abs(_oneMoveVec))
+	if (abs(_endPos - _pos)>=abs(_oneMoveVec))
 	{
 		_pos += _oneMoveVec;
 		_rad = atan2(_lenght.y, _lenght.x) + 3.141592 / 2;
