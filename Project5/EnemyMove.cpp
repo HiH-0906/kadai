@@ -70,6 +70,7 @@ void EnemyMove::SetMovePrg(void)
 		break;
 	case MOVE_TYPE::PITIN:
 		_move = &EnemyMove::PitIn;
+		// 1ﾌﾚｰﾑに進む距離
 		_oneMoveVec = (_endPos - _startPos) / 120.0;
 		break;
 	case MOVE_TYPE::LR:
@@ -95,7 +96,7 @@ void EnemyMove::PitIn(void)
 	// 2点間
 	_lenght = _endPos - _pos;
 
-	// 移動しきったか判定
+	// 1 ﾌﾚｰﾑに進む距離より_endPosまでの距離が短いなら移動終了
 	if (abs(_lenght)>=abs(_oneMoveVec))
 	{
 		_pos += _oneMoveVec;
@@ -103,6 +104,7 @@ void EnemyMove::PitIn(void)
 	}
 	else
 	{
+		// 位置矯正
 		_pos = _endPos;
 		// 行動切り替え
 		SetMovePrg();
@@ -110,7 +112,6 @@ void EnemyMove::PitIn(void)
 		// 一応切り替え表示
 		TREACE("Pitin終了だよー\n");
 	}
-	count++;
 }
 
 void EnemyMove::Wait(void)

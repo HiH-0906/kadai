@@ -77,6 +77,7 @@ using Vector2    = Vector2Template<int>;
 using Vector2Dbl = Vector2Template<double>;
 using Vector2Flt = Vector2Template<float>;
 
+// â‘Î’læ“¾
 template<class T>
 Vector2Template<T>abs(Vector2Template<T>& vec);
 
