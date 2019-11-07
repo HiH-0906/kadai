@@ -1,4 +1,5 @@
 #pragma once
+#include <cmath>
 // ©ìÃİÌßÚ°Ä
 template<class T> class Vector2Template
 {
@@ -75,5 +76,8 @@ Vector2Template<T> operator*(int k, const Vector2Template<T>& v);
 using Vector2    = Vector2Template<int>;
 using Vector2Dbl = Vector2Template<double>;
 using Vector2Flt = Vector2Template<float>;
+
+template<class T>
+Vector2Template<T>abs(Vector2Template<T>& vec);
 
 #include <common/Detail/Vector2.h>

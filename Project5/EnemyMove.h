@@ -35,12 +35,14 @@ private:
 	int count;												// wait用ｶｳﾝﾄ
 
 	MoveState _aim;											// 目標地点
-	int _aimCnt;											// どの目的地かｶｳﾝﾄ
+	unsigned int _aimCnt;									// どの目的地かｶｳﾝﾄ
 
 	Vector2Dbl _startPos;									// 各移動関数のｽﾀｰﾄ地点
 	Vector2Dbl _endPos;										// 各移動関数のｴﾝﾄﾞ地点
 
 	Vector2Dbl& _pos;										// もらったｴﾈﾐｰのposの場所保存
+	Vector2Dbl _lenght;										// 距離
+	Vector2Dbl _oneMoveVec;
 	double& _rad;
 };
 

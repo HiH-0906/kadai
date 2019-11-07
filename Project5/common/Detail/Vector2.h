@@ -1,3 +1,4 @@
+#include "..\Vector2.h"
 template<class T>
 Vector2Template<T>::Vector2Template()
 {
@@ -240,4 +241,10 @@ Vector2Template<T> operator*(int k, const Vector2Template<T> & v)
 	vec.x = k * v.x;
 	vec.y = k * v.y;
 	return vec;
+}
+
+template<class T>
+inline Vector2Template<T> abs(Vector2Template<T>& vec)
+{
+	return { abs(vec.x),abs(vec.y) };
 }

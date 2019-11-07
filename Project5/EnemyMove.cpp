@@ -70,7 +70,7 @@ void EnemyMove::SetMovePrg(void)
 		break;
 	case MOVE_TYPE::PITIN:
 		_move = &EnemyMove::PitIn;
-		count = 0;
+		_oneMoveVec = (_endPos - _startPos) / 120.0;
 		break;
 	case MOVE_TYPE::LR:
 		_move = &EnemyMove::MoveLR;
@@ -93,16 +93,17 @@ void EnemyMove::MoveSpiral(void)
 void EnemyMove::PitIn(void)
 {
 	// 2“_ŠÔ
-	_pos.x += (_endPos.x - _startPos.x) / 60.0;
-	_pos.y += (_endPos.y - _startPos.y) / 60.0;
+	_lenght = _endPos - _pos;
 
-	if (count > 60.0)
+	// ˆÚ“®‚µ‚«‚Á‚½‚©”»’è
+	if (abs(_lenght)>=abs(_oneMoveVec))
+	{
+		_pos += _oneMoveVec;
+		_rad = atan2(_lenght.y, _lenght.x) + 3.141592 / 2;
+	}
+	else
 	{
 		_pos = _endPos;
-	}
-	// ˆÚ“®‚µ‚«‚Á‚½‚©”»’è
-	if (_pos == _endPos)
-	{
 		// s“®Ø‚è‘Ö‚¦
 		SetMovePrg();
 		_rad = 0;
