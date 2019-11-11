@@ -43,6 +43,9 @@ private:
 	Vector2Dbl& _pos;										// ‚à‚ç‚Á‚½´ÈĞ°‚Ìpos‚ÌêŠ•Û‘¶
 	Vector2Dbl _lenght;										// ‹——£
 	Vector2Dbl _oneMoveVec;
-	double& _rad;
+	double& _rad;											// Šp“x
+	Vector2Dbl test2;
+	double _moveGain;
+	double test;
 };
 

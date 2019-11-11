@@ -1,5 +1,6 @@
 #include "EnemyMove.h"
 #include <_DebugConOut.h>
+#include <cmath>
 
 
 EnemyMove::EnemyMove(Vector2Dbl & pos,double & rad): _pos(pos),_rad(rad)			// 参照は存在してないといけないのでここに書く
@@ -64,6 +65,8 @@ void EnemyMove::SetMovePrg(void)
 		break;
 	case MOVE_TYPE::SIGMOID:
 		_move = &EnemyMove::MoveSigmoid;
+		_moveGain = 0.0;
+		_lenght = _endPos - _startPos;
 		break;
 	case MOVE_TYPE::SPIRAL:
 		_move = &EnemyMove::MoveSpiral;
@@ -85,6 +88,11 @@ void EnemyMove::SetMovePrg(void)
 
 void EnemyMove::MoveSigmoid(void)
 {
+	_moveGain += 10.0 / 90.0;
+	test = 1.0 / (1.0 + exp(-0.7*(_moveGain-10.0)));
+	_pos.y = test * _lenght.y;
+	_pos.x = _moveGain * (_lenght.x/10);
+	TREACE("%f\n", test);
 }
 
 void EnemyMove::MoveSpiral(void)
@@ -100,15 +108,15 @@ void EnemyMove::PitIn(void)
 	if (abs(_endPos - _pos)>=abs(_oneMoveVec))
 	{
 		_pos += _oneMoveVec;
-		_rad = atan2(_lenght.y, _lenght.x) + 3.141592 / 2;
+		_rad = atan2(_lenght.y, _lenght.x) + 3.141592 / 2.0;
 	}
 	else
 	{
 		// 位置矯正
 		_pos = _endPos;
+		_rad = 0;
 		// 行動切り替え
 		SetMovePrg();
-		_rad = 0;
 		// 一応切り替え表示
 		TREACE("Pitin終了だよー\n");
 	}

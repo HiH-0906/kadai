@@ -2,11 +2,13 @@
 #include "SceneMng.h"
 #include "TitleScene.h"
 #include "GameScene.h"
+#include <_DebugDispOut.h>
 
 SceneMng* SceneMng::sInstance = nullptr;
 
 void SceneMng::Draw(void)
 {
+	_dbgAddDraw();
 	SetDrawScreen(DX_SCREEN_BACK);			// •`‰ææİ’è
 	ClsDrawScreen();
 
@@ -59,6 +61,7 @@ void SceneMng::Ran(void)
 	_activeScene = std::make_unique<GameScene>();
 	while (ProcessMessage() == 0 && CheckHitKey(KEY_INPUT_ESCAPE) == 0)
 	{
+		_dbgStartDraw();
 		_drawList.clear();			// Ø½Ä‚Ìíœ
 		_activeScene = (*_activeScene).Update(std::move(_activeScene));
 		Draw();						// •`‰æ
@@ -91,6 +94,7 @@ bool SceneMng::SysInit(void)
 		return false;
 	}
 	SetDrawScreen(DX_SCREEN_BACK);					// •`Êæ‚ğÊŞ¯¸ÊŞ¯Ì§‚Éİ’è
+	_dbgSetup(255);
 
 	return false;
 }
