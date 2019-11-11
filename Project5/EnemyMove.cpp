@@ -88,11 +88,19 @@ void EnemyMove::SetMovePrg(void)
 
 void EnemyMove::MoveSigmoid(void)
 {
-	_moveGain += 10.0 / 90.0;
-	test = 1.0 / (1.0 + exp(-0.7*(_moveGain-10.0)));
-	_pos.y = test * _lenght.y;
-	_pos.x = _moveGain * (_lenght.x/10);
-	TREACE("%f\n", test);
+	if (true)
+	{
+		_moveGain += 0.1;
+		test = 1.0 / (1.0 + exp(-0.7*(_moveGain - 10.0)));
+		_pos.y = test * _lenght.y;
+		_pos.x = _moveGain * (_lenght.x / 10.0);
+		TREACE("%f\n", _pos.y);
+	}
+	else
+	{
+		SetMovePrg();
+		_pos = _endPos;
+	}
 }
 
 void EnemyMove::MoveSpiral(void)
