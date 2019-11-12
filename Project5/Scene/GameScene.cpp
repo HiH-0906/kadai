@@ -23,16 +23,17 @@ GameScene::GameScene()
 	_objList.emplace_back(
 		new Player({ 100,400 }, { 0,0 })
 	);
-	for (int y = 0; y < 1; y++)
+	for (int y = 0; y < 5; y++)
 	{
-		for (int x = 0; x < 1; x++)
+		for (int x = 0; x < 10; x++)
 		{
 			int cnt = (y * 10 + x);
 			// ‘ã“ü‚·‚é‚½‚ß‚ÌÃÞ°Àì¬
 			MoveState tmpEnemyState;
 			// WaitŽžŠÔÝ’è
 			tmpEnemyState.emplace_back(MOVE_TYPE::WAIT, Vector2Dbl{ 30.0*cnt,0.0 });
-			tmpEnemyState.emplace_back(MOVE_TYPE::SIGMOID, Vector2Dbl{ (lpSceneMng.ScreenSize.x - 32) / 2.0,lpSceneMng.ScreenSize.y *(5.0 / 7.0) });
+			tmpEnemyState.emplace_back(MOVE_TYPE::SIGMOID, Vector2Dbl{ lpSceneMng.ScreenSize.x -128.0-(544*(cnt%2)),lpSceneMng.ScreenSize.y *(5.0 / 7.0) });
+			tmpEnemyState.emplace_back(MOVE_TYPE::SPIRAL, Vector2Dbl{ 0.0,0.0 });
 			tmpEnemyState.emplace_back(MOVE_TYPE::PITIN, Vector2Dbl{ (35.0 * 7) + (35.0*x), 40.0 + ((40.0)*y) });
 			tmpEnemyState.emplace_back(MOVE_TYPE::LR, Vector2Dbl{ 180.0,0.0 });
 			cnt=cnt % 6;

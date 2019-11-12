@@ -65,11 +65,15 @@ void EnemyMove::SetMovePrg(void)
 		break;
 	case MOVE_TYPE::SIGMOID:
 		_move = &EnemyMove::MoveSigmoid;
-		_moveGain = 0.0;
+		_moveGain = -5.0;
 		_lenght = _endPos - _startPos;
 		break;
 	case MOVE_TYPE::SPIRAL:
 		_move = &EnemyMove::MoveSpiral;
+		_centr.y = _pos.y - 128.0;
+		_centr.x = _pos.x;
+		_rad = 0.0;
+		radius = 128.0;
 		break;
 	case MOVE_TYPE::PITIN:
 		_move = &EnemyMove::PitIn;
@@ -88,23 +92,30 @@ void EnemyMove::SetMovePrg(void)
 
 void EnemyMove::MoveSigmoid(void)
 {
-	if (true)
+	if (5 - _moveGain >= 0.05)
 	{
-		_moveGain += 0.1;
-		test = 1.0 / (1.0 + exp(-0.7*(_moveGain - 10.0)));
-		_pos.y = test * _lenght.y;
-		_pos.x = _moveGain * (_lenght.x / 10.0);
+		// xŒW”
+		_moveGain += 10.0 / 180.0;
+		// ¼¸ŞÓ²ÄŞŠÖ”‚É‚æ‚Á‚Ä“¾‚½’l‚ğŠg‘å
+		_pos.y = _startPos.y + 1.0 / (1.0 + exp(-1.3*_moveGain-2.0)) * _lenght.y;
+		_pos.x = _startPos.x + (5 + _moveGain)*_lenght.x / 10.0;
+		_rad= atan2(_endPos.y-_pos.y,_endPos.x-_pos.x) + 3.141592 / 2.0;
 		TREACE("%f\n", _pos.y);
 	}
 	else
 	{
-		SetMovePrg();
+		// ˆÊ’u‹­§
 		_pos = _endPos;
+		SetMovePrg();
 	}
 }
 
 void EnemyMove::MoveSpiral(void)
 {
+	_pos.y = _centr.y + radius*std::cos(_rad);
+	_pos.x = _centr.x + radius*std::sin(_rad);
+	_rad += 3.141592 / 180.0;
+	radius -= 0.1;
 }
 
 void EnemyMove::PitIn(void)
