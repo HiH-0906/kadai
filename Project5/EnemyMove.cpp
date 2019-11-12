@@ -67,12 +67,14 @@ void EnemyMove::SetMovePrg(void)
 		_move = &EnemyMove::MoveSigmoid;
 		_moveGain = -5.0;
 		_lenght = _endPos - _startPos;
+		_oldPos = _pos;
 		break;
 	case MOVE_TYPE::SPIRAL:
 		_move = &EnemyMove::MoveSpiral;
-		_centr.y = _pos.y - 128.0;
-		_centr.x = _pos.x;
-		_rad = 0.0;
+		_endPos.y = _pos.y - 128.0;
+		_endPos.x = _pos.x;
+		// 角度決め
+		_tmpRad = 0.0;
 		radius = 128.0;
 		break;
 	case MOVE_TYPE::PITIN:
@@ -92,6 +94,7 @@ void EnemyMove::SetMovePrg(void)
 
 void EnemyMove::MoveSigmoid(void)
 {
+	_oldPos = _pos;
 	if (5 - _moveGain >= 0.05)
 	{
 		// x係数
@@ -99,7 +102,7 @@ void EnemyMove::MoveSigmoid(void)
 		// ｼｸﾞﾓｲﾄﾞ関数によって得た値を拡大
 		_pos.y = _startPos.y + 1.0 / (1.0 + exp(-1.3*_moveGain-2.0)) * _lenght.y;
 		_pos.x = _startPos.x + (5 + _moveGain)*_lenght.x / 10.0;
-		_rad= atan2(_endPos.y-_pos.y,_endPos.x-_pos.x) + 3.141592 / 2.0;
+		_rad = atan2(_pos.y - _oldPos.y, _pos.x - _oldPos.x) + PI / 2;
 		TREACE("%f\n", _pos.y);
 	}
 	else
@@ -112,10 +115,28 @@ void EnemyMove::MoveSigmoid(void)
 
 void EnemyMove::MoveSpiral(void)
 {
-	_pos.y = _centr.y + radius*std::cos(_rad);
-	_pos.x = _centr.x + radius*std::sin(_rad);
-	_rad += 3.141592 / 180.0;
-	radius -= 0.1;
+	_oldPos = _pos;
+	if (PI*2.0 - abs(_tmpRad) > 0)
+	{
+		_spiralMoveVec.y = _endPos.y + radius * std::cos(_tmpRad);
+		_spiralMoveVec.x = _endPos.x + radius * std::sin(_tmpRad);
+		_pos.y = _spiralMoveVec.y;
+		_pos.x = _spiralMoveVec.x;
+		_rad = atan2(_pos.y - _oldPos.y, _pos.x - _oldPos.x) + PI / 2;
+		radius -= 0.5;
+		if (_startPos.x > 400)
+		{
+			_tmpRad += PI / 90.0;
+		}
+		else
+		{
+			_tmpRad -= PI / 90.0;
+		}
+	}
+	else
+	{
+		SetMovePrg();
+	}
 }
 
 void EnemyMove::PitIn(void)
@@ -127,13 +148,13 @@ void EnemyMove::PitIn(void)
 	if (abs(_endPos - _pos)>=abs(_oneMoveVec))
 	{
 		_pos += _oneMoveVec;
-		_rad = atan2(_lenght.y, _lenght.x) + 3.141592 / 2.0;
+		_rad = atan2(_lenght.y, _lenght.x) + PI / 2.0;
 	}
 	else
 	{
 		// 位置矯正
 		_pos = _endPos;
-		_rad = 0;
+		_rad = 0.0;
 		// 行動切り替え
 		SetMovePrg();
 		// 一応切り替え表示

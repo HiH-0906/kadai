@@ -3,6 +3,8 @@
 #include <Vector2.h>
 #include <vector>
 
+#define PI 3.141592
+
 enum class MOVE_TYPE
 {
 	WAIT,
@@ -42,10 +44,12 @@ private:
 
 	Vector2Dbl& _pos;										// ‚à‚ç‚Á‚½´ÈĞ°‚Ìpos‚ÌêŠ•Û‘¶
 	Vector2Dbl _lenght;										// ‹——£
-	Vector2Dbl _oneMoveVec;
-	Vector2Dbl _centr;										// ‰~‚Ì’†S
-	double radius;
+	Vector2Dbl _oneMoveVec;									// 1ÌÚ°Ñ‚Å‚ÌˆÚ‘—‹——£
+	Vector2Dbl _spiralMoveVec;								// ‰ñ“]ˆÚ“®—Ê
+	Vector2Dbl _oldPos;										// Šp“x‹‚ß‚é—p
+	double radius;											// ”¼Œa
 	double& _rad;											// Šp“x
+	double _tmpRad;											// ‰ñ“]—pŠp“x
 	double _moveGain;										// ˆÚ“®ŠÇ—
 };
 
