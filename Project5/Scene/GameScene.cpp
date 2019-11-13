@@ -38,7 +38,7 @@ GameScene::GameScene()
 			tmpEnemyState.emplace_back(MOVE_TYPE::LR, Vector2Dbl{ 180.0,0.0 });
 			cnt=cnt % 6;
 			EnemyState state = { static_cast<ENEMY_TYPE>(rand() % static_cast<int>(ENEMY_TYPE::MAX)),													// ﾀｲﾌﾟの設定
-								{ static_cast<double>((lpSceneMng.ScreenSize.x*(cnt % 2) - 15) + (32 * (cnt % 2))),									// 座標Xの設定
+								{ static_cast<double>((lpSceneMng.ScreenSize.x*(cnt % 2) - 16) + (32 * (cnt % 2))),										// 座標Xの設定
 								static_cast<double>(((lpSceneMng.ScreenSize.y-30)/2)*((cnt / 2) % 3) - 16)},											// 座標Yの設定
 								{ 30.0,32.0 },																											// ｻｲｽﾞの設定
 								std::atan2(40.0 + ((40.0)*y - (((lpSceneMng.ScreenSize.y - 30) / 2)*((cnt / 2) % 3) - 16)),(35.0 * 7) +					// 角度
