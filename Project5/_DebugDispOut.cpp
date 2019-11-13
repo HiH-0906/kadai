@@ -137,7 +137,7 @@ bool _DebugDispOut::StartDrawDebug(void)
 	int ghBefor;
 	ghBefor = GetDrawScreen();
 	SetDrawScreen(_DbgScreen);
-	ClsDrawScreen();
+	//ClsDrawScreen();
 	SetDrawScreen(ghBefor);
 	return true;
 }

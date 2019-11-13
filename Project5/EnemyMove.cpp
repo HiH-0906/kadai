@@ -1,6 +1,7 @@
 #include "EnemyMove.h"
 #include <_DebugConOut.h>
 #include <cmath>
+#include "_DebugDispOut.h"
 
 
 EnemyMove::EnemyMove(Vector2Dbl & pos,double & rad): _pos(pos),_rad(rad)			// 参照は存在してないといけないのでここに書く
@@ -100,10 +101,9 @@ void EnemyMove::MoveSigmoid(void)
 		// x係数
 		_moveGain += 10.0 / 180.0;
 		// ｼｸﾞﾓｲﾄﾞ関数によって得た値を拡大
-		_pos.y = _startPos.y + 1.0 / (1.0 + exp(-1.3*_moveGain-2.0)) * _lenght.y;
+		_pos.y = _startPos.y + 1.0 / (1.0 + exp(-1.3*_moveGain-1.0)) * _lenght.y;
 		_pos.x = _startPos.x + (5 + _moveGain)*_lenght.x / 10.0;
 		_rad = atan2(_pos.y - _oldPos.y, _pos.x - _oldPos.x) + PI / 2;
-		TREACE("%f\n", _pos.y);
 	}
 	else
 	{
@@ -136,6 +136,7 @@ void EnemyMove::MoveSpiral(void)
 	else
 	{
 		SetMovePrg();
+		TREACE("Spairal終了だよー\n");
 	}
 }
 
