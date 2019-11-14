@@ -45,7 +45,6 @@ private:
 	Vector2Dbl& _pos;										// ‚à‚ç‚Á‚½´ÈĞ°‚Ìpos‚ÌêŠ•Û‘¶
 	Vector2Dbl _lenght;										// ‹——£
 	Vector2Dbl _oneMoveVec;									// 1ÌÚ°Ñ‚Å‚ÌˆÚ‘—‹——£
-	Vector2Dbl _spiralMoveVec;								// ‰ñ“]ˆÚ“®—Ê
 	Vector2Dbl _oldPos;										// Šp“x‹‚ß‚é—p
 	double radius;											// ”¼Œa
 	double& _rad;											// Šp“x

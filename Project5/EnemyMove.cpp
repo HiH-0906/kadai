@@ -124,11 +124,8 @@ void EnemyMove::MoveSpiral(void)
 	if (PI*2.0 - abs(_cntRad) > 0)
 	{
 		// ‰~‚ÌƒXƒ^[ƒgˆÊ’u‚¸‚ç‚µ‚Ì‚½‚ß‚Ìcos,sin‹t“]
-		_spiralMoveVec.y = _endPos.y + radius * std::cos(_tmpRad);
-		_spiralMoveVec.x = _endPos.x + radius * std::sin(_tmpRad);
-		// ‚Ù‚ñ‚Æ‚Í‰º‚Ìif•¶‚¶‚á‚È‚­‚Ä‚±‚±‚ÅŒW”Š|‚¯‚½‚è‚µ‚½‚©‚Á‚½
-		_pos.y = _spiralMoveVec.y;
-		_pos.x = _spiralMoveVec.x;
+		_pos.y = _endPos.y + radius * std::cos(_tmpRad);
+		_pos.x = _endPos.x + radius * std::sin(_tmpRad);
 		// ·¬×‚ÌŒü‚¢‚Ä‚¢‚é•ûŒüŒˆ‚ß
 		_rad = atan2(_pos.y - _oldPos.y, _pos.x - _oldPos.x) + PI / 2;
 		radius -= 0.3;
