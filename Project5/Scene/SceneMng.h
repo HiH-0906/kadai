@@ -5,8 +5,6 @@
 #include <common/Vector2.h>
 #include "BaseScene.h"
 
-//							image x		y		‰ñ“]Šp
-using DrawQueT = std::tuple<int, double, double, double>;
 
 #define lpSceneMng SceneMng::GetInstance()
 
@@ -15,8 +13,21 @@ enum class DRAW_QUE
 	IMAGE,					// ²Ò°¼Ş
 	X,						// XÀ•W
 	Y,						// YÀ•W
-	RAD						// Šp“x
+	RAD,					// Šp“x
+	ZORDER,					// Ú²Ô°“à•`‰æ‡ ”š‚Ì’á‚¢‚Ù‚¤‚ªæ “¯‚¶”š‚Ìê‡“o˜^‡
+	LAYER					// ‚Ç‚±‚ÌÚ²Ô°‚© ID‚ª¬‚³‚¢‚Ù‚¤‚ªŒã‚ë‚É•`‰æ
 };
+
+enum class LAYER
+{
+	BG,						// ”wŒi
+	CHAR,					// ·¬×
+	UI						// UI
+};
+
+
+//							image  x		y	‰ñ“]Šp	zOrder Ú²Ô°
+using DrawQueT = std::tuple<int, double, double, double,int,LAYER>;
 
 class SceneMng
 {

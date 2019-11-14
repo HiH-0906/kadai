@@ -3,12 +3,17 @@
 #include "TitleScene.h"
 #include "GameScene.h"
 #include <_DebugDispOut.h>
+#include <ImageMng.h>
+#include <algorithm>
 
 SceneMng* SceneMng::sInstance = nullptr;
 
 void SceneMng::Draw(void)
 {
 	_dbgAddDraw();
+
+	std::sort(_drawList.begin(),_drawList.end(),
+		[](const DrawQueT& x, const DrawQueT& y) {return static_cast<int>(std::get<static_cast<int>(DRAW_QUE::ZORDER)>(x)) < static_cast<int>(std::get<static_cast<int>(DRAW_QUE::ZORDER)>(y)); });
 	SetDrawScreen(DX_SCREEN_BACK);			// •`‰ææİ’è
 	ClsDrawScreen();
 
@@ -63,6 +68,7 @@ void SceneMng::Ran(void)
 	{
 		_dbgStartDraw();
 		_drawList.clear();			// Ø½Ä‚Ìíœ
+		AddDrawQue({IMAGE_ID("BG")[0],400.0,300.0,0.0,32768,LAYER::BG});
 		_activeScene = (*_activeScene).Update(std::move(_activeScene));
 		Draw();						// •`‰æ
 	}
@@ -94,6 +100,7 @@ bool SceneMng::SysInit(void)
 		return false;
 	}
 	SetDrawScreen(DX_SCREEN_BACK);					// •`Êæ‚ğÊŞ¯¸ÊŞ¯Ì§‚Éİ’è
+	lpImageMng.GetID("BG","image/frame.png");
 	_dbgSetup(255);
 
 	return false;

@@ -50,6 +50,7 @@ private:
 	double radius;											// ”¼Œa
 	double& _rad;											// Šp“x
 	double _tmpRad;											// ‰ñ“]—pŠp“x
+	double _moveRad;										// 1ÌÚ°Ñ‚É‰ñ‚éŠp“x
 	double _moveGain;										// ˆÚ“®ŠÇ—
 };
 

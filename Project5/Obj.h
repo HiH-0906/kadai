@@ -47,5 +47,6 @@ protected:
 	Vector2Dbl _pos;											// 座標
 	Vector2Dbl _size;											// 当たり判定用ｻｲｽﾞ
 	double _rad;												// 角度
+	int _zOrder;													// 描画優先度
 };
 
