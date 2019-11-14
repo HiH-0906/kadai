@@ -32,8 +32,8 @@ GameScene::GameScene()
 			MoveState tmpEnemyState;
 			// Waitéûä‘ê›íË
 			tmpEnemyState.emplace_back(MOVE_TYPE::WAIT, Vector2Dbl{ 30.0*cnt,0.0 });
-			tmpEnemyState.emplace_back(MOVE_TYPE::SIGMOID, Vector2Dbl{ lpSceneMng.ScreenSize.x - 128.0 - (544.0 * (cnt % 2)),lpSceneMng.ScreenSize.y *(5.0 / 7.0) - (256 * ((cnt / 2) % 3/2)) });
-			tmpEnemyState.emplace_back(MOVE_TYPE::SPIRAL, Vector2Dbl{ 1.0 - (2 * (cnt % 2)),128.0 - (256.0*((cnt / 2) % 3 / 2)) });
+			tmpEnemyState.emplace_back(MOVE_TYPE::SIGMOID, Vector2Dbl{ lpSceneMng.ScreenSize.x - 128.0 - (544.0 * (cnt % 2)),lpSceneMng.ScreenSize.y *(5.0 / 7.0) - (192.0 * ((cnt / 2) % 3/2)) });
+			tmpEnemyState.emplace_back(MOVE_TYPE::SPIRAL, Vector2Dbl{ 1.0 - (2 * (cnt % 2)),static_cast<double>((cnt / 2) % 3 / 2)});
 			tmpEnemyState.emplace_back(MOVE_TYPE::PITIN, Vector2Dbl{ (35.0 * 7) + (35.0*x), 40.0 + ((40.0)*y) });
 			tmpEnemyState.emplace_back(MOVE_TYPE::LR, Vector2Dbl{ 180.0,0.0 });
 			cnt=cnt % 6;

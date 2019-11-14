@@ -75,12 +75,13 @@ void EnemyMove::SetMovePrg(void)
 	case MOVE_TYPE::SPIRAL:
 		_move = &EnemyMove::MoveSpiral;
 		// Šp“xŒˆ‚ß
-		_tmpRad = 0.0;
-		_moveRad = PI / 90.0*_endPos.x;
+		_cntRad = 0.0;
+		_tmpRad = PI * _endPos.y;
+		_moveRad = PI / 90.0*_endPos.x*(1-(2*_endPos.y));
 		// ‰~‚Ì’†SŒˆ‚ß
-		_endPos.y = _pos.y - _endPos.y;
+		radius = 96.0;
+		_endPos.y = _pos.y - radius + (radius*2.0 *_endPos.y);
 		_endPos.x = _pos.x;
-		radius = 128.0;
 		break;
 	case MOVE_TYPE::PITIN:
 		_move = &EnemyMove::PitIn;
@@ -120,7 +121,7 @@ void EnemyMove::MoveSigmoid(void)
 void EnemyMove::MoveSpiral(void)
 {
 	_oldPos = _pos;
-	if (PI*2.0 - abs(_tmpRad) > 0)
+	if (PI*2.0 - abs(_cntRad) > 0)
 	{
 		// ‰~‚ÌƒXƒ^[ƒgˆÊ’u‚¸‚ç‚µ‚Ì‚½‚ß‚Ìcos,sin‹t“]
 		_spiralMoveVec.y = _endPos.y + radius * std::cos(_tmpRad);
@@ -130,15 +131,9 @@ void EnemyMove::MoveSpiral(void)
 		_pos.x = _spiralMoveVec.x;
 		// ·¬×‚ÌŒü‚¢‚Ä‚¢‚é•ûŒüŒˆ‚ß
 		_rad = atan2(_pos.y - _oldPos.y, _pos.x - _oldPos.x) + PI / 2;
-		radius -= 0.5;
-		if (true/*_startPos.x > 400*/)
-		{
-			_tmpRad += _moveRad;;
-		}
-		//else
-		//{
-		//	_tmpRad -= PI / 90.0;
-		//}
+		radius -= 0.3;
+		_tmpRad += _moveRad;
+		_cntRad += abs(_moveRad);
 	}
 	else
 	{

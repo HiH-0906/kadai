@@ -53,7 +53,7 @@ void Enemy::Update(void)
 	_dbgSetAlpha(128);
 	//_dbgDrawBox(_pos.x - (_size.x / 2), _pos.y - (_size.y / 2), _pos.x + (_size.x / 2), _pos.y + (_size.y / 2), 0xff00000, true);
 	_dbgSetAlpha(255);
-	//_dbgDrawBox(_pos.x - (_size.x / 4), _pos.y - (_size.y / 4), _pos.x + (_size.x / 4), _pos.y + (_size.y / 4), 0xffffff, true);
+	//_dbgDrawBox(_pos.x - (_size.x / 4), _pos.y - (_size.y / 4), _pos.x + (_size.x / 4), _pos.y + (_size.y / 4), 0xffffff, false);
 	//_dbgDrawCircle(_pos.x, _pos.y, 10, 0xffffff, true);
 	_dbgDrawPixel(_pos.x, _pos.y, 0xffffff);
 }

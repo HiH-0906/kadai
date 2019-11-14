@@ -13,7 +13,8 @@ void SceneMng::Draw(void)
 	_dbgAddDraw();
 
 	std::sort(_drawList.begin(),_drawList.end(),
-		[](const DrawQueT& x, const DrawQueT& y) {return static_cast<int>(std::get<static_cast<int>(DRAW_QUE::ZORDER)>(x)) < static_cast<int>(std::get<static_cast<int>(DRAW_QUE::ZORDER)>(y)); });
+		[](const DrawQueT& x, const DrawQueT& y)
+	{return static_cast<int>(std::get<static_cast<int>(DRAW_QUE::ZORDER)>(x)) < static_cast<int>(std::get<static_cast<int>(DRAW_QUE::ZORDER)>(y)); });
 	SetDrawScreen(DX_SCREEN_BACK);			// •`‰ææİ’è
 	ClsDrawScreen();
 
