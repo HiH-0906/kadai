@@ -11,10 +11,30 @@ SceneMng* SceneMng::sInstance = nullptr;
 void SceneMng::Draw(void)
 {
 	_dbgAddDraw();
-
+	// _drawList‚ğ¸‡‚É¿°Ä
 	std::sort(_drawList.begin(),_drawList.end(),
-		[](const DrawQueT& x, const DrawQueT& y)
-	{return static_cast<int>(std::get<static_cast<int>(DRAW_QUE::ZORDER)>(x)) < static_cast<int>(std::get<static_cast<int>(DRAW_QUE::ZORDER)>(y)); });
+		// ”ä‚×‚é‚©‚ç“ñ‚Â
+		[](const DrawQueT& dQueA, const DrawQueT& dQueB)
+	{
+		//// layer‚ªˆá‚¤‚È‚çÚ²Ô°‡‚Å•À‚Ñ‘Ö‚¦
+		//if (std::get<static_cast<int>(DRAW_QUE::LAYER)>(dQueA) != std::get<static_cast<int>(DRAW_QUE::LAYER)>(dQueB))
+		//{
+		//	// layer‚Å”ä‚×‚é
+		//	return std::get<static_cast<int>(DRAW_QUE::LAYER)>(dQueA) < std::get<static_cast<int>(DRAW_QUE::LAYER)>(dQueB);
+		//}
+		//else
+		//{
+		//	// _zOrder‚Å”ä‚×‚é
+		//	return std::get<static_cast<int>(DRAW_QUE::ZORDER)>(dQueA) < std::get<static_cast<int>(DRAW_QUE::ZORDER)>(dQueB);
+		//}
+
+		// ã‚Ì“à—e‚ğ1s‚Å ‚â‚Á‚Ä‚¢‚é‚±‚Æ‚Í‘S‚­“¯‚¶
+		return
+		std::tie(std::get<static_cast<int>(DRAW_QUE::LAYER)>(dQueA), std::get<static_cast<int>(DRAW_QUE::ZORDER)>(dQueA))
+			<
+		std::tie(std::get<static_cast<int>(DRAW_QUE::LAYER)>(dQueB), std::get<static_cast<int>(DRAW_QUE::ZORDER)>(dQueB));
+
+	});
 	SetDrawScreen(DX_SCREEN_BACK);			// •`‰ææİ’è
 	ClsDrawScreen();
 
@@ -22,12 +42,20 @@ void SceneMng::Draw(void)
 	//	”ÍˆÍfor•¶
 	for (auto dQue:_drawList)
 	{
+		// tuple‚Ìî•ñ‚ğ‚Î‚ç‚µ‚½Œã‚É•Û‘¶‚·‚é•Ï”’è‹`
+		double x, y,rad;
+		int id;
+		LAYER layer;
+
+		// tuple‚ğ‚Î‚ç‚Î‚ç‚É
+		std::tie(id, x, y, rad, std::ignore, layer) = dQue;
+
 		DrawRotaGraph(
-			static_cast<int>(std::get<static_cast<int>(DRAW_QUE::X)>(dQue)),
-			static_cast<int>(std::get<static_cast<int>(DRAW_QUE::Y)>(dQue)),
+			static_cast<int>(x),
+			static_cast<int>(y),
 			1.0,
-			std::get<static_cast<int>(DRAW_QUE::RAD)>(dQue),
-			std::get<static_cast<int>(DRAW_QUE::IMAGE)>(dQue),
+			rad,
+			id,
 			true);
 	}
 	//// iteratorfor•¶
@@ -69,7 +97,7 @@ void SceneMng::Ran(void)
 	{
 		_dbgStartDraw();
 		_drawList.clear();			// Ø½Ä‚Ìíœ
-		AddDrawQue({IMAGE_ID("BG")[0],400.0,300.0,0.0,32768,LAYER::BG});
+		AddDrawQue({IMAGE_ID("˜g")[0],400.0,300.0,0.0,0,LAYER::UI});
 		_activeScene = (*_activeScene).Update(std::move(_activeScene));
 		Draw();						// •`‰æ
 	}
@@ -101,8 +129,15 @@ bool SceneMng::SysInit(void)
 		return false;
 	}
 	SetDrawScreen(DX_SCREEN_BACK);					// •`Êæ‚ğÊŞ¯¸ÊŞ¯Ì§‚Éİ’è
-	lpImageMng.GetID("BG","image/frame.png");
+	
+	for (auto id : LAYER())
+	{
+		if(_screenID[])
+	}
+
 	_dbgSetup(255);
+
+	lpImageMng.GetID("˜g","image/frame.png");
 
 	return false;
 }

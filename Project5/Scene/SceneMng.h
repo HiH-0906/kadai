@@ -1,6 +1,7 @@
 #pragma once
 #include <memory>
 #include <vector>
+#include <map>
 #include <tuple>
 #include <common/Vector2.h>
 #include "BaseScene.h"
@@ -68,9 +69,13 @@ private:
 
 	void Draw(void);							// •`‰æ
 
+	std::map<LAYER, int> _screenID;				// •`‰æ—p½¸Ø°İ•Û‘¶—p•Ï”
+
 	std::vector<DrawQueT> _drawList;			// •`‰æ—p·­°
+
 	SceneMng();									// ºİ½Ä×¸À
 	~SceneMng();								// ÃŞ½Ä×¸À
+
 	bool SysInit(void);							// ¼½ÃÑ²Æ¯Ä
 };
 
