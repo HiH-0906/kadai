@@ -8,6 +8,26 @@
 
 SceneMng* SceneMng::sInstance = nullptr;
 
+LAYER begin(LAYER)
+{
+	return LAYER::BG;
+}
+
+LAYER end(LAYER)
+{
+	return LAYER::MAX;
+}
+LAYER operator*(LAYER key)
+{
+	return key;
+}
+
+LAYER operator++(LAYER & key)
+{
+	// Šî’ê‚ÌŒ^‚ğŒ©‚Ä‰]X
+	return key = static_cast<LAYER>(std::underlying_type<LAYER>::type(key) + 1);
+}
+
 void SceneMng::Draw(void)
 {
 	_dbgAddDraw();
@@ -49,7 +69,12 @@ void SceneMng::Draw(void)
 
 		// tuple‚ğ‚Î‚ç‚Î‚ç‚É
 		std::tie(id, x, y, rad, std::ignore, layer) = dQue;
-
+		// Œ»İ‚Ì•`‰æ½¸Ø°İ‚Æˆá‚¦‚Î•ÏX
+		if (_screenID[layer]!=GetDrawScreen())
+		{
+			SetDrawScreen(_screenID[layer]);
+			ClsDrawScreen();
+		}
 		DrawRotaGraph(
 			static_cast<int>(x),
 			static_cast<int>(y),
@@ -57,6 +82,12 @@ void SceneMng::Draw(void)
 			rad,
 			id,
 			true);
+	}
+	SetDrawScreen(DX_SCREEN_BACK);
+	// ŠeÚ²Ô°‚ğ•`‰æ
+	for (auto layer : LAYER())
+	{
+		DrawRotaGraph(lpSceneMng.ScreenSize.x / 2, lpSceneMng.ScreenSize.y / 2, 1.0, 0, _screenID[layer], true);
 	}
 	//// iteratorfor•¶
 	//for (auto dQue = _drawList.begin(); dQue != _drawList.end; dQue++)
@@ -132,7 +163,10 @@ bool SceneMng::SysInit(void)
 	
 	for (auto id : LAYER())
 	{
-		if(_screenID[])
+		if (_screenID.find(id) == _screenID.end())
+		{
+			_screenID[id] = MakeScreen(lpSceneMng.ScreenSize.x, lpSceneMng.ScreenSize.y, true);
+		}
 	}
 
 	_dbgSetup(255);

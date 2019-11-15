@@ -23,7 +23,8 @@ enum class LAYER
 {
 	BG,						// ”wŒi
 	CHAR,					// ·¬×
-	UI						// UI
+	UI,						// UI
+	MAX
 };
 
 
