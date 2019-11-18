@@ -23,19 +23,22 @@ GameScene::GameScene()
 	_objList.emplace_back(
 		new Player({ lpSceneMng.GameScreenSize.x / 2.0,lpSceneMng.GameScreenSize.y-16.0 }, { 0,0 })
 	);
+	int tmpFcnt = lpSceneMng.fCnt;
 	for (int y = 0; y < 5; y++)
 	{
 		for (int x = 0; x < 10; x++)
 		{
 			int cnt = (y * 10 + x);
+			tmpFcnt = 483 + (30 * cnt);
 			// ë„ì¸Ç∑ÇÈÇΩÇﬂÇÃ√ﬁ∞¿çÏê¨
 			MoveState tmpEnemyState;
 			// Waitéûä‘ê›íË
 			tmpEnemyState.emplace_back(MOVE_TYPE::WAIT, Vector2Dbl{ 30.0*cnt,0.0 });
 			tmpEnemyState.emplace_back(MOVE_TYPE::SIGMOID, Vector2Dbl{ lpSceneMng.GameScreenSize.x - 96.0 - ((lpSceneMng.GameScreenSize.x - 192.0) * (cnt % 2)),lpSceneMng.GameScreenSize.y *(6.0 / 7.0) - (128.0 * ((cnt % 6) / 4))});
 			tmpEnemyState.emplace_back(MOVE_TYPE::SPIRAL, Vector2Dbl{ 1.0 - (2 * (cnt % 2)),static_cast<double>((cnt / 2) % 3 / 2)});
-			tmpEnemyState.emplace_back(MOVE_TYPE::PITIN, Vector2Dbl{ 35.0*2.5 + (35.0*x), 40.0 + ((40.0)*y) });
-			tmpEnemyState.emplace_back(MOVE_TYPE::LR, Vector2Dbl{ , });
+			tmpEnemyState.emplace_back(MOVE_TYPE::PITIN, Vector2Dbl{(16.0+ (35.0*x)) + (tmpFcnt % 150 * (1 - (2 * ((tmpFcnt / 150) % 2))) + (150 * ((tmpFcnt / 150) % 2))), 40.0 + ((40.0)*y) });
+			tmpEnemyState.emplace_back(MOVE_TYPE::LR, Vector2Dbl{ 16.0 + (35.0*x) ,1500.0- (30 * cnt) });
+			tmpEnemyState.emplace_back(MOVE_TYPE::SCALE, Vector2Dbl{ lpSceneMng.GameScreenSize.x/2.0,120.0 });
 			cnt=cnt % 6;
 			EnemyState state = { static_cast<ENEMY_TYPE>(rand() % static_cast<int>(ENEMY_TYPE::MAX)),													// ¿≤ÃﬂÇÃê›íË
 								{ static_cast<double>((lpSceneMng.GameScreenSize.x*(cnt % 2) - 16) + (35 * (cnt % 2))),									// ç¿ïWXÇÃê›íË

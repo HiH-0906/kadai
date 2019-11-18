@@ -11,7 +11,8 @@ enum class MOVE_TYPE
 	SIGMOID,
 	SPIRAL,
 	PITIN,
-	LR
+	LR,
+	SCALE
 };
 
 using MoveState = std::vector<std::pair<MOVE_TYPE, Vector2Dbl>>;		// 行動目的地管理用型
@@ -33,6 +34,7 @@ private:
 	void PitIn(void);										// ﾋﾟｯﾄｲﾝ
 	void Wait(void);										// 待機 aim[_aimCnt].secondの値まで回る
 	void MoveLR(void);										// 左右
+	void MoveScale(void);									// 拡大縮小
 
 	int count;												// wait用ｶｳﾝﾄ
 
@@ -46,7 +48,10 @@ private:
 	Vector2Dbl _lenght;										// 距離
 	Vector2Dbl _oneMoveVec;									// 1ﾌﾚｰﾑでの移送距離
 	Vector2Dbl _oldPos;										// 角度求める用
-	int _speed;												// ｽﾋﾟｰﾄﾞ
+	Vector2Dbl _center;										// 敵中心
+	Vector2Dbl _range;										// 中心からの距離
+	Vector2Dbl _nextRange;									// 拡大縮小後の距離
+	Vector2Dbl _oneMoveRange;								// 1ﾌﾚｰﾑに移動する距離
 	double radius;											// 半径
 	double& _rad;											// 角度
 	double _tmpRad;											// 回転用角度
