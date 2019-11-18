@@ -8,24 +8,14 @@
 
 SceneMng* SceneMng::sInstance = nullptr;
 
-LAYER begin(LAYER)
+SceneMng::SceneMng() :ScreenSize{ 800,600 }, ScreenCenter{ ScreenSize / 2 }, GameScreenSize{ 500,390 }, GameScreenOffset{ (ScreenSize - GameScreenSize) / 2 }	// ½¸Ø°İ‚ÌŠÖŒW‚ÌÀ•W‰Šú‰»
 {
-	return LAYER::BG;
+	fCnt = 0;
 }
 
-LAYER end(LAYER)
-{
-	return LAYER::MAX;
-}
-LAYER operator*(LAYER key)
-{
-	return key;
-}
 
-LAYER operator++(LAYER & key)
+SceneMng::~SceneMng()
 {
-	// Šî’ê‚ÌŒ^‚ğŒ©‚Ä‰]X
-	return key = static_cast<LAYER>(std::underlying_type<LAYER>::type(key) + 1);
 }
 
 void SceneMng::Draw(void)
@@ -55,8 +45,12 @@ void SceneMng::Draw(void)
 		std::tie(std::get<static_cast<int>(DRAW_QUE::LAYER)>(dQueB), std::get<static_cast<int>(DRAW_QUE::ZORDER)>(dQueB));
 
 	});
-	SetDrawScreen(DX_SCREEN_BACK);			// •`‰ææİ’è
-	ClsDrawScreen();
+
+	for (auto id : LAYER())
+	{
+		SetDrawScreen(_screenID[id]);
+		ClsDrawScreen();
+	}
 
 	// ½À¯¸‚É—­‚Ü‚Á‚Ä‚¢‚éQue‚ğ•`‰æ‚·‚é
 	//	”ÍˆÍfor•¶
@@ -70,10 +64,9 @@ void SceneMng::Draw(void)
 		// tuple‚ğ‚Î‚ç‚Î‚ç‚É
 		std::tie(id, x, y, rad, std::ignore, layer) = dQue;
 		// Œ»İ‚Ì•`‰æ½¸Ø°İ‚Æˆá‚¦‚Î•ÏX
-		if (_screenID[layer]!=GetDrawScreen())
+		if (_screenID[layer] != GetDrawScreen())
 		{
 			SetDrawScreen(_screenID[layer]);
-			ClsDrawScreen();
 		}
 		DrawRotaGraph(
 			static_cast<int>(x),
@@ -84,10 +77,18 @@ void SceneMng::Draw(void)
 			true);
 	}
 	SetDrawScreen(DX_SCREEN_BACK);
+	ClsDrawScreen();
 	// ŠeÚ²Ô°‚ğ•`‰æ
 	for (auto layer : LAYER())
 	{
-		DrawRotaGraph(lpSceneMng.ScreenSize.x / 2, lpSceneMng.ScreenSize.y / 2, 1.0, 0, _screenID[layer], true);
+		if (layer == LAYER::CHAR)
+		{
+			DrawRotaGraph(ScreenCenter.x, ScreenCenter.y ,1.0, 0, _screenID[layer], true);
+		}
+		else
+		{
+			DrawRotaGraph(ScreenCenter.x, ScreenCenter.y, 1.0, 0, _screenID[layer], true);
+		}
 	}
 	//// iteratorfor•¶
 	//for (auto dQue = _drawList.begin(); dQue != _drawList.end; dQue++)
@@ -110,14 +111,7 @@ void SceneMng::Draw(void)
 
 	ScreenFlip();
 }
-SceneMng::SceneMng():ScreenSize{800,600}
-{
-}
 
-
-SceneMng::~SceneMng()
-{
-}
 
 void SceneMng::Ran(void)
 {
@@ -130,6 +124,7 @@ void SceneMng::Ran(void)
 		_drawList.clear();			// Ø½Ä‚Ìíœ
 		AddDrawQue({IMAGE_ID("˜g")[0],400.0,300.0,0.0,0,LAYER::UI});
 		_activeScene = (*_activeScene).Update(std::move(_activeScene));
+		fCnt++;
 		Draw();						// •`‰æ
 	}
 }
@@ -163,10 +158,8 @@ bool SceneMng::SysInit(void)
 	
 	for (auto id : LAYER())
 	{
-		if (_screenID.find(id) == _screenID.end())
-		{
-			_screenID[id] = MakeScreen(lpSceneMng.ScreenSize.x, lpSceneMng.ScreenSize.y, true);
-		}
+		// ½¸Ø°İ‚Ìì¬
+		_screenID.try_emplace(id, MakeScreen(ScreenSize.x, ScreenSize.y, true));
 	}
 
 	_dbgSetup(255);

@@ -32,7 +32,7 @@ public:
 	void Update(void) override;
 	~Enemy();
 private:
-	EnemyMove _moveCtl{ _pos ,_rad };					// ´ÈĞ°‚Ì“®‚«ŠÇ——pObj
+	EnemyMove _moveCtl{ _pos ,_rad,_speed };					// ´ÈĞ°‚Ì“®‚«ŠÇ——pObj
 	void Init();
 	ENEMY_TYPE _type;							// ´ÈĞ°type¯•Ê—p
 };

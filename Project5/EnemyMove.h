@@ -20,7 +20,7 @@ class EnemyMove
 {
 
 public:
-	EnemyMove(Vector2Dbl& pos,double& rad);					// 今回はわかりやすくするために参照で受け取る 本当はGetSetがあるといい
+	EnemyMove(Vector2Dbl& pos,double& rad,int& speed);					// 今回はわかりやすくするために参照で受け取る 本当はGetSetがあるといい
 	~EnemyMove();
 	void Update(void);										// 更新
 	bool SetMoveState(MoveState& state, bool newFlag);		// 行動ｾｯﾄ関数
@@ -46,6 +46,7 @@ private:
 	Vector2Dbl _lenght;										// 距離
 	Vector2Dbl _oneMoveVec;									// 1ﾌﾚｰﾑでの移送距離
 	Vector2Dbl _oldPos;										// 角度求める用
+	int _speed;												// ｽﾋﾟｰﾄﾞ
 	double radius;											// 半径
 	double& _rad;											// 角度
 	double _tmpRad;											// 回転用角度

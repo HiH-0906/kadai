@@ -11,6 +11,7 @@ Obj::Obj()
 	_animFrame = 0;
 	_animCount = 0;
 	_rad = 0;
+	_speed = 1;
 	_zOrder = 0;
 }
 
@@ -150,12 +151,12 @@ void Obj::Draw(void)
 	}
 
 	// ·­°‚Ö‚Ì’Ç‰Á
-	lpSceneMng.AddDrawQue({ _animMap[_state][_animFrame].first,_pos.x,_pos.y,_rad,_zOrder,LAYER::CHAR});
+	lpSceneMng.AddDrawQue({ _animMap[_state][_animFrame].first,_pos.x + lpSceneMng.GameScreenOffset.x,_pos.y+lpSceneMng.GameScreenOffset.y,_rad,_zOrder,LAYER::CHAR});
 }
 
 void Obj::Draw(int id)
 {
 	// ·­°‚Ö‚Ì’Ç‰Á
-	lpSceneMng.AddDrawQue({ id, _pos.x,_pos.y,_rad,_zOrder,LAYER::CHAR});
+	lpSceneMng.AddDrawQue({ id, _pos.x+lpSceneMng.GameScreenOffset.x,_pos.y+ lpSceneMng.GameScreenOffset.y,_rad,_zOrder,LAYER::CHAR});
 }
 

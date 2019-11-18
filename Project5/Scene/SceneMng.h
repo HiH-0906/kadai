@@ -5,6 +5,7 @@
 #include <tuple>
 #include <common/Vector2.h>
 #include "BaseScene.h"
+#include "Layer.h"
 
 
 #define lpSceneMng SceneMng::GetInstance()
@@ -19,13 +20,6 @@ enum class DRAW_QUE
 	LAYER					// ‚Ç‚±‚ÌÚ²Ô°‚© ID‚ª¬‚³‚¢‚Ù‚¤‚ªŒã‚ë‚É•`‰æ
 };
 
-enum class LAYER
-{
-	BG,						// ”wŒi
-	CHAR,					// ·¬×
-	UI,						// UI
-	MAX
-};
 
 
 //							image  x		y	‰ñ“]Šp	zOrder Ú²Ô°
@@ -63,6 +57,10 @@ public:
 	bool AddDrawQue(DrawQueT dQue);				// ·­°‚ğ—­‚ß‚é
 
 	const Vector2 ScreenSize;					// ½¸Ø°İ»²½Ş reedonly
+	const Vector2 ScreenCenter;					// ½¸Ø°İ‚Ì’†S reedonly
+	const Vector2 GameScreenSize;				// ¹Ş°Ñ½¸Ø°İ»²½Ş reedonly
+	const Vector2 GameScreenOffset;				// ¹Ş°Ñ½¸Ø°İµÌ¾¯Ä reedonly
+	int fCnt;									// ÌÚ°Ñ”¶³İÀ
 private:
 	static SceneMng* sInstance;					// Îß²İÀ
 

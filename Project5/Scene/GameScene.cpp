@@ -21,7 +21,7 @@ GameScene::GameScene()
 	TREACE("ｹﾞｰﾑｼｰﾝの生成\n");
 	// ﾘｽﾄへの表示登録
 	_objList.emplace_back(
-		new Player({ 100,400 }, { 0,0 })
+		new Player({ lpSceneMng.GameScreenSize.x / 2.0,lpSceneMng.GameScreenSize.y-16.0 }, { 0,0 })
 	);
 	for (int y = 0; y < 5; y++)
 	{
@@ -32,17 +32,16 @@ GameScene::GameScene()
 			MoveState tmpEnemyState;
 			// Wait時間設定
 			tmpEnemyState.emplace_back(MOVE_TYPE::WAIT, Vector2Dbl{ 30.0*cnt,0.0 });
-			tmpEnemyState.emplace_back(MOVE_TYPE::SIGMOID, Vector2Dbl{ lpSceneMng.ScreenSize.x - 128.0 - (544.0 * (cnt % 2)),lpSceneMng.ScreenSize.y *(5.0 / 7.0) - (192.0 * ((cnt % 6) / 4)) });
+			tmpEnemyState.emplace_back(MOVE_TYPE::SIGMOID, Vector2Dbl{ lpSceneMng.GameScreenSize.x - 96.0 - ((lpSceneMng.GameScreenSize.x - 192.0) * (cnt % 2)),lpSceneMng.GameScreenSize.y *(6.0 / 7.0) - (128.0 * ((cnt % 6) / 4))});
 			tmpEnemyState.emplace_back(MOVE_TYPE::SPIRAL, Vector2Dbl{ 1.0 - (2 * (cnt % 2)),static_cast<double>((cnt / 2) % 3 / 2)});
-			tmpEnemyState.emplace_back(MOVE_TYPE::PITIN, Vector2Dbl{ (35.0 * 7) + (35.0*x), 40.0 + ((40.0)*y) });
-			tmpEnemyState.emplace_back(MOVE_TYPE::LR, Vector2Dbl{ 180.0,0.0 });
+			tmpEnemyState.emplace_back(MOVE_TYPE::PITIN, Vector2Dbl{ 35.0*2.5 + (35.0*x), 40.0 + ((40.0)*y) });
+			tmpEnemyState.emplace_back(MOVE_TYPE::LR, Vector2Dbl{ , });
 			cnt=cnt % 6;
 			EnemyState state = { static_cast<ENEMY_TYPE>(rand() % static_cast<int>(ENEMY_TYPE::MAX)),													// ﾀｲﾌﾟの設定
-								{ static_cast<double>((lpSceneMng.ScreenSize.x*(cnt % 2) - 16) + (32 * (cnt % 2))),										// 座標Xの設定
-								static_cast<double>(((lpSceneMng.ScreenSize.y-30)/2)*((cnt / 2) % 3) - 16)},											// 座標Yの設定
-								{ 30.0,32.0 },																											// ｻｲｽﾞの設定
-								std::atan2(40.0 + ((40.0)*y - (((lpSceneMng.ScreenSize.y - 30) / 2)*((cnt / 2) % 3) - 16)),(35.0 * 7) +					// 角度
-								(35.0*x) - (lpSceneMng.ScreenSize.x*(cnt % 2) - 15) + (32 * (cnt % 2))) + (3.14159 / 2),
+								{ static_cast<double>((lpSceneMng.GameScreenSize.x*(cnt % 2) - 16) + (35 * (cnt % 2))),									// 座標Xの設定
+								static_cast<double>(((lpSceneMng.GameScreenSize.y-30)/2)*((cnt / 2) % 3) - 16)},										// 座標Yの設定
+								{ 30.0,32.0 },																											// ｻｲｽﾞの設定																													// ｽﾋﾟｰﾄﾞ
+								0.0,																													// 角度
 								tmpEnemyState																											// 行動管理の設定
 								};
 			_objList.emplace_back(

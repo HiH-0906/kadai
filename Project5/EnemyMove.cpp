@@ -2,9 +2,10 @@
 #include <_DebugConOut.h>
 #include <cmath>
 #include "_DebugDispOut.h"
+#include <SceneMng.h>
 
 
-EnemyMove::EnemyMove(Vector2Dbl & pos,double & rad): _pos(pos),_rad(rad)			// QÆ‚Í‘¶İ‚µ‚Ä‚È‚¢‚Æ‚¢‚¯‚È‚¢‚Ì‚Å‚±‚±‚É‘‚­
+EnemyMove::EnemyMove(Vector2Dbl & pos,double & rad,int &speed): _pos(pos),_rad(rad),_speed(speed)			// QÆ‚Í‘¶İ‚µ‚Ä‚È‚¢‚Æ‚¢‚¯‚È‚¢‚Ì‚Å‚±‚±‚É‘‚­
 {
 	_move = nullptr;
 	_aimCnt = -1;
@@ -79,7 +80,7 @@ void EnemyMove::SetMovePrg(void)
 		_tmpRad = PI * _endPos.y;
 		_moveRad = PI / 90.0*_endPos.x*(1-(2*_endPos.y));
 		// ‰~‚Ì’†SŒˆ‚ß
-		radius = 96.0;
+		radius = 64.0;
 		_endPos.y = _pos.y - radius + (radius*2.0 *_endPos.y);
 		_endPos.x = _pos.x;
 		break;
@@ -90,6 +91,7 @@ void EnemyMove::SetMovePrg(void)
 		break;
 	case MOVE_TYPE::LR:
 		_move = &EnemyMove::MoveLR;
+		count = 0;
 		break;
 	default:
 		AST();
@@ -128,7 +130,7 @@ void EnemyMove::MoveSpiral(void)
 		_pos.x = _endPos.x + radius * std::sin(_tmpRad);
 		// ·¬×‚ÌŒü‚¢‚Ä‚¢‚é•ûŒüŒˆ‚ß
 		_rad = atan2(_pos.y - _oldPos.y, _pos.x - _oldPos.x) + PI / 2;
-		radius -= 0.3;
+		radius -= 0.2;
 		_tmpRad += _moveRad;
 		_cntRad += abs(_moveRad);
 	}
@@ -178,5 +180,5 @@ void EnemyMove::Wait(void)
 
 void EnemyMove::MoveLR(void)
 {
-	/*_pos.x++;*/
+	_pos.x = _endPos.x;
 }
