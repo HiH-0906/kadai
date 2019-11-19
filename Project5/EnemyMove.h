@@ -52,6 +52,7 @@ private:
 	Vector2Dbl _range;										// ’†S‚©‚ç‚Ì‹——£
 	Vector2Dbl _nextRange;									// Šg‘åk¬Œã‚Ì‹——£
 	Vector2Dbl _oneMoveRange;								// 1ÌÚ°Ñ‚ÉˆÚ“®‚·‚é‹——£
+	static int InCount;										// “GËß¯Ä²İ¶³İÄ
 	double radius;											// ”¼Œa
 	double& _rad;											// Šp“x
 	double _tmpRad;											// ‰ñ“]—pŠp“x

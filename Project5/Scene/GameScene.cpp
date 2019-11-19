@@ -24,33 +24,28 @@ GameScene::GameScene()
 		new Player({ lpSceneMng.GameScreenSize.x / 2.0,lpSceneMng.GameScreenSize.y-16.0 }, { 0,0 })
 	);
 	int tmpFcnt = lpSceneMng.fCnt;
-	for (int y = 0; y < 5; y++)
+	int formation = 3;
+	for (int cnt = 0; cnt < 5*10; cnt++)
 	{
-		for (int x = 0; x < 10; x++)
-		{
-			int cnt = (y * 10 + x);
-			tmpFcnt = 483 + (30 * cnt);
 			// 代入するためのﾃﾞｰﾀ作成
 			MoveState tmpEnemyState;
 			// Wait時間設定
-			tmpEnemyState.emplace_back(MOVE_TYPE::WAIT, Vector2Dbl{ 30.0*cnt,0.0 });
-			tmpEnemyState.emplace_back(MOVE_TYPE::SIGMOID, Vector2Dbl{ lpSceneMng.GameScreenSize.x - 96.0 - ((lpSceneMng.GameScreenSize.x - 192.0) * (cnt % 2)),lpSceneMng.GameScreenSize.y *(6.0 / 7.0) - (128.0 * ((cnt % 6) / 4))});
-			tmpEnemyState.emplace_back(MOVE_TYPE::SPIRAL, Vector2Dbl{ 1.0 - (2 * (cnt % 2)),static_cast<double>((cnt / 2) % 3 / 2)});
-			tmpEnemyState.emplace_back(MOVE_TYPE::PITIN, Vector2Dbl{(16.0+ (35.0*x)) + (tmpFcnt % 150 * (1 - (2 * ((tmpFcnt / 150) % 2))) + (150 * ((tmpFcnt / 150) % 2))), 40.0 + ((40.0)*y) });
-			tmpEnemyState.emplace_back(MOVE_TYPE::LR, Vector2Dbl{ 16.0 + (35.0*x) ,1500.0- (30 * cnt) });
-			tmpEnemyState.emplace_back(MOVE_TYPE::SCALE, Vector2Dbl{ lpSceneMng.GameScreenSize.x/2.0,120.0 });
-			cnt=cnt % 6;
-			EnemyState state = { static_cast<ENEMY_TYPE>(rand() % static_cast<int>(ENEMY_TYPE::MAX)),													// ﾀｲﾌﾟの設定
-								{ static_cast<double>((lpSceneMng.GameScreenSize.x*(cnt % 2) - 16) + (35 * (cnt % 2))),									// 座標Xの設定
-								static_cast<double>(((lpSceneMng.GameScreenSize.y-30)/2)*((cnt / 2) % 3) - 16)},										// 座標Yの設定
-								{ 30.0,32.0 },																											// ｻｲｽﾞの設定																													// ｽﾋﾟｰﾄﾞ
-								0.0,																													// 角度
-								tmpEnemyState																											// 行動管理の設定
+			tmpEnemyState.emplace_back(MOVE_TYPE::WAIT, Vector2Dbl{ 10.0*(cnt % formation) + 50.0*(cnt / formation),0.0 });
+			tmpEnemyState.emplace_back(MOVE_TYPE::SIGMOID, Vector2Dbl{ lpSceneMng.GameScreenSize.x - 96.0 - ((lpSceneMng.GameScreenSize.x - 192.0) * (cnt/ formation % 2)),lpSceneMng.GameScreenSize.y *(6.0 / 7.0) - (128.0 * ((cnt/ formation % 6) / 4))});
+			tmpEnemyState.emplace_back(MOVE_TYPE::SPIRAL, Vector2Dbl{ 1.0 - (2 * (cnt/ formation % 2)),static_cast<double>((cnt/ formation / 2) % 3 / 2)});
+			tmpEnemyState.emplace_back(MOVE_TYPE::PITIN, Vector2Dbl{ (16.0 + (35.0*(cnt % 10))) , 40.0 + ((40.0)*(cnt / 10 % 5)) });
+			tmpEnemyState.emplace_back(MOVE_TYPE::LR, Vector2Dbl{ 16.0 + (35.0*(cnt % 10)) ,0.0});
+			tmpEnemyState.emplace_back(MOVE_TYPE::SCALE, Vector2Dbl{ lpSceneMng.GameScreenSize.x/2.0,40.0 });
+			EnemyState state = { static_cast<ENEMY_TYPE>(rand() % static_cast<int>(ENEMY_TYPE::MAX)),																				// ﾀｲﾌﾟの設定
+								{ static_cast<double>((lpSceneMng.GameScreenSize.x*(((cnt / formation) % 6) % 2) - 16) + (35 * (((cnt / formation) % 6) % 2))),					// 座標Xの設定
+								static_cast<double>(((lpSceneMng.GameScreenSize.y-30)/2)*((((cnt / formation) % 6) / 2) % 3) - 16)},												// 座標Yの設定
+								{ 30.0,32.0 },																																		// ｻｲｽﾞの設定																													// ｽﾋﾟｰﾄﾞ
+								0.0,																																				// 角度
+								tmpEnemyState																																		// 行動管理の設定
 								};
 			_objList.emplace_back(
 				new Enemy(state)
 			);
-		}
 	}
 }
 

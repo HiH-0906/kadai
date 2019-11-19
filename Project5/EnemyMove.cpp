@@ -4,11 +4,13 @@
 #include "_DebugDispOut.h"
 #include <SceneMng.h>
 
+int EnemyMove::InCount = 0;
 
 EnemyMove::EnemyMove(Vector2Dbl & pos,double & rad,int &speed): _pos(pos),_rad(rad)				// 参照は存在してないといけないのでここに書く
 {
 	_move = nullptr;
 	_aimCnt = -1;
+	//InCount = 0;
 }
 
 EnemyMove::~EnemyMove()
@@ -71,6 +73,7 @@ void EnemyMove::SetMovePrg(void)
 		_moveGain = -5.0;
 		// 目的地までの距離
 		_lenght = _endPos - _startPos;
+		_lenght.x /= 180.0;
 		_oldPos = _pos;
 		break;
 	case MOVE_TYPE::SPIRAL:
@@ -86,19 +89,21 @@ void EnemyMove::SetMovePrg(void)
 		break;
 	case MOVE_TYPE::PITIN:
 		_move = &EnemyMove::PitIn;
+		_endPos.x += (lpSceneMng.fCnt+120) % 150 * (1 - (2 * (((lpSceneMng.fCnt + 120) / 150) % 2))) + (150 * (((lpSceneMng.fCnt + 120) / 150) % 2));
 		// 1ﾌﾚｰﾑに進む距離
 		_oneMoveVec = (_endPos - _startPos) / 120.0;
 		break;
 	case MOVE_TYPE::LR:
 		count = 0;
 		_move = &EnemyMove::MoveLR;
+		InCount++;
 		break;
 	case MOVE_TYPE::SCALE:
 		_move = &EnemyMove::MoveScale;
 		_center = _endPos;
 		_range = _center - _pos;
 		_nextRange = _range * 1.3;
-		_oneMoveRange = (_range - _nextRange) / 120.0;
+		_oneMoveRange = (_range - _nextRange) / 60.0;
 		count = 0;
 		break;
 	default:
@@ -117,7 +122,7 @@ void EnemyMove::MoveSigmoid(void)
 		_moveGain += 10.0 / 180.0;
 		// ｼｸﾞﾓｲﾄﾞ関数によって得た値を拡大
 		_pos.y = _startPos.y + 1.0 / (1.0 + exp(-1.3*_moveGain-1.0)) * _lenght.y;
-		_pos.x = _startPos.x + (5 + _moveGain)*_lenght.x / 10.0;
+		_pos.x = _pos.x + _lenght.x;
 		_rad = atan2(_pos.y - _oldPos.y, _pos.x - _oldPos.x) + PI / 2;
 	}
 	else
@@ -189,8 +194,7 @@ void EnemyMove::Wait(void)
 void EnemyMove::MoveLR(void)
 {
 	_pos.x = _endPos.x + lpSceneMng.fCnt % 150 * (1 - (2 * ((lpSceneMng.fCnt / 150) % 2)))+(150* ((lpSceneMng.fCnt / 150) % 2));
-	_endPos.y--;
-	if (_endPos.y <= 0 && lpSceneMng.fCnt % 75 == 0)
+	if (InCount >= 50 && lpSceneMng.fCnt % 150 == 74)
 	{
 		SetMovePrg();
 		TREACE("LR終了だよー\n");
@@ -201,7 +205,7 @@ void EnemyMove::MoveScale(void)
 {
 	count++;
 	_pos += _oneMoveRange;
-	if (count>=120)
+	if (count>=60)
 	{
 		_oneMoveRange *= -1;
 		count = 0;
