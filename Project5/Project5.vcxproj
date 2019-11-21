@@ -126,6 +126,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="common\ImageMng.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyMove.cpp" />
@@ -144,6 +145,7 @@
     <ClCompile Include="Scene\TitleScene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Bullet.h" />
     <ClInclude Include="common\Detail\Vector2.h" />
     <ClInclude Include="common\ImageMng.h" />
     <ClInclude Include="Enemy.h" />

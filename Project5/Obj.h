@@ -5,6 +5,8 @@
 #include <map>
 #include <common/Vector2.h>
 
+#define PI 3.141592
+
 enum class STATE
 {
 	NORMAL,		// í èÌ
@@ -28,6 +30,9 @@ public:
 
 	bool state(const STATE state);								// ±∆“∞ºÆ›∑∞ÇÃí«â¡
 	const STATE state(void) const;								// åªç›ÇÃ±∆“∞ºÆ›∑∞ÇÃéÊìæ
+
+	const Vector2Dbl pos(void);
+	const Vector2Dbl size(void);
 
 	bool SetAnim(const STATE state, AnimVector& data);			// √ﬁ∞¿äiî[ópä÷êî
 	bool SetAlive(bool alive);

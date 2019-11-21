@@ -12,7 +12,7 @@ Obj::Obj()
 	_animCount = 0;
 	_rad = 0;
 	_speed = 1;
-	_zOrder = 0;
+	_zOrder = 100;
 }
 
 
@@ -43,6 +43,16 @@ bool Obj::state(const STATE state)
 const STATE Obj::state(void) const
 {
 	return _state;
+}
+
+const Vector2Dbl Obj::pos(void)
+{
+	return _pos;
+}
+
+const Vector2Dbl Obj::size(void)
+{
+	return _size;
 }
 
 bool Obj::SetAnim(const STATE state, AnimVector& data)

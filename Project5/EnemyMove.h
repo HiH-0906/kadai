@@ -3,7 +3,7 @@
 #include <Vector2.h>
 #include <vector>
 
-#define PI 3.141592
+#define ENEMY_MAX 50
 
 enum class MOVE_TYPE
 {

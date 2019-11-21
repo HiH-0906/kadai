@@ -194,7 +194,7 @@ void EnemyMove::Wait(void)
 void EnemyMove::MoveLR(void)
 {
 	_pos.x = _endPos.x + lpSceneMng.fCnt % 150 * (1 - (2 * ((lpSceneMng.fCnt / 150) % 2)))+(150* ((lpSceneMng.fCnt / 150) % 2));
-	if (InCount >= 50 && lpSceneMng.fCnt % 150 == 74)
+	if (InCount >= ENEMY_MAX && lpSceneMng.fCnt % 150 == 74)
 	{
 		SetMovePrg();
 		TREACE("LRI—¹‚¾‚æ[\n");

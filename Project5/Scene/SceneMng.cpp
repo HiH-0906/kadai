@@ -124,8 +124,9 @@ void SceneMng::Ran(void)
 		_drawList.clear();			// Ø½Ä‚Ìíœ
 		AddDrawQue({IMAGE_ID("˜g")[0],400.0,300.0,0.0,0,LAYER::UI});
 		_activeScene = (*_activeScene).Update(std::move(_activeScene));
-		fCnt++;
+		(*_activeScene).RunActQue(std::move(_actList));
 		Draw();						// •`‰æ
+		fCnt++;
 	}
 }
 
@@ -139,6 +140,13 @@ bool SceneMng::AddDrawQue(DrawQueT dQue)
 	// Que‚ğ’Ç‰Á
 	_drawList.emplace_back(dQue);
 
+	return true;
+}
+
+bool SceneMng::AddActQue(ActQueT aQue)
+{
+	// ±¸¼®İŒn‚Ì·­°‚ÌØ½Ä‚Ö‚Ì’Ç‰Á
+	_actList.emplace_back(aQue);
 	return true;
 }
 

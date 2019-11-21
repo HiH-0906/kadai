@@ -3,7 +3,7 @@
 #include <vector>
 #include <map>
 #include <tuple>
-#include <common/Vector2.h>
+#include <Vector2.h>
 #include "BaseScene.h"
 #include "Layer.h"
 
@@ -55,6 +55,7 @@ public:
 	void Ran(void);								// ﾙｰﾌﾟ
 
 	bool AddDrawQue(DrawQueT dQue);				// ｷｭｰを溜める
+	bool AddActQue(ActQueT aQue);				// ｱｸｼｮﾝ用ｷｭｰ
 
 	const Vector2 ScreenSize;					// ｽｸﾘｰﾝｻｲｽﾞ reedonly
 	const Vector2 ScreenCenter;					// ｽｸﾘｰﾝの中心 reedonly
@@ -71,6 +72,7 @@ private:
 	std::map<LAYER, int> _screenID;				// 描画用ｽｸﾘｰﾝ保存用変数
 
 	std::vector<DrawQueT> _drawList;			// 描画用ｷｭｰ
+	std::vector<ActQueT> _actList;				// ｱｸｼｮﾝ用ｷｭｰ
 
 	SceneMng();									// ｺﾝｽﾄﾗｸﾀ
 	~SceneMng();								// ﾃﾞｽﾄﾗｸﾀ

@@ -7,6 +7,7 @@
 #include <ImageMng.h>
 #include <Player.h>
 #include <Enemy.h>
+#include <Bullet.h>
 
 
 GameScene::GameScene()
@@ -25,7 +26,7 @@ GameScene::GameScene()
 	);
 	int tmpFcnt = lpSceneMng.fCnt;
 	int formation = 3;
-	for (int cnt = 0; cnt < 5*10; cnt++)
+	for (int cnt = 0; cnt < ENEMY_MAX; cnt++)
 	{
 			// ‘ã“ü‚·‚é‚½‚ß‚ÌÃÞ°Àì¬
 			MoveState tmpEnemyState;
@@ -85,4 +86,24 @@ unipueBase GameScene::Update(unipueBase own)
 						), 
 					_objList.end());
 	return std::move(own);
+}
+
+void GameScene::RunActQue(std::vector<ActQueT> actList)
+{
+	for (auto data : actList)
+	{
+		switch (data.first)
+		{
+		case ACT_QUE::NON:
+			break;
+		case ACT_QUE::SHOT:
+			_objList.emplace_back(
+				new Bullet(data.second.pos())
+			);
+			break;
+
+		default:
+			break;
+		}
+	}
 }
