@@ -103,6 +103,7 @@ void GameScene::RunActQue(std::vector<ActQueT> actList)
 			break;
 
 		default:
+			AST();
 			break;
 		}
 	}

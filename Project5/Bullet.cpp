@@ -1,5 +1,6 @@
 #include "Bullet.h"
 #include <ImageMng.h>
+#include <SceneMng.h>
 
 
 Bullet::Bullet()
@@ -22,10 +23,10 @@ void Bullet::Update(void)
 	{
 		return;
 	}
-	if (_pos.y > -_size.y&&
-		_pos.y - _size.y < 0)
+	if (_pos.y > -_size.x&&
+		_pos.y - _size.x > lpSceneMng.GameScreenSize.y)
 	{
-		_alive = false;
+		SetAlive(false);
 	}
 	_pos.y = _pos.y + 5 * std::sin(_rad);
 	_pos.x = _pos.x + 5 * std::cos(_rad);
@@ -42,7 +43,6 @@ void Bullet::init()
 	data.reserve(1);
 	data.emplace_back(IMAGE_ID("’e")[0],1);
 	SetAnim(STATE::NORMAL, data);
-	data.reserve(1);
-	data.emplace_back(IMAGE_ID("’e")[0],0);
+	data.emplace_back(-1,0);
 	SetAnim(STATE::DEATH, data);
 }
