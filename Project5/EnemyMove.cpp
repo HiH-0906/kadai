@@ -27,6 +27,7 @@ void EnemyMove::Update(void)
 	}
 }
 
+
 bool EnemyMove::SetMoveState(MoveState & state, bool newFlag)
 {
 	if (newFlag)

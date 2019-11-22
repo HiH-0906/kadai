@@ -10,3 +10,4 @@ bool FuncBullet::operator()(ActQueT& actQue, std::vector<sharedObj>& objList)
 	);
 	return true;
 }
+
