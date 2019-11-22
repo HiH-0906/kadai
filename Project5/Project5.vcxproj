@@ -130,6 +130,7 @@
     <ClCompile Include="common\ImageMng.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyMove.cpp" />
+    <ClCompile Include="Scene\func\FuncBullet.cpp" />
     <ClCompile Include="Scene\Layer.cpp" />
     <ClCompile Include="State\InputId.cpp" />
     <ClCompile Include="State\KeyState.cpp" />
@@ -150,6 +151,7 @@
     <ClInclude Include="common\ImageMng.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyMove.h" />
+    <ClInclude Include="Scene\func\FuncBullet.h" />
     <ClInclude Include="Scene\Layer.h" />
     <ClInclude Include="State\InputId.h" />
     <ClInclude Include="State\KeyState.h" />

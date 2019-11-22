@@ -14,6 +14,15 @@ enum class STATE
 	DEATH,		// ”š”­(€–S)
 	MAX
 };
+
+enum class UNIT_ID
+{
+	NON,		// –³‚µ
+	PLAYER,		// ©‹@
+	ENEMY,		// “G
+	PL_BULLET,	// ©‹@’e
+	EN_BULLET	// “G’e
+};
 class Obj;
 
 using AnimVector = std::vector<std::pair<int, unsigned int>>;	// ‰æ‘œ‚Æ±ÆÒ°¼®İ¶³İÄÃŞ°À
@@ -31,8 +40,9 @@ public:
 	bool state(const STATE state);								// ±ÆÒ°¼®İ·°‚Ì’Ç‰Á
 	const STATE state(void) const;								// Œ»İ‚Ì±ÆÒ°¼®İ·°‚Ìæ“¾
 
-	const Vector2Dbl pos(void);
-	const Vector2Dbl size(void);
+	const Vector2Dbl pos(void);									// _posGetÀŞ¾Ş!
+	const Vector2Dbl size(void);								// _sizeGetÀŞ¾Ş!
+	const UNIT_ID unitID(void);									// _unitIDGetÀŞ¾Ş!
 
 	bool SetAnim(const STATE state, AnimVector& data);			// ÃŞ°ÀŠi”[—pŠÖ”
 	bool SetAlive(bool alive);
@@ -51,6 +61,7 @@ protected:
 	bool _dead;													// €‚ñ‚Å‚¢‚é‚©
 	Vector2Dbl _pos;											// À•W
 	Vector2Dbl _size;											// “–‚½‚è”»’è—p»²½Ş
+	UNIT_ID _unitID;
 	int _speed;													// ½Ëß°ÄŞ
 	double _rad;												// Šp“x
 	int _zOrder;												// •`‰æ—Dæ“x

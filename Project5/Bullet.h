@@ -5,10 +5,10 @@ class Bullet :
 {
 public:
 	Bullet();
-	Bullet(Vector2Dbl pos);
+	Bullet(UNIT_ID unitID,Vector2Dbl pos);
 	void Update(void) override;
 	~Bullet();
 private:
-	void init();
+	bool init();
 };
 

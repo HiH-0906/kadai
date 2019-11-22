@@ -26,6 +26,7 @@ void Enemy::Init()
 
 Enemy::Enemy()
 {
+	_unitID = UNIT_ID::ENEMY;
 	Init();
 }
 
@@ -37,6 +38,7 @@ Enemy::Enemy(EnemyState &state)
 	_size = std::move(std::get<static_cast<int>(ENEMY_STATE::SIZE)>(state));					// »²½Ş‚Ìİ’è
 	_rad = std::move(std::get<static_cast<int>(ENEMY_STATE::RAD)>(state));
 	_moveCtl.SetMoveState(std::get<static_cast<int>(ENEMY_STATE::AIM)>(state),true);			// s“®‚Ìİ’è
+	_unitID = UNIT_ID::ENEMY;
 	Init();
 }
 

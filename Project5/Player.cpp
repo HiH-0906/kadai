@@ -35,6 +35,7 @@ void Player::Init(void)
 
 Player::Player()
 {
+	_unitID = UNIT_ID::PLAYER;
 	Init();
 }
 
@@ -42,6 +43,7 @@ Player::Player(Vector2Dbl pos, Vector2Dbl size)
 {
 	_pos = pos;
 	_size = size;
+	_unitID = UNIT_ID::PLAYER;
 
 	Init();
 }

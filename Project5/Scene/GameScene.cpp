@@ -8,7 +8,7 @@
 #include <Player.h>
 #include <Enemy.h>
 #include <Bullet.h>
-
+#include <Scene/func/FuncBullet.h>
 
 GameScene::GameScene()
 {
@@ -90,19 +90,21 @@ unipueBase GameScene::Update(unipueBase own)
 
 void GameScene::RunActQue(std::vector<ActQueT> actList)
 {
+	// ”ÍˆÍfor•¶
 	for (auto data : actList)
 	{
+		// ±¸¼®İí•Ê‚É‚æ‚Á‚Ä•ÏX
 		switch (data.first)
 		{
 		case ACT_QUE::NON:
+			// 0‚Ì’l‚Í“ü‚ê‚È‚¢‚Í‚¸‚È‚Ì‚ÅAST()
+			AST();
 			break;
 		case ACT_QUE::SHOT:
-			_objList.emplace_back(
-				new Bullet(data.second.pos())
-			);
+			FuncBullet()(data, _objList);
 			break;
-
 		default:
+			// —áŠO‚ÍAST()
 			AST();
 			break;
 		}

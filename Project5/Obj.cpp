@@ -55,6 +55,11 @@ const Vector2Dbl Obj::size(void)
 	return _size;
 }
 
+const UNIT_ID Obj::unitID(void)
+{
+	return _unitID;
+}
+
 bool Obj::SetAnim(const STATE state, AnimVector& data)
 {
 	// c++17à»ç~

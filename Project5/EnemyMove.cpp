@@ -81,7 +81,7 @@ void EnemyMove::SetMovePrg(void)
 		// äpìxåàÇﬂ
 		_cntRad = 0.0;
 		_tmpRad = PI * _endPos.y;
-		_moveRad = PI / 90.0*_endPos.x*(1-(2*_endPos.y));
+		_moveRad = PI / 60.0*_endPos.x*(1-(2*_endPos.y));
 		// â~ÇÃíÜêSåàÇﬂ
 		radius = 64.0;
 		_endPos.y = _pos.y - radius + (radius*2.0 *_endPos.y);
@@ -89,9 +89,9 @@ void EnemyMove::SetMovePrg(void)
 		break;
 	case MOVE_TYPE::PITIN:
 		_move = &EnemyMove::PitIn;
-		_endPos.x += (lpSceneMng.fCnt+120) % 150 * (1 - (2 * (((lpSceneMng.fCnt + 120) / 150) % 2))) + (150 * (((lpSceneMng.fCnt + 120) / 150) % 2));
+		_endPos.x += (lpSceneMng.fCnt + 60) % 150 * (1 - (2 * (((lpSceneMng.fCnt + 60) / 150) % 2))) + (150 * (((lpSceneMng.fCnt + 60) / 150) % 2));
 		// 1Ã⁄∞—Ç…êiÇﬁãóó£
-		_oneMoveVec = (_endPos - _startPos) / 120.0;
+		_oneMoveVec = (_endPos - _startPos) / 60.0;
 		break;
 	case MOVE_TYPE::LR:
 		count = 0;
