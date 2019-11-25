@@ -24,6 +24,7 @@ public:
 	EnemyMove(Vector2Dbl& pos,double& rad,int& speed);					// 今回はわかりやすくするために参照で受け取る 本当はGetSetがあるといい
 	~EnemyMove();
 	void Update(void);										// 更新
+	void enemyMax(void);
 	bool SetMoveState(MoveState& state, bool newFlag);		// 行動ｾｯﾄ関数
 private:
 	void SetMovePrg(void);									// 行動切り替え
@@ -37,6 +38,7 @@ private:
 	void MoveScale(void);									// 拡大縮小
 
 	int count;												// wait用ｶｳﾝﾄ
+	static int _enemyMax;									// 敵最大数
 
 	MoveState _aim;											// 目標地点
 	unsigned int _aimCnt;									// どの目的地かｶｳﾝﾄ

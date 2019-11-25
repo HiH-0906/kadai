@@ -5,7 +5,8 @@
 #include <SceneMng.h>
 
 int EnemyMove::InCount = 0;
-
+// 敵最大数設定
+int EnemyMove::_enemyMax = ENEMY_MAX;
 EnemyMove::EnemyMove(Vector2Dbl & pos,double & rad,int &speed): _pos(pos),_rad(rad)				// 参照は存在してないといけないのでここに書く
 {
 	_move = nullptr;
@@ -25,6 +26,11 @@ void EnemyMove::Update(void)
 		// 呼び出し
 		(this->*_move)();
 	}
+}
+
+void EnemyMove::enemyMax(void)
+{
+	_enemyMax--;
 }
 
 
@@ -195,7 +201,7 @@ void EnemyMove::Wait(void)
 void EnemyMove::MoveLR(void)
 {
 	_pos.x = _endPos.x + lpSceneMng.fCnt % 150 * (1 - (2 * ((lpSceneMng.fCnt / 150) % 2)))+(150* ((lpSceneMng.fCnt / 150) % 2));
-	if (InCount >= ENEMY_MAX && lpSceneMng.fCnt % 150 == 74)
+	if (InCount >= _enemyMax && lpSceneMng.fCnt % 150 == 74)
 	{
 		SetMovePrg();
 		TREACE("LR終了だよー\n");
@@ -204,12 +210,6 @@ void EnemyMove::MoveLR(void)
 
 void EnemyMove::MoveScale(void)
 {
+	_pos += _oneMoveRange * (1.0 - (2.0 * ((count / 60) % 2)));
 	count++;
-	_pos += _oneMoveRange;
-	if (count>=60)
-	{
-		_oneMoveRange *= -1;
-		count = 0;
-	}
-
 }

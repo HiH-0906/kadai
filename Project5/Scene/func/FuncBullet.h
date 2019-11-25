@@ -4,5 +4,7 @@
 struct FuncBullet
 {
 	bool operator() (ActQueT& actQue, std::vector<sharedObj>& objList);
+private:
+	static std::map<UNIT_ID, int> _MaxCount;
 };
 

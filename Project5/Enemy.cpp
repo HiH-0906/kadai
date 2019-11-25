@@ -60,4 +60,5 @@ void Enemy::Update(void)
 
 Enemy::~Enemy()
 {
+	_moveCtl.enemyMax();
 }

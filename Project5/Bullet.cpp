@@ -32,6 +32,7 @@ void Bullet::Update(void)
 	}
 	_pos.y = _pos.y + 5 * std::sin(_rad);
 	_pos.x = _pos.x + 5 * std::cos(_rad);
+	lpSceneMng.AddActQue({ACT_QUE::CHECK_HIT,*this});
 }
 
 

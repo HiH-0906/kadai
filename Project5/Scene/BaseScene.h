@@ -8,7 +8,8 @@ class BaseScene;											// ¸×½‚ÌÌßÛÄÀ²ÌßéŒ¾
 enum class ACT_QUE
 {
 	NON,													// –³‚µ –œ‚ªˆê0‚Ì’l‚ª—ˆ‚½‚É‰½‚à‚µ‚È‚¢‚æ‚¤
-	SHOT													// ’e
+	SHOT,													// ’e
+	CHECK_HIT												// “–‚½‚è”»’è
 };
 
 using unipueBase = std::unique_ptr<BaseScene>;

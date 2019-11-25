@@ -9,9 +9,12 @@
 #include <Enemy.h>
 #include <Bullet.h>
 #include <Scene/func/FuncBullet.h>
+#include <Scene/func/FuncCheckHit.h>
 
 GameScene::GameScene()
 {
+	initFunc();
+
 	// ｹﾞｰﾑｼｰﾝ用の画像登録
 	srand((unsigned int)time(NULL));
 	lpImageMng.GetID("ｷｬﾗ", "image/char.png", { 30,32 }, { 10, 10 });
@@ -94,19 +97,19 @@ void GameScene::RunActQue(std::vector<ActQueT> actList)
 	for (auto data : actList)
 	{
 		// ｱｸｼｮﾝ種別によって変更
-		switch (data.first)
+		try
 		{
-		case ACT_QUE::NON:
-			// 0の値は入れないはずなのでAST()
+			funcQue.at(data.first)(data,_objList);
+		}
+		catch (...)
+		{
 			AST();
-			break;
-		case ACT_QUE::SHOT:
-			FuncBullet()(data, _objList);
-			break;
-		default:
-			// 例外はAST()
-			AST();
-			break;
 		}
 	}
+}
+
+void GameScene::initFunc(void)
+{
+	funcQue[ACT_QUE::SHOT] = FuncBullet();
+	funcQue[ACT_QUE::CHECK_HIT] = FuncCheckHit();
 }

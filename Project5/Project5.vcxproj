@@ -22,7 +22,7 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{760C85CD-9256-4C37-90F3-72D20A60A2C5}</ProjectGuid>
     <RootNamespace>Project5</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -130,6 +130,7 @@
     <ClCompile Include="common\ImageMng.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyMove.cpp" />
+    <ClCompile Include="Scene\func\FuncCheckHit.cpp" />
     <ClCompile Include="Scene\func\FuncBullet.cpp" />
     <ClCompile Include="Scene\Layer.cpp" />
     <ClCompile Include="State\InputId.cpp" />
@@ -151,6 +152,7 @@
     <ClInclude Include="common\ImageMng.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyMove.h" />
+    <ClInclude Include="Scene\func\FuncCheckHit.h" />
     <ClInclude Include="Scene\func\FuncBullet.h" />
     <ClInclude Include="Scene\Layer.h" />
     <ClInclude Include="State\InputId.h" />

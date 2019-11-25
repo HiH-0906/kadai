@@ -15,6 +15,7 @@ public:
 private:
 	std::vector<sharedObj> _objList;							// List‚Å‚Í‚È‚­Vector
 	void RunActQue(std::vector<ActQueT> actList) override;
+	void initFunc(void);
 	std::map<ACT_QUE, funcAct> funcQue;
 };
 

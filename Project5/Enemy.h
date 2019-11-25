@@ -3,6 +3,7 @@
 #include "Obj.h"
 #include "EnemyMove.h"
 
+
 enum class ENEMY_TYPE
 {
 	A,
