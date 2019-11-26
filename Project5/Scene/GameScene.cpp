@@ -38,7 +38,7 @@ GameScene::GameScene()
 			tmpEnemyState.emplace_back(MOVE_TYPE::SIGMOID, Vector2Dbl{ lpSceneMng.GameScreenSize.x - 96.0 - ((lpSceneMng.GameScreenSize.x - 192.0) * (cnt/ formation % 2)),lpSceneMng.GameScreenSize.y *(6.0 / 7.0) - (128.0 * ((cnt/ formation % 6) / 4))});
 			tmpEnemyState.emplace_back(MOVE_TYPE::SPIRAL, Vector2Dbl{ 1.0 - (2 * (cnt/ formation % 2)),static_cast<double>((cnt/ formation / 2) % 3 / 2)});
 			tmpEnemyState.emplace_back(MOVE_TYPE::PITIN, Vector2Dbl{ (16.0 + (35.0*(cnt % 10))) , 40.0 + ((40.0)*(cnt / 10 % 5)) });
-			tmpEnemyState.emplace_back(MOVE_TYPE::LR, Vector2Dbl{ 16.0 + (35.0*(cnt % 10)) ,0.0});
+			tmpEnemyState.emplace_back(MOVE_TYPE::LR, Vector2Dbl{ (16.0 + (35.0*(cnt % 10))) ,0.0});
 			tmpEnemyState.emplace_back(MOVE_TYPE::SCALE, Vector2Dbl{ lpSceneMng.GameScreenSize.x/2.0,40.0 });
 			tmpEnemyState.emplace_back(MOVE_TYPE::ATACK, Vector2Dbl{ (16.0 + (35.0*(cnt % 10))) , 40.0 + ((40.0)*(cnt / 10 % 5)) });
 			tmpEnemyState.emplace_back(MOVE_TYPE::PITIN, Vector2Dbl{ (16.0 + (35.0*(cnt % 10))) , 40.0 + ((40.0)*(cnt / 10 % 5)) });

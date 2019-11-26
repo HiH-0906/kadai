@@ -104,7 +104,7 @@ void EnemyMove::SetMovePrg(void)
 		_moveGain = -5.0;
 		// 目的地までの距離
 		_lenght = _endPos - _startPos;
-		_lenght.x /= 180.0;
+		_lenght.x /= 60.0;
 		_oldPos = _pos;
 		break;
 	case MOVE_TYPE::SPIRAL:
@@ -112,7 +112,7 @@ void EnemyMove::SetMovePrg(void)
 		// 角度決め
 		_cntRad = 0.0;
 		_tmpRad = PI * _endPos.y;
-		_moveRad = PI / 60.0*_endPos.x*(1-(2*_endPos.y));
+		_moveRad = PI / 20.0*_endPos.x*(1-(2*_endPos.y));
 		// 円の中心決め
 		radius = 64.0;
 		_endPos.y = _pos.y - radius + (radius*2.0 *_endPos.y);
@@ -120,11 +120,19 @@ void EnemyMove::SetMovePrg(void)
 		break;
 	case MOVE_TYPE::PITIN:
 		_move = &EnemyMove::PitIn;
-		_endPos.x += (lpSceneMng.fCnt + 60) % 150 * (1 - (2 * (((lpSceneMng.fCnt + 60) / 150) % 2))) + (150 * (((lpSceneMng.fCnt + 60) / 150) % 2));
+		if (_startPos.y > 0)
+		{
+			_endPos.x += (lpSceneMng.fCnt + 60) % 150 * (1 - (2 * (((lpSceneMng.fCnt + 60) / 150) % 2))) + (150 * (((lpSceneMng.fCnt + 60) / 150) % 2));
+		}
+		else
+		{
+			_endPos.x += (74) % 150 * (1 - (2 * ((( 74) / 150) % 2))) + (150 * (((74) / 150) % 2));
+		}
 		// 2点間
 		_lenght = _endPos - _pos;
 		// 1ﾌﾚｰﾑに進む距離
 		_oneMoveVec = (_endPos - _startPos) / 60.0;
+		_count = 0;
 		break;
 	case MOVE_TYPE::LR:
 		_count = 0;
@@ -141,6 +149,7 @@ void EnemyMove::SetMovePrg(void)
 		break;
 	case MOVE_TYPE::ATACK:
 		_move = &EnemyMove::MoveAtack;
+		_count = 0;
 		break;
 	default:
 		AST();
@@ -155,7 +164,7 @@ void EnemyMove::MoveSigmoid(void)
 	if (5 - _moveGain >= 0.05)
 	{
 		// x係数
-		_moveGain += 10.0 / 180.0;
+		_moveGain += 10.0 / 60.0;
 		// ｼｸﾞﾓｲﾄﾞ関数によって得た値を拡大
 		_pos.y = _startPos.y + 1.0 / (1.0 + exp(-1.3*_moveGain-1.0)) * _lenght.y;
 		_pos.x = _pos.x + _lenght.x;
@@ -172,14 +181,14 @@ void EnemyMove::MoveSigmoid(void)
 void EnemyMove::MoveSpiral(void)
 {
 	_oldPos = _pos;
-	if (PI*2.0 - abs(_cntRad) > 0)
+	if (PI*4.0 - abs(_cntRad) > 0)
 	{
 		// 円のスタート位置ずらしのためのcos,sin逆転
 		_pos.y = _endPos.y + radius * std::cos(_tmpRad);
 		_pos.x = _endPos.x + radius * std::sin(_tmpRad);
 		// ｷｬﾗの向いている方向決め
 		_rad = atan2(_pos.y - _oldPos.y, _pos.x - _oldPos.x) + PI / 2;
-		radius -= 0.2;
+		radius -= 0.5;
 		_tmpRad += _moveRad;
 		_cntRad += abs(_moveRad);
 	}
@@ -194,7 +203,7 @@ void EnemyMove::PitIn(void)
 {
 
 	// 1 ﾌﾚｰﾑに進む距離より_endPosまでの距離が短いなら移動終了
-	if (abs(_endPos - _pos)>=abs(_oneMoveVec))
+	if (_count < 60)
 	{
 		_pos += _oneMoveVec;
 		_rad = atan2(_lenght.y, _lenght.x) + PI / 2.0;
@@ -209,6 +218,7 @@ void EnemyMove::PitIn(void)
 		// 一応切り替え表示
 		TREACE("Pitin終了だよー\n");
 	}
+	_count++;
 }
 
 void EnemyMove::Wait(void)
@@ -238,23 +248,29 @@ void EnemyMove::MoveLR(void)
 void EnemyMove::MoveScale(void)
 {
 	_pos += _oneMoveRange * (1.0 - (2.0 * ((_count / 60) % 2)));
-	_count++;
-	if (_count>=120)
+	if (_count>=100)
 	{
 		SetMovePrg();
 		TREACE("Scale終了だよー\n");
 	}
+	_count++;
 }
 
 void EnemyMove::MoveAtack(void)
 {
-	//else
+	if (_count < 60)
 	{
-		_endPos = _plPos + Vector2Dbl{ 0.0, 100.0 };
+		_rad += PI / 10;
+	}
+	else
+	{
 		_move = &EnemyMove::PitIn;
+		_endPos = _plPos + Vector2Dbl{ 0.0, 100.0 };
 		// 2点間
 		_lenght = _endPos - _pos;
 		// 1ﾌﾚｰﾑに進む距離
-		_oneMoveVec = (_endPos - _startPos) / 60.0;
+		_oneMoveVec = _lenght / 60.0;
+		_count = 0;
 	}
+	_count++;
 }
