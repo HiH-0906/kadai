@@ -40,6 +40,8 @@ GameScene::GameScene()
 			tmpEnemyState.emplace_back(MOVE_TYPE::PITIN, Vector2Dbl{ (16.0 + (35.0*(cnt % 10))) , 40.0 + ((40.0)*(cnt / 10 % 5)) });
 			tmpEnemyState.emplace_back(MOVE_TYPE::LR, Vector2Dbl{ 16.0 + (35.0*(cnt % 10)) ,0.0});
 			tmpEnemyState.emplace_back(MOVE_TYPE::SCALE, Vector2Dbl{ lpSceneMng.GameScreenSize.x/2.0,40.0 });
+			tmpEnemyState.emplace_back(MOVE_TYPE::ATACK, Vector2Dbl{ (16.0 + (35.0*(cnt % 10))) , 40.0 + ((40.0)*(cnt / 10 % 5)) });
+			tmpEnemyState.emplace_back(MOVE_TYPE::PITIN, Vector2Dbl{ (16.0 + (35.0*(cnt % 10))) , 40.0 + ((40.0)*(cnt / 10 % 5)) });
 			EnemyState state = { static_cast<ENEMY_TYPE>(rand() % static_cast<int>(ENEMY_TYPE::MAX)),																				// ﾀｲﾌﾟの設定
 								{ static_cast<double>((lpSceneMng.GameScreenSize.x*(((cnt / formation) % 6) % 2) - 16) + (35 * (((cnt / formation) % 6) % 2))),					// 座標Xの設定
 								static_cast<double>(((lpSceneMng.GameScreenSize.y-30)/2)*((((cnt / formation) % 6) / 2) % 3) - 16)},												// 座標Yの設定
@@ -60,22 +62,23 @@ GameScene::~GameScene()
 
 unipueBase GameScene::Update(unipueBase own)
 {
+	// playerのObj検索
+	auto plObj= std::find_if(
+		_objList.begin(),
+		_objList.end(),
+		[](sharedObj obj) {return (*obj).unitID() == UNIT_ID::PLAYER; }
+	);
 	// 範囲for文
 	for (auto data : _objList)
 	{
-		(*data).Update();
+		(*data).Update(*plObj);
 	}
 
 
 	// 先頭を取り出し、最後の要素まで回してくれる
 	for (auto data : _objList)
 	{		
-		// ｽﾏｰﾄﾎﾟｲﾝﾀへのｱｸｾｽ方法はｱﾛｰ又はｱｽﾀﾘｽｸどちらでもよい
-		if (CheckHitKey(KEY_INPUT_SPACE))
-		{
-			(*data).SetAlive(false);
-		}
-		data->Draw();
+		(*data).Draw();
 	}
 
 	//auto prg = [](sharedObj&obj) {return (*obj).isDead(); };		// 何回も呼び出す場合は代入するといい感じ

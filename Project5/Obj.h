@@ -32,7 +32,7 @@ class Obj
 {
 public:
 	Obj();
-	virtual void Update(void) = 0;								// ƒˆ‰¼‘zŠÖ”
+	virtual void Update(sharedObj plObj) = 0;								// ƒˆ‰¼‘zŠÖ”
 	void Draw(void);											// ±ÆÒ°¼®İ‚ ‚è‚Ì•`‰æ
 	void Draw(int id);											// ±ÆÒ°¼®İ‚È‚µ‚Ì•`‰æ
 	virtual ~Obj();

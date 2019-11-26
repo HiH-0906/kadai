@@ -42,13 +42,13 @@ Enemy::Enemy(EnemyState &state)
 	Init();
 }
 
-void Enemy::Update(void)
+void Enemy::Update(sharedObj plObj)
 {
 	if (DestroyProc())
 	{
 		return;
 	}
-	_moveCtl.Update();
+	_moveCtl.Update(plObj);
 	//if (rand() % 300 == 0)
 	//{
 	//	SetAlive(false);
@@ -60,5 +60,5 @@ void Enemy::Update(void)
 
 Enemy::~Enemy()
 {
-	_moveCtl.enemyMax();
+	_moveCtl.InCount();
 }

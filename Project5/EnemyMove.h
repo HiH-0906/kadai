@@ -2,6 +2,7 @@
 
 #include <Vector2.h>
 #include <vector>
+#include "Obj.h"
 
 #define ENEMY_MAX 50
 
@@ -12,7 +13,8 @@ enum class MOVE_TYPE
 	SPIRAL,
 	PITIN,
 	LR,
-	SCALE
+	SCALE,
+	ATACK
 };
 
 using MoveState = std::vector<std::pair<MOVE_TYPE, Vector2Dbl>>;		// 行動目的地管理用型
@@ -23,21 +25,24 @@ class EnemyMove
 public:
 	EnemyMove(Vector2Dbl& pos,double& rad,int& speed);					// 今回はわかりやすくするために参照で受け取る 本当はGetSetがあるといい
 	~EnemyMove();
-	void Update(void);										// 更新
+	void Update(sharedObj plObj);										// 更新
 	void enemyMax(void);
+	void InCount(void);
 	bool SetMoveState(MoveState& state, bool newFlag);		// 行動ｾｯﾄ関数
 private:
 	void SetMovePrg(void);									// 行動切り替え
 
 	void(EnemyMove::*_move)(void);							// ﾒﾝﾊﾞ関数ﾎﾟｲﾝﾀ move系
+
 	void MoveSigmoid(void);									// ｼｸﾞﾓｲﾄﾞ
 	void MoveSpiral(void);									// 魔法陣ｸﾙｸﾙ
 	void PitIn(void);										// ﾋﾟｯﾄｲﾝ
 	void Wait(void);										// 待機 aim[_aimCnt].secondの値まで回る
 	void MoveLR(void);										// 左右
 	void MoveScale(void);									// 拡大縮小
+	void MoveAtack(void);									// 突撃
 
-	int count;												// wait用ｶｳﾝﾄ
+	int _count;												// wait用ｶｳﾝﾄ
 	static int _enemyMax;									// 敵最大数
 
 	MoveState _aim;											// 目標地点
@@ -54,7 +59,10 @@ private:
 	Vector2Dbl _range;										// 中心からの距離
 	Vector2Dbl _nextRange;									// 拡大縮小後の距離
 	Vector2Dbl _oneMoveRange;								// 1ﾌﾚｰﾑに移動する距離
-	static int InCount;										// 敵ﾋﾟｯﾄｲﾝｶｳﾝﾄ
+
+	Vector2Dbl _plPos;										// ﾌﾟﾚｲﾔｰpos保存用変数
+
+	static int _InCount;									// 敵ﾋﾟｯﾄｲﾝｶｳﾝﾄ
 	double radius;											// 半径
 	double& _rad;											// 角度
 	double _tmpRad;											// 回転用角度

@@ -4,22 +4,22 @@
 #include "_DebugDispOut.h"
 #include <SceneMng.h>
 
-int EnemyMove::InCount = 0;
+int EnemyMove::_InCount = 0;
 // 敵最大数設定
 int EnemyMove::_enemyMax = ENEMY_MAX;
 EnemyMove::EnemyMove(Vector2Dbl & pos,double & rad,int &speed): _pos(pos),_rad(rad)				// 参照は存在してないといけないのでここに書く
 {
 	_move = nullptr;
 	_aimCnt = -1;
-	//InCount = 0;
 }
 
 EnemyMove::~EnemyMove()
 {
 }
 
-void EnemyMove::Update(void)
+void EnemyMove::Update(sharedObj plObj)
 {
+	_plPos = (*plObj).pos();
 	// 中身ﾁｪｯｸ
 	if (_move != nullptr)
 	{
@@ -31,6 +31,11 @@ void EnemyMove::Update(void)
 void EnemyMove::enemyMax(void)
 {
 	_enemyMax--;
+}
+
+void EnemyMove::InCount(void)
+{
+	_InCount++;
 }
 
 
@@ -55,11 +60,30 @@ bool EnemyMove::SetMoveState(MoveState & state, bool newFlag)
 void EnemyMove::SetMovePrg(void)
 {
 	_aimCnt++;
+	auto checkAim = [&]() 
+	{
+		for (_aimCnt = 0;_aimCnt<=_aim.size();_aimCnt++)
+		{
+			if (_aim[_aimCnt].first == MOVE_TYPE::SCALE)
+			{
+				return true;
+			}
+		}
+		return false;
+	};
+
 	// 範囲ﾁｪｯｸ
 	if (_aim.size() <= _aimCnt)
 	{
-		// 範囲外ならreturn
-		return;
+		if (!checkAim())
+		{
+			// 範囲外ならreturn
+			return;
+		}
+	}
+	if (_pos.y > lpSceneMng.GameScreenSize.y)
+	{
+		_pos.y = -100.0;
 	}
 	// ｽﾀｰﾄ位置保存
 	_startPos = _pos;
@@ -72,7 +96,7 @@ void EnemyMove::SetMovePrg(void)
 	case MOVE_TYPE::WAIT:
 		_move = &EnemyMove::Wait;
 		// waitで使う変数の初期化
-		count = 0;
+		_count = 0;
 		break;
 	case MOVE_TYPE::SIGMOID:
 		_move = &EnemyMove::MoveSigmoid;
@@ -97,13 +121,15 @@ void EnemyMove::SetMovePrg(void)
 	case MOVE_TYPE::PITIN:
 		_move = &EnemyMove::PitIn;
 		_endPos.x += (lpSceneMng.fCnt + 60) % 150 * (1 - (2 * (((lpSceneMng.fCnt + 60) / 150) % 2))) + (150 * (((lpSceneMng.fCnt + 60) / 150) % 2));
+		// 2点間
+		_lenght = _endPos - _pos;
 		// 1ﾌﾚｰﾑに進む距離
 		_oneMoveVec = (_endPos - _startPos) / 60.0;
 		break;
 	case MOVE_TYPE::LR:
-		count = 0;
+		_count = 0;
 		_move = &EnemyMove::MoveLR;
-		InCount++;
+		_InCount++;
 		break;
 	case MOVE_TYPE::SCALE:
 		_move = &EnemyMove::MoveScale;
@@ -111,7 +137,10 @@ void EnemyMove::SetMovePrg(void)
 		_range = _center - _pos;
 		_nextRange = _range * 1.3;
 		_oneMoveRange = (_range - _nextRange) / 60.0;
-		count = 0;
+		_count = 0;
+		break;
+	case MOVE_TYPE::ATACK:
+		_move = &EnemyMove::MoveAtack;
 		break;
 	default:
 		AST();
@@ -163,8 +192,6 @@ void EnemyMove::MoveSpiral(void)
 
 void EnemyMove::PitIn(void)
 {
-	// 2点間
-	_lenght = _endPos - _pos;
 
 	// 1 ﾌﾚｰﾑに進む距離より_endPosまでの距離が短いなら移動終了
 	if (abs(_endPos - _pos)>=abs(_oneMoveVec))
@@ -187,7 +214,7 @@ void EnemyMove::PitIn(void)
 void EnemyMove::Wait(void)
 {
 	// ｶｳﾝﾄが行動開始する値まで来ているかﾁｪｯｸ　secondのxを行動開始するｶｳﾝﾄとして扱う
-	if (count >= _endPos.x)
+	if (_count >= _endPos.x)
 	{
 		// 行動の切り替え
 		SetMovePrg();
@@ -195,13 +222,13 @@ void EnemyMove::Wait(void)
 		TREACE("Wait終了だよー\n");
 	}
 	// ｶｳﾝﾄの増加
-	count++;
+	_count++;
 }
 
 void EnemyMove::MoveLR(void)
 {
 	_pos.x = _endPos.x + lpSceneMng.fCnt % 150 * (1 - (2 * ((lpSceneMng.fCnt / 150) % 2)))+(150* ((lpSceneMng.fCnt / 150) % 2));
-	if (InCount >= _enemyMax && lpSceneMng.fCnt % 150 == 74)
+	if (_InCount >= _enemyMax && lpSceneMng.fCnt % 150 == 74)
 	{
 		SetMovePrg();
 		TREACE("LR終了だよー\n");
@@ -210,6 +237,24 @@ void EnemyMove::MoveLR(void)
 
 void EnemyMove::MoveScale(void)
 {
-	_pos += _oneMoveRange * (1.0 - (2.0 * ((count / 60) % 2)));
-	count++;
+	_pos += _oneMoveRange * (1.0 - (2.0 * ((_count / 60) % 2)));
+	_count++;
+	if (_count>=120)
+	{
+		SetMovePrg();
+		TREACE("Scale終了だよー\n");
+	}
+}
+
+void EnemyMove::MoveAtack(void)
+{
+	//else
+	{
+		_endPos = _plPos + Vector2Dbl{ 0.0, 100.0 };
+		_move = &EnemyMove::PitIn;
+		// 2点間
+		_lenght = _endPos - _pos;
+		// 1ﾌﾚｰﾑに進む距離
+		_oneMoveVec = (_endPos - _startPos) / 60.0;
+	}
 }
