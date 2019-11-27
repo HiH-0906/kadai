@@ -41,7 +41,7 @@ GameScene::GameScene()
 			tmpEnemyState.emplace_back(MOVE_TYPE::LR, Vector2Dbl{ (16.0 + (35.0*(cnt % 10))) ,0.0});
 			tmpEnemyState.emplace_back(MOVE_TYPE::SCALE, Vector2Dbl{ lpSceneMng.GameScreenSize.x/2.0,40.0 });
 			tmpEnemyState.emplace_back(MOVE_TYPE::ATACK, Vector2Dbl{ (16.0 + (35.0*(cnt % 10))) , 40.0 + ((40.0)*(cnt / 10 % 5)) });
-			tmpEnemyState.emplace_back(MOVE_TYPE::PITIN, Vector2Dbl{ (16.0 + (35.0*(cnt % 10))) , 40.0 + ((40.0)*(cnt / 10 % 5)) });
+			tmpEnemyState.emplace_back(MOVE_TYPE::PITIN, Vector2Dbl{ 30*2.5+(16.0 + (35.0*(cnt % 10))) , 40.0 + ((40.0)*(cnt / 10 % 5)) });
 			EnemyState state = { static_cast<ENEMY_TYPE>(rand() % static_cast<int>(ENEMY_TYPE::MAX)),																				// ¿≤ÃﬂÇÃê›íË
 								{ static_cast<double>((lpSceneMng.GameScreenSize.x*(((cnt / formation) % 6) % 2) - 16) + (35 * (((cnt / formation) % 6) % 2))),					// ç¿ïWXÇÃê›íË
 								static_cast<double>(((lpSceneMng.GameScreenSize.y-30)/2)*((((cnt / formation) % 6) / 2) % 3) - 16)},												// ç¿ïWYÇÃê›íË

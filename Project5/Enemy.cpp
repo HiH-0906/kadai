@@ -60,5 +60,4 @@ void Enemy::Update(sharedObj plObj)
 
 Enemy::~Enemy()
 {
-	_moveCtl.InCount();
 }

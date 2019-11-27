@@ -124,10 +124,6 @@ void EnemyMove::SetMovePrg(void)
 		{
 			_endPos.x += (lpSceneMng.fCnt + 60) % 150 * (1 - (2 * (((lpSceneMng.fCnt + 60) / 150) % 2))) + (150 * (((lpSceneMng.fCnt + 60) / 150) % 2));
 		}
-		else
-		{
-			_endPos.x += (74) % 150 * (1 - (2 * ((( 74) / 150) % 2))) + (150 * (((74) / 150) % 2));
-		}
 		// 2ì_ä‘
 		_lenght = _endPos - _pos;
 		// 1Ã⁄∞—Ç…êiÇﬁãóó£
