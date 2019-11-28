@@ -57,9 +57,6 @@
     <ClCompile Include="EnemyMove.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="_DebugDispOut.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Scene\Layer.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -70,6 +67,9 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Scene\func\FuncCheckHit.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="_Debug\_DebugDispOut.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -119,9 +119,6 @@
     <ClInclude Include="common\Detail\Vector2.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="_DebugDispOut.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Scene\Layer.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -132,6 +129,9 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Scene\func\FuncCheckHit.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="_Debug\_DebugDispOut.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

@@ -11,6 +11,7 @@ EnemyMove::EnemyMove(Vector2Dbl & pos,double & rad,int &speed,bool &flag): _pos(
 {
 	_move = nullptr;
 	_aimCnt = -1;
+	_startFlam = 0;
 }
 
 EnemyMove::~EnemyMove()
@@ -109,7 +110,7 @@ void EnemyMove::SetMovePrg(void)
 		_moveGain = -5.0;
 		// 目的地までの距離
 		_lenght = _endPos - _startPos;
-		_lenght.x /= 60.0;
+		_lenght.x /= SIGMOID_TIME;
 		_oldPos = _pos;
 		break;
 	case MOVE_TYPE::SPIRAL:
@@ -127,13 +128,16 @@ void EnemyMove::SetMovePrg(void)
 		_move = &EnemyMove::PitIn;
 		if (_startPos.y > 0)
 		{
-			//_endPos.x += (std::abs((lpSceneMng.fCnt + 60) % 100 - 50)-25);
-			_endPos.x += (lpSceneMng.fCnt + 60) % 150 * (1 - (2 * (((lpSceneMng.fCnt + 60) / 150) % 2))) + (150 * (((lpSceneMng.fCnt + 60) / 150) % 2));
+			_endPos.x += (std::abs((lpSceneMng.fCnt + PITIN_TIME) % (LR_LIMT * 2) - LR_LIMT) - (LR_LIMT / 2));
+		}
+		else
+		{
+			_endPos = _center + _range * static_cast<double>(100 + (std::abs(std::abs((((lpSceneMng.fCnt - _startFlam) + PITIN_TIME) % (SCALE_LIMT * 2) - SCALE_LIMT)) - SCALE_LIMT))) / 100.0;
 		}
 		// 2点間
 		_lenght = _endPos - _pos;
 		// 1ﾌﾚｰﾑに進む距離
-		_oneMoveVec = (_endPos - _startPos) / 60.0;
+		_oneMoveVec = (_endPos - _startPos) / static_cast<double>(PITIN_TIME);
 		_count = 0;
 		break;
 	case MOVE_TYPE::LR:
@@ -143,11 +147,12 @@ void EnemyMove::SetMovePrg(void)
 		break;
 	case MOVE_TYPE::SCALE:
 		_move = &EnemyMove::MoveScale;
-		_center = _endPos;
-		_range = _center - _pos;
-		_nextRange = _range * 1.3;
-		_oneMoveRange = (_range - _nextRange) / 60.0;
-		_count = 0;
+		_center = { lpSceneMng.GameScreenSize.x / 2.0,40.0 * 3.0 };
+		_range = _endPos - _center;
+		if (_startFlam == 0)
+		{
+			_startFlam = lpSceneMng.fCnt;
+		}
 		break;
 	case MOVE_TYPE::ATACK:
 		_move = &EnemyMove::MoveAtack;
@@ -166,7 +171,7 @@ void EnemyMove::MoveSigmoid(void)
 	if (5 - _moveGain >= 0.05)
 	{
 		// x係数
-		_moveGain += 10.0 / 60.0;
+		_moveGain += 10.0 / SIGMOID_TIME;
 		// ｼｸﾞﾓｲﾄﾞ関数によって得た値を拡大
 		_pos.y = _startPos.y + 1.0 / (1.0 + exp(-1.3*_moveGain-1.0)) * _lenght.y;
 		_pos.x = _pos.x + _lenght.x;
@@ -183,7 +188,7 @@ void EnemyMove::MoveSigmoid(void)
 void EnemyMove::MoveSpiral(void)
 {
 	_oldPos = _pos;
-	if (PI*4.0 - abs(_cntRad) > 0)
+	if (SPIRAL_MAX - abs(_cntRad) > 0)
 	{
 		// 円のスタート位置ずらしのためのcos,sin逆転
 		_pos.y = _endPos.y + radius * std::cos(_tmpRad);
@@ -204,7 +209,7 @@ void EnemyMove::MoveSpiral(void)
 void EnemyMove::PitIn(void)
 {
 	// 1 ﾌﾚｰﾑに進む距離より_endPosまでの距離が短いなら移動終了
-	if (_count < 60)
+	if (_count < PITIN_TIME)
 	{
 		_pos += _oneMoveVec;
 		_rad = atan2(_lenght.y, _lenght.x) + PI / 2.0;
@@ -238,32 +243,29 @@ void EnemyMove::Wait(void)
 
 void EnemyMove::MoveLR(void)
 {
-	//_pos.x = _endPos.x + (std::abs(lpSceneMng.fCnt % 100 - 50) - 25);
-	_pos.x = _endPos.x + lpSceneMng.fCnt % 150 * (1 - (2 * ((lpSceneMng.fCnt / 150) % 2)))+(150* ((lpSceneMng.fCnt / 150) % 2));
-	if (_InCount >= _enemyMax && lpSceneMng.fCnt % 150 == 74)
+	_pos.x = _endPos.x + (std::abs(lpSceneMng.fCnt % (LR_LIMT * 2) - LR_LIMT) - (LR_LIMT/2));
+	if (_InCount >= _enemyMax && lpSceneMng.fCnt % (LR_LIMT * 2) == (LR_LIMT / 2))
 	{
 		SetMovePrg();
-		startFlam = lpSceneMng.fCnt;
+		_startFlam = lpSceneMng.fCnt;
 		TREACE("LR終了だよー\n");
 	}
 }
 
 void EnemyMove::MoveScale(void)
 {
-	//_pos = _startPos + _lenght * static_cast<double>(((lpSceneMng.fCnt % 30 * (1 - (2 * ((lpSceneMng.fCnt / 30) % 2))) + (30 * ((lpSceneMng.fCnt / 30) % 2)) + 100) / 100));
-	_pos += _oneMoveRange * (1.0 - (2.0 * ((_count / 60) % 2)));
+	_pos = _center + _range * static_cast<double>(100 + (std::abs(std::abs(((lpSceneMng.fCnt - _startFlam) % (SCALE_LIMT * 2) - SCALE_LIMT)) - SCALE_LIMT))) / 100.0;
 	if (_atackFlag)
 	{
 		SetMovePrg();
 		_atackFlag = false;
 		TREACE("Scale終了だよー\n");
 	}
-	_count++;
 }
 
 void EnemyMove::MoveAtack(void)
 {
-	if (_count < 60)
+	if (_count < ATACK_MAX)
 	{
 		_rad += PI / 10;
 	}
@@ -274,7 +276,7 @@ void EnemyMove::MoveAtack(void)
 		// 2点間
 		_lenght = _endPos - _pos;
 		// 1ﾌﾚｰﾑに進む距離
-		_oneMoveVec = _lenght / 60.0;
+		_oneMoveVec = _lenght / static_cast<double>(PITIN_TIME);
 		_count = 0;
 	}
 	_count++;

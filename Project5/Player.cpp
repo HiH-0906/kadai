@@ -27,8 +27,6 @@ void Player::Init(void)
 
 	// ÕÆ°¸Îß²İÀ ’†g‚ÍŒã c++14ˆÈ~
 	_input = std::make_shared<KeyState>();
-	//// ã‚ªg‚¦‚È‚©‚Á‚½ê‡ Šo‚¦‚Ä‚¨‚±‚¤
-	//_input.reset(new KeyState());
 
 	state(STATE::NORMAL);
 }

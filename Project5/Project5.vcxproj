@@ -22,7 +22,7 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{760C85CD-9256-4C37-90F3-72D20A60A2C5}</ProjectGuid>
     <RootNamespace>Project5</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -137,7 +137,7 @@
     <ClCompile Include="State\KeyState.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="State\InputState.cpp" />
-    <ClCompile Include="_DebugDispOut.cpp" />
+    <ClCompile Include="_Debug\_DebugDispOut.cpp" />
     <ClCompile Include="_Debug\_DebugConOut.cpp" />
     <ClCompile Include="Obj.cpp" />
     <ClCompile Include="Scene\GameScene.cpp" />
@@ -159,7 +159,7 @@
     <ClInclude Include="State\KeyState.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="State\InputState.h" />
-    <ClInclude Include="_DebugDispOut.h" />
+    <ClInclude Include="_Debug\_DebugDispOut.h" />
     <ClInclude Include="_Debug\_DebugConOut.h" />
     <ClInclude Include="Obj.h" />
     <ClInclude Include="Scene\GameScene.h" />

@@ -4,7 +4,13 @@
 #include <vector>
 #include "Obj.h"
 
-#define ENEMY_MAX 50
+#define ENEMY_MAX 50									// enemy‘”
+#define PITIN_TIME 60									// PitIn‚É‚©‚©‚éŠÔ
+#define SIGMOID_TIME 60.0								// sigmoid‚É‚©‚©‚éŠÔ
+#define SPIRAL_MAX (PI*4.0)								// spiral‚Å‰ñ“]‚·‚é‰ñ“]”
+#define LR_LIMT	50										// LRˆÚ“®•
+#define SCALE_LIMT 30									// Šg‘åk¬”{—¦
+#define ATACK_MAX 60									// atack‰ñ“]ŠÔ
 
 enum class MOVE_TYPE
 {
@@ -57,12 +63,11 @@ private:
 	Vector2Dbl _oldPos;										// Šp“x‹‚ß‚é—p
 	Vector2Dbl _center;										// “G’†S
 	Vector2Dbl _range;										// ’†S‚©‚ç‚Ì‹——£
-	Vector2Dbl _nextRange;									// Šg‘åk¬Œã‚Ì‹——£
-	Vector2Dbl _oneMoveRange;								// 1ÌÚ°Ñ‚ÉˆÚ“®‚·‚é‹——£
 
 	Vector2Dbl _plPos;										// ÌßÚ²Ô°pos•Û‘¶—p•Ï”
 
-	int startFlam;											// Šg‘åk¬ŠJnÌÚ°Ñ
+	int _scaleCnt;
+	int _startFlam;											// Šg‘åk¬ŠJnÌÚ°Ñ
 	static int _InCount;									// “GËß¯Ä²İ¶³İÄ
 	double radius;											// ”¼Œa
 	double& _rad;											// Šp“x

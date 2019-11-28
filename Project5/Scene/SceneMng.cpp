@@ -26,19 +26,8 @@ void SceneMng::Draw(void)
 		// ”ä‚×‚é‚©‚ç“ñ‚Â
 		[](const DrawQueT& dQueA, const DrawQueT& dQueB)
 	{
-		//// layer‚ªˆá‚¤‚È‚çÚ²Ô°‡‚Å•À‚Ñ‘Ö‚¦
-		//if (std::get<static_cast<int>(DRAW_QUE::LAYER)>(dQueA) != std::get<static_cast<int>(DRAW_QUE::LAYER)>(dQueB))
-		//{
-		//	// layer‚Å”ä‚×‚é
-		//	return std::get<static_cast<int>(DRAW_QUE::LAYER)>(dQueA) < std::get<static_cast<int>(DRAW_QUE::LAYER)>(dQueB);
-		//}
-		//else
-		//{
-		//	// _zOrder‚Å”ä‚×‚é
-		//	return std::get<static_cast<int>(DRAW_QUE::ZORDER)>(dQueA) < std::get<static_cast<int>(DRAW_QUE::ZORDER)>(dQueB);
-		//}
 
-		// ã‚Ì“à—e‚ğ1s‚Å ‚â‚Á‚Ä‚¢‚é‚±‚Æ‚Í‘S‚­“¯‚¶
+		// layer‚ÆzOdar”äŠr
 		return
 		std::tie(std::get<static_cast<int>(DRAW_QUE::LAYER)>(dQueA), std::get<static_cast<int>(DRAW_QUE::ZORDER)>(dQueA))
 			<
@@ -90,24 +79,6 @@ void SceneMng::Draw(void)
 			DrawRotaGraph(ScreenCenter.x, ScreenCenter.y, 1.0, 0, _screenID[layer], true);
 		}
 	}
-	//// iteratorfor•¶
-	//for (auto dQue = _drawList.begin(); dQue != _drawList.end; dQue++)
-	//{
-	//	DrawGraph(
-	//		std::get<static_cast<int>(DRAW_QUE::X)>(*dQue),
-	//		std::get<static_cast<int>(DRAW_QUE::Y)>(*dQue),
-	//		std::get<static_cast<int>(DRAW_QUE::IMAGE)>(*dQue),
-	//		true);
-	//}
-	//// ¡‚Ü‚Å‚Ìfor•¶
-	//for (int i = 0; i < _drawList.size(); i++)
-	//{
-	//	DrawGraph(
-	//		std::get<static_cast<int>(DRAW_QUE::X)>(_drawList[i]),
-	//		std::get<static_cast<int>(DRAW_QUE::Y)>(_drawList[i]),
-	//		std::get<static_cast<int>(DRAW_QUE::IMAGE)>(_drawList[i]),
-	//		true);
-	//}
 
 	ScreenFlip();
 }

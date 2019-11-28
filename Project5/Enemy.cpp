@@ -59,10 +59,6 @@ void Enemy::Update(sharedObj plObj)
 		return;
 	}
 	_moveCtl.Update(plObj);
-	//if (rand() % 300 == 0)
-	//{
-	//	SetAlive(false);
-	//}
 
 	_dbgDrawPixel(_pos.x+lpSceneMng.GameScreenOffset.x, _pos.y + lpSceneMng.GameScreenOffset.y, 0xffffff);
 }
@@ -70,4 +66,8 @@ void Enemy::Update(sharedObj plObj)
 
 Enemy::~Enemy()
 {
+	if (_moveCtl.aimMove() != MOVE_TYPE::LR)
+	{
+		_moveCtl.InCount();
+	}
 }

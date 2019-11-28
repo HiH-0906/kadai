@@ -8,7 +8,7 @@ class Player :
 {
 public:
 	Player();
-	Player(Vector2Dbl pos, Vector2Dbl size);				// ﾌﾟﾚｲﾔｰ配置引数付きｺﾝｽﾄﾗｸﾀｰ
+	Player(Vector2Dbl pos, Vector2Dbl size);		// ﾌﾟﾚｲﾔｰ配置引数付きｺﾝｽﾄﾗｸﾀｰ
 	void Update(sharedObj plObj) override;
 	~Player();
 private:

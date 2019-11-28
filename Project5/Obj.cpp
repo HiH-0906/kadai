@@ -65,14 +65,6 @@ bool Obj::SetAnim(const STATE state, AnimVector& data)
 	// c++17ˆÈ~
 	return (_animMap.try_emplace(state, std::move(data))).second;
 
-	//// ‚·‚Å‚É‚ ‚é‚©Áª¯¸
-	//if (_animMap.find(key) == _animMap.end())
-	//{
-	//	// –³‚©‚Á‚½‚ç“o˜^
-	//	_animMap[key] = data;
-	//	return true;
-	//}
-	//return false;
 }
 
 bool Obj::SetAlive(bool alive)
