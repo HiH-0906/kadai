@@ -42,6 +42,16 @@ Enemy::Enemy(EnemyState &state)
 	Init();
 }
 
+bool Enemy::exFlag(bool flag)
+{
+	if (_moveCtl.aimMove()!=MOVE_TYPE::SCALE)
+	{
+		return false;
+	}
+	_exFlag = flag;
+	return true;
+}
+
 void Enemy::Update(sharedObj plObj)
 {
 	if (DestroyProc())

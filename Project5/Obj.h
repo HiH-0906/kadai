@@ -46,6 +46,8 @@ public:
 
 	bool SetAnim(const STATE state, AnimVector& data);			// ﾃﾞｰﾀ格納用関数
 	bool SetAlive(bool alive);
+	virtual bool exFlag(bool flag);
+	bool exFlag(void);
 	bool isAlive(void) { return _alive; }						// 生きているか取得
 	bool isDead(void) { return _dead; }							// 死んでいるか取得
 	bool isAnimEnd(void);										// ｱﾆﾒｰｼｮﾝ状態取得	trueで終わっている
@@ -62,6 +64,7 @@ protected:
 	Vector2Dbl _pos;											// 座標
 	Vector2Dbl _size;											// 当たり判定用ｻｲｽﾞ
 	UNIT_ID _unitID;
+	bool _exFlag;
 	int _speed;													// ｽﾋﾟｰﾄﾞ
 	double _rad;												// 角度
 	int _zOrder;												// 描画優先度

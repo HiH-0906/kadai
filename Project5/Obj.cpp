@@ -85,6 +85,17 @@ bool Obj::SetAlive(bool alive)
 	return true;
 }
 
+bool Obj::exFlag(bool flag)
+{
+	_exFlag = flag;
+	return true;
+}
+
+bool Obj::exFlag(void)
+{
+	return _exFlag;
+}
+
 bool Obj::isAnimEnd(void)
 {
 	// ”O‚Ì‚½‚ß·°Áª¯¸
@@ -164,7 +175,7 @@ void Obj::Draw(void)
 			_animCount = 0;
 		}
 	}
-
+	
 	// ·­°‚Ö‚Ì’Ç‰Á
 	lpSceneMng.AddDrawQue({ _animMap[_state][_animFrame].first,_pos.x + lpSceneMng.GameScreenOffset.x,_pos.y+lpSceneMng.GameScreenOffset.y,_rad,_zOrder,LAYER::CHAR});
 }

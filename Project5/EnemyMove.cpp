@@ -7,7 +7,7 @@
 int EnemyMove::_InCount = 0;
 // 敵最大数設定
 int EnemyMove::_enemyMax = ENEMY_MAX;
-EnemyMove::EnemyMove(Vector2Dbl & pos,double & rad,int &speed): _pos(pos),_rad(rad)				// 参照は存在してないといけないのでここに書く
+EnemyMove::EnemyMove(Vector2Dbl & pos,double & rad,int &speed,bool &flag): _pos(pos),_rad(rad),_atackFlag(flag)			// 参照は存在してないといけないのでここに書く
 {
 	_move = nullptr;
 	_aimCnt = -1;
@@ -28,14 +28,19 @@ void EnemyMove::Update(sharedObj plObj)
 	}
 }
 
-void EnemyMove::enemyMax(void)
-{
-	_enemyMax--;
-}
 
 void EnemyMove::InCount(void)
 {
 	_InCount++;
+}
+
+MOVE_TYPE EnemyMove::aimMove(void)
+{
+	if (_aim.size() <= _aimCnt)
+	{
+		return MOVE_TYPE::WAIT;
+	}
+	return _aim[_aimCnt].first;
 }
 
 
@@ -62,7 +67,7 @@ void EnemyMove::SetMovePrg(void)
 	_aimCnt++;
 	auto checkAim = [&]() 
 	{
-		for (_aimCnt = 0;_aimCnt<=_aim.size();_aimCnt++)
+		for (_aimCnt = 0;_aimCnt<_aim.size();_aimCnt++)
 		{
 			if (_aim[_aimCnt].first == MOVE_TYPE::SCALE)
 			{
@@ -122,6 +127,7 @@ void EnemyMove::SetMovePrg(void)
 		_move = &EnemyMove::PitIn;
 		if (_startPos.y > 0)
 		{
+			//_endPos.x += (std::abs((lpSceneMng.fCnt + 60) % 100 - 50)-25);
 			_endPos.x += (lpSceneMng.fCnt + 60) % 150 * (1 - (2 * (((lpSceneMng.fCnt + 60) / 150) % 2))) + (150 * (((lpSceneMng.fCnt + 60) / 150) % 2));
 		}
 		// 2点間
@@ -197,7 +203,6 @@ void EnemyMove::MoveSpiral(void)
 
 void EnemyMove::PitIn(void)
 {
-
 	// 1 ﾌﾚｰﾑに進む距離より_endPosまでの距離が短いなら移動終了
 	if (_count < 60)
 	{
@@ -233,20 +238,24 @@ void EnemyMove::Wait(void)
 
 void EnemyMove::MoveLR(void)
 {
+	//_pos.x = _endPos.x + (std::abs(lpSceneMng.fCnt % 100 - 50) - 25);
 	_pos.x = _endPos.x + lpSceneMng.fCnt % 150 * (1 - (2 * ((lpSceneMng.fCnt / 150) % 2)))+(150* ((lpSceneMng.fCnt / 150) % 2));
 	if (_InCount >= _enemyMax && lpSceneMng.fCnt % 150 == 74)
 	{
 		SetMovePrg();
+		startFlam = lpSceneMng.fCnt;
 		TREACE("LR終了だよー\n");
 	}
 }
 
 void EnemyMove::MoveScale(void)
 {
+	//_pos = _startPos + _lenght * static_cast<double>(((lpSceneMng.fCnt % 30 * (1 - (2 * ((lpSceneMng.fCnt / 30) % 2))) + (30 * ((lpSceneMng.fCnt / 30) % 2)) + 100) / 100));
 	_pos += _oneMoveRange * (1.0 - (2.0 * ((_count / 60) % 2)));
-	if (_count>=100)
+	if (_atackFlag)
 	{
 		SetMovePrg();
+		_atackFlag = false;
 		TREACE("Scale終了だよー\n");
 	}
 	_count++;

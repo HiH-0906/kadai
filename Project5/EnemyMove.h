@@ -23,11 +23,11 @@ class EnemyMove
 {
 
 public:
-	EnemyMove(Vector2Dbl& pos,double& rad,int& speed);					// 今回はわかりやすくするために参照で受け取る 本当はGetSetがあるといい
+	EnemyMove(Vector2Dbl& pos,double& rad,int& speed,bool& flag);		// 今回はわかりやすくするために参照で受け取る 本当はGetSetがあるといい
 	~EnemyMove();
-	void Update(sharedObj plObj);										// 更新
-	void enemyMax(void);
+	void Update(sharedObj plObj);							// 更新
 	void InCount(void);
+	MOVE_TYPE aimMove(void);
 	bool SetMoveState(MoveState& state, bool newFlag);		// 行動ｾｯﾄ関数
 private:
 	void SetMovePrg(void);									// 行動切り替え
@@ -62,6 +62,7 @@ private:
 
 	Vector2Dbl _plPos;										// ﾌﾟﾚｲﾔｰpos保存用変数
 
+	int startFlam;											// 拡大縮小開始ﾌﾚｰﾑ
 	static int _InCount;									// 敵ﾋﾟｯﾄｲﾝｶｳﾝﾄ
 	double radius;											// 半径
 	double& _rad;											// 角度
@@ -69,5 +70,6 @@ private:
 	double _cntRad;											// 今どれだけ回転したか
 	double _moveRad;										// 1ﾌﾚｰﾑに回る角度
 	double _moveGain;										// 移動管理
+	bool& _atackFlag;
 };
 

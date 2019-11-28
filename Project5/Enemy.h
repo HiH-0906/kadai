@@ -30,10 +30,11 @@ class Enemy :
 public:
 	Enemy();
 	Enemy(EnemyState &state);
+	bool exFlag(bool flag);
 	void Update(sharedObj plObj) override;
 	~Enemy();
 private:
-	EnemyMove _moveCtl{ _pos ,_rad,_speed };					// ´ÈĞ°‚Ì“®‚«ŠÇ——pObj
+	EnemyMove _moveCtl{ _pos ,_rad,_speed,_exFlag};					// ´ÈĞ°‚Ì“®‚«ŠÇ——pObj
 	void Init();
 	ENEMY_TYPE _type;							// ´ÈĞ°type¯•Ê—p
 };

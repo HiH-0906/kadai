@@ -38,11 +38,11 @@ GameScene::GameScene()
 			tmpEnemyState.emplace_back(MOVE_TYPE::SIGMOID, Vector2Dbl{ lpSceneMng.GameScreenSize.x - 96.0 - ((lpSceneMng.GameScreenSize.x - 192.0) * (cnt/ formation % 2)),lpSceneMng.GameScreenSize.y *(6.0 / 7.0) - (128.0 * ((cnt/ formation % 6) / 4))});
 			tmpEnemyState.emplace_back(MOVE_TYPE::SPIRAL, Vector2Dbl{ 1.0 - (2 * (cnt/ formation % 2)),static_cast<double>((cnt/ formation / 2) % 3 / 2)});
 			tmpEnemyState.emplace_back(MOVE_TYPE::PITIN, Vector2Dbl{ (16.0 + (35.0*(cnt % 10))) , 40.0 + ((40.0)*(cnt / 10 % 5)) });
-			tmpEnemyState.emplace_back(MOVE_TYPE::LR, Vector2Dbl{ (16.0 + (35.0*(cnt % 10))) ,0.0});
-			tmpEnemyState.emplace_back(MOVE_TYPE::SCALE, Vector2Dbl{ lpSceneMng.GameScreenSize.x/2.0,40.0 });
-			tmpEnemyState.emplace_back(MOVE_TYPE::ATACK, Vector2Dbl{ (16.0 + (35.0*(cnt % 10))) , 40.0 + ((40.0)*(cnt / 10 % 5)) });
+			tmpEnemyState.emplace_back(MOVE_TYPE::LR, Vector2Dbl{(16.0 + (35.0*(cnt % 10))) ,0.0});
+			tmpEnemyState.emplace_back(MOVE_TYPE::SCALE, Vector2Dbl{ lpSceneMng.GameScreenSize.x/2.0,40.0*3.0 });
+			tmpEnemyState.emplace_back(MOVE_TYPE::ATACK, Vector2Dbl{ 30 * 2.5 + (16.0 + (35.0*(cnt % 10))) , 40.0 + ((40.0)*(cnt / 10 % 5)) });
 			tmpEnemyState.emplace_back(MOVE_TYPE::PITIN, Vector2Dbl{ 30*2.5+(16.0 + (35.0*(cnt % 10))) , 40.0 + ((40.0)*(cnt / 10 % 5)) });
-			EnemyState state = { static_cast<ENEMY_TYPE>(rand() % static_cast<int>(ENEMY_TYPE::MAX)),																				// ¿≤ÃﬂÇÃê›íË
+			EnemyState state = { ENEMY_TYPE::A,																				// ¿≤ÃﬂÇÃê›íË
 								{ static_cast<double>((lpSceneMng.GameScreenSize.x*(((cnt / formation) % 6) % 2) - 16) + (35 * (((cnt / formation) % 6) % 2))),					// ç¿ïWXÇÃê›íË
 								static_cast<double>(((lpSceneMng.GameScreenSize.y-30)/2)*((((cnt / formation) % 6) / 2) % 3) - 16)},												// ç¿ïWYÇÃê›íË
 								{ 30.0,32.0 },																																		// ª≤ΩﬁÇÃê›íË																													// ΩÀﬂ∞ƒﬁ
@@ -68,9 +68,23 @@ unipueBase GameScene::Update(unipueBase own)
 		_objList.end(),
 		[](sharedObj obj) {return (*obj).unitID() == UNIT_ID::PLAYER; }
 	);
+	auto SetAtack=[](sharedObj obj) {
+		if ((*obj).unitID() == UNIT_ID::ENEMY)
+		{
+			if (rand() % 3000 == 0)
+			{
+				return true;
+			}
+		}
+		return false;
+	};
 	// îÕàÕforï∂
 	for (auto data : _objList)
 	{
+		if (SetAtack(data))
+		{
+			(*data).exFlag(true);
+		}
 		(*data).Update(*plObj);
 	}
 
