@@ -142,12 +142,15 @@ void EnemyMove::SetMovePrg(void)
 		break;
 	case MOVE_TYPE::PITIN:
 		_move = &EnemyMove::PitIn;
+		
 		if (_startPos.y > 0)
 		{
+			_rad = atan2(_endPos.y - _pos.y, _endPos.x - _pos.x) + PI / 2.0;
 			_endPos.x += (std::abs((lpSceneMng.fCnt + PITIN_TIME) % (LR_LIMT * 2) - LR_LIMT) - (LR_LIMT / 2));
 		}
 		else
 		{
+			_rad = 0;
 			_endPos = _center + _range * static_cast<double>(100 + (std::abs(std::abs((((lpSceneMng.fCnt - _startFlam) + PITIN_TIME) % (SCALE_LIMT * 2) - SCALE_LIMT)) - SCALE_LIMT))) / 100.0;
 		}
 		// 2“_ŠÔ
@@ -233,7 +236,6 @@ void EnemyMove::PitIn(void)
 	if (_count < PITIN_TIME)
 	{
 		_pos += _oneMoveVec;
-		_rad = atan2(_lenght.y, _lenght.x) + PI / 2.0;
 	}
 	else
 	{
