@@ -10,7 +10,7 @@
 #define SPIRAL_MAX (PI*2.0)								// spiral‚Å‰ñ“]‚·‚é‰ñ“]”
 #define LR_LIMT	50										// LRˆÚ“®•
 #define SCALE_LIMT 30									// Šg‘åk¬”{—¦
-#define ATACK_MAX 60									// atack‰ñ“]ŠÔ
+#define ATACK_MAX 30									// atack‰ñ“]ŠÔ
 
 enum class MOVE_TYPE
 {

@@ -293,6 +293,7 @@ void EnemyMove::MoveAtack(void)
 	{
 		// ‰ñ‚é
 		_rad += _tmpRad;
+		_pos.y--;
 	}
 	else
 	{
