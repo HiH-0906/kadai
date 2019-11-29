@@ -21,7 +21,7 @@ class BaseScene
 public:
 	BaseScene();
 	virtual ~BaseScene();
-	virtual unipueBase Update(unipueBase own) = 0;
-	virtual void RunActQue(std::vector<ActQueT> actList);
+	virtual unipueBase Update(unipueBase own) = 0;			// どのｼｰﾝにもあるので純粋仮想
+	virtual void RunActQue(std::vector<ActQueT> actList);	// 必要ないｼｰﾝもあるので仮想
 };
 

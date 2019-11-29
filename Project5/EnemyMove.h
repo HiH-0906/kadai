@@ -7,7 +7,7 @@
 #define ENEMY_MAX 50									// enemy‘”
 #define PITIN_TIME 60									// PitIn‚É‚©‚©‚éŠÔ
 #define SIGMOID_TIME 60.0								// sigmoid‚É‚©‚©‚éŠÔ
-#define SPIRAL_MAX (PI*4.0)								// spiral‚Å‰ñ“]‚·‚é‰ñ“]”
+#define SPIRAL_MAX (PI*2.0)								// spiral‚Å‰ñ“]‚·‚é‰ñ“]”
 #define LR_LIMT	50										// LRˆÚ“®•
 #define SCALE_LIMT 30									// Šg‘åk¬”{—¦
 #define ATACK_MAX 60									// atack‰ñ“]ŠÔ
@@ -34,6 +34,8 @@ public:
 	void Update(sharedObj plObj);							// XV
 	void InCount(void);
 	MOVE_TYPE aimMove(void);
+	const bool shotFlag(void)const;
+	bool shotFlag(bool flag);
 	bool SetMoveState(MoveState& state, bool newFlag);		// s“®¾¯ÄŠÖ”
 private:
 	void SetMovePrg(void);									// s“®Ø‚è‘Ö‚¦
@@ -66,7 +68,6 @@ private:
 
 	Vector2Dbl _plPos;										// ÌßÚ²Ô°pos•Û‘¶—p•Ï”
 
-	int _scaleCnt;
 	int _startFlam;											// Šg‘åk¬ŠJnÌÚ°Ñ
 	static int _InCount;									// “GËß¯Ä²İ¶³İÄ
 	double radius;											// ”¼Œa
@@ -75,6 +76,7 @@ private:
 	double _cntRad;											// ¡‚Ç‚ê‚¾‚¯‰ñ“]‚µ‚½‚©
 	double _moveRad;										// 1ÌÚ°Ñ‚É‰ñ‚éŠp“x
 	double _moveGain;										// ˆÚ“®ŠÇ—
-	bool& _atackFlag;
+	bool& _atackFlag;										// true‚Å“ËŒ‚ QÆæ‚ÍObj‚Ì_exFlag
+	bool _shotFlag;											// ’e”­Ë
 };
 

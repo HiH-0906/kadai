@@ -7,9 +7,8 @@ class Player :
 	public Obj
 {
 public:
-	Player();
 	Player(Vector2Dbl pos, Vector2Dbl size);		// ÌßÚ²Ô°”z’uˆø”•t‚«ºİ½Ä×¸À°
-	void Update(sharedObj plObj) override;
+	void Update(sharedObj plObj) override final;
 	~Player();
 private:
 	void Init(void);

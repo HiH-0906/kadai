@@ -70,14 +70,7 @@ void SceneMng::Draw(void)
 	// ŠeÚ²Ô°‚ğ•`‰æ
 	for (auto layer : LAYER())
 	{
-		if (layer == LAYER::CHAR)
-		{
-			DrawRotaGraph(ScreenCenter.x, ScreenCenter.y ,1.0, 0, _screenID[layer], true);
-		}
-		else
-		{
-			DrawRotaGraph(ScreenCenter.x, ScreenCenter.y, 1.0, 0, _screenID[layer], true);
-		}
+		DrawRotaGraph(ScreenCenter.x, ScreenCenter.y ,1.0, 0, _screenID[layer], true);	
 	}
 
 	ScreenFlip();
@@ -92,12 +85,12 @@ void SceneMng::Ran(void)
 	while (ProcessMessage() == 0 && CheckHitKey(KEY_INPUT_ESCAPE) == 0)
 	{
 		_dbgStartDraw();
-		_drawList.clear();			// Ø½Ä‚Ìíœ
-		AddDrawQue({IMAGE_ID("˜g")[0],400.0,300.0,0.0,0,LAYER::UI});
+		_drawList.clear();														// Ø½Ä‚Ìíœ
+		AddDrawQue({IMAGE_ID("˜g")[0],400.0,300.0,0.0,0,LAYER::UI});			// ˜gQUE“o˜^
 		_activeScene = (*_activeScene).Update(std::move(_activeScene));
-		(*_activeScene).RunActQue(std::move(_actList));
-		Draw();						// •`‰æ
-		fCnt++;
+		(*_activeScene).RunActQue(std::move(_actList));							// ActionÀs
+		Draw();																	// •`‰æ
+		fCnt++;																	// ÌÚ°Ñ¶³İÄ
 	}
 }
 

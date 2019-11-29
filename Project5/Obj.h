@@ -45,9 +45,9 @@ public:
 	const UNIT_ID unitID(void);									// _unitIDGetﾀﾞｾﾞ!
 
 	bool SetAnim(const STATE state, AnimVector& data);			// ﾃﾞｰﾀ格納用関数
-	bool SetAlive(bool alive);
-	virtual bool exFlag(bool flag);
-	bool exFlag(void);
+	bool SetAlive(bool alive);									// 生きてるﾌﾗｸﾞ変更
+	virtual bool exFlag(bool flag);								// 継承先で使い道が違うのでとりあえず仮想関数
+	const bool exFlag(void)const;											// FlagのGet
 	bool isAlive(void) { return _alive; }						// 生きているか取得
 	bool isDead(void) { return _dead; }							// 死んでいるか取得
 	bool isAnimEnd(void);										// ｱﾆﾒｰｼｮﾝ状態取得	trueで終わっている
@@ -63,8 +63,8 @@ protected:
 	bool _dead;													// 死んでいるか
 	Vector2Dbl _pos;											// 座標
 	Vector2Dbl _size;											// 当たり判定用ｻｲｽﾞ
-	UNIT_ID _unitID;
-	bool _exFlag;
+	UNIT_ID _unitID;											// 識別ﾀｸﾞ
+	bool _exFlag;												// 外部からのｱｸｾｽ用Flag
 	int _speed;													// ｽﾋﾟｰﾄﾞ
 	double _rad;												// 角度
 	int _zOrder;												// 描画優先度

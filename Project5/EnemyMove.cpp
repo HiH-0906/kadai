@@ -12,6 +12,7 @@ EnemyMove::EnemyMove(Vector2Dbl & pos,double & rad,int &speed,bool &flag): _pos(
 	_move = nullptr;
 	_aimCnt = -1;
 	_startFlam = 0;
+	_shotFlag = false;
 }
 
 EnemyMove::~EnemyMove()
@@ -32,6 +33,7 @@ void EnemyMove::Update(sharedObj plObj)
 
 void EnemyMove::InCount(void)
 {
+	// 揋PitInCnt壛嶼
 	_InCount++;
 }
 
@@ -39,11 +41,23 @@ MOVE_TYPE EnemyMove::aimMove(void)
 {
 	if (_aim.size() <= _aimCnt)
 	{
+		// 梫慺悢傛傝_aimCnt偑懡偗傟偽WAIT偱曉偡
 		return MOVE_TYPE::WAIT;
 	}
 	return _aim[_aimCnt].first;
 }
 
+const bool EnemyMove::shotFlag(void) const
+{
+	return _shotFlag;
+}
+
+
+bool EnemyMove::shotFlag(bool flag)
+{
+	_shotFlag = flag;
+	return true;
+}
 
 bool EnemyMove::SetMoveState(MoveState & state, bool newFlag)
 {
@@ -66,10 +80,12 @@ bool EnemyMove::SetMoveState(MoveState & state, bool newFlag)
 void EnemyMove::SetMovePrg(void)
 {
 	_aimCnt++;
+	_shotFlag = false;
 	auto checkAim = [&]() 
 	{
 		for (_aimCnt = 0;_aimCnt<_aim.size();_aimCnt++)
 		{
+			// SCALE傑偱姫偒栠偡
 			if (_aim[_aimCnt].first == MOVE_TYPE::SCALE)
 			{
 				return true;
@@ -89,6 +105,7 @@ void EnemyMove::SetMovePrg(void)
 	}
 	if (_pos.y > lpSceneMng.GameScreenSize.y)
 	{
+		// 夋柺壓晹傊峴偭偨傜夋柺忋晹傊
 		_pos.y = -100.0;
 	}
 	// 嚼澳埵抲曐懚
@@ -101,7 +118,6 @@ void EnemyMove::SetMovePrg(void)
 	{
 	case MOVE_TYPE::WAIT:
 		_move = &EnemyMove::Wait;
-		// wait偱巊偆曄悢偺弶婜壔
 		_count = 0;
 		break;
 	case MOVE_TYPE::SIGMOID:
@@ -143,19 +159,24 @@ void EnemyMove::SetMovePrg(void)
 	case MOVE_TYPE::LR:
 		_count = 0;
 		_move = &EnemyMove::MoveLR;
+		// PitIn廔傢偭偨偐丠冻菽
 		_InCount++;
 		break;
 	case MOVE_TYPE::SCALE:
 		_move = &EnemyMove::MoveScale;
+		// 揋拞墰
 		_center = { lpSceneMng.GameScreenSize.x / 2.0,40.0 * 3.0 };
 		_range = _endPos - _center;
 		if (_startFlam == 0)
 		{
+			// SCALE偑巒傑偭偨腾把悢婰壇
 			_startFlam = lpSceneMng.fCnt;
 		}
 		break;
 	case MOVE_TYPE::ATACK:
 		_move = &EnemyMove::MoveAtack;
+		// 1腾把偵摦偔妏搙
+		_tmpRad = (atan2(_plPos.y - _pos.y, _plPos.x - _pos.x)+PI / 2)/ATACK_MAX;
 		_count = 0;
 		break;
 	default:
@@ -173,7 +194,7 @@ void EnemyMove::MoveSigmoid(void)
 		// x學悢
 		_moveGain += 10.0 / SIGMOID_TIME;
 		// 几抻材迠謵攤蓚鎮羵膿緜綊l傪奼戝
-		_pos.y = _startPos.y + 1.0 / (1.0 + exp(-1.3*_moveGain-1.0)) * _lenght.y;
+		_pos.y = _startPos.y + 1.0 / (1.0 + exp(-1.5*_moveGain+1.0)) * _lenght.y;
 		_pos.x = _pos.x + _lenght.x;
 		_rad = atan2(_pos.y - _oldPos.y, _pos.x - _oldPos.x) + PI / 2;
 	}
@@ -255,6 +276,7 @@ void EnemyMove::MoveLR(void)
 void EnemyMove::MoveScale(void)
 {
 	_pos = _center + _range * static_cast<double>(100 + (std::abs(std::abs(((lpSceneMng.fCnt - _startFlam) % (SCALE_LIMT * 2) - SCALE_LIMT)) - SCALE_LIMT))) / 100.0;
+	// 峌寕柦椷偑旘傫偱偒偰偨傜堏峴
 	if (_atackFlag)
 	{
 		SetMovePrg();
@@ -267,12 +289,16 @@ void EnemyMove::MoveAtack(void)
 {
 	if (_count < ATACK_MAX)
 	{
-		_rad += PI / 10;
+		// 夞傞
+		_rad += _tmpRad;
 	}
 	else
 	{
+		// PitIn婾憰
+		_shotFlag = true;
 		_move = &EnemyMove::PitIn;
-		_endPos = _plPos + Vector2Dbl{ 0.0, 100.0 };
+		_lenght = (_plPos - _pos)*1.5;
+		_endPos = _pos + _lenght;
 		// 2揰娫
 		_lenght = _endPos - _pos;
 		// 1腾把偵恑傓嫍棧

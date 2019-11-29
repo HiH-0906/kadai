@@ -83,7 +83,7 @@ bool Obj::exFlag(bool flag)
 	return true;
 }
 
-bool Obj::exFlag(void)
+const bool Obj::exFlag(void)const
 {
 	return _exFlag;
 }

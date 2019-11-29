@@ -37,39 +37,39 @@ public:
 
 // ÍÞ¸ÄÙ‚Ì‰‰ŽZ
 
-// Vector2 + int
+// Vector2T + T
 template<class T>
 Vector2Template<T> operator+(const Vector2Template<T>& u, T k);
-// Vector2 - int
+// Vector2T - T
 template<class T>
 Vector2Template<T> operator-(const Vector2Template<T>& u, T k);
-// Vector2 * int
+// Vector2T * T
 template<class T>
 Vector2Template<T> operator*(const Vector2Template<T>& u, T k);
-// Vector2 / int
+// Vector2T / T
 template<class T>
 Vector2Template<T> operator/(const Vector2Template<T>& u, T k);
-// Vector2 % int
+// Vector2T % T
 template<class T>
 Vector2Template<T> operator%(const Vector2Template<T>& u, T k);
 
-// Vector2 + Vector2
+// Vector2T + Vector2T
 template<class T>
 Vector2Template<T> operator+(const Vector2Template<T>& u, const Vector2Template<T>& v);
-// Vector2 - Vector2
+// Vector2T - Vector2T
 template<class T>
 Vector2Template<T> operator-(const Vector2Template<T>& u, const Vector2Template<T>& v);
-// Vector2 * Vector2
+// Vector2T * Vector2T
 template<class T>
 Vector2Template<T> operator*(const Vector2Template<T>& u, const Vector2Template<T>& v);
-// Vector2 / Vector2
+// Vector2T / Vector2T
 template<class T>
 Vector2Template<T> operator/(const Vector2Template<T>& u, const Vector2Template<T>& v);
-// Vector2 % Vector2
+// Vector2T % Vector2T
 template<class T>
 Vector2Template<T> operator%(const Vector2Template<T>& u, const Vector2Template<T>& v);
 
-// int * Vector2
+// T * Vector2T
 template<class T>
 Vector2Template<T> operator*(int k, const Vector2Template<T>& v);
 

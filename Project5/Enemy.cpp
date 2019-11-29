@@ -24,11 +24,6 @@ void Enemy::Init()
 	state(STATE::NORMAL);
 }
 
-Enemy::Enemy()
-{
-	_unitID = UNIT_ID::ENEMY;
-	Init();
-}
 
 Enemy::Enemy(EnemyState &state)
 {
@@ -36,14 +31,15 @@ Enemy::Enemy(EnemyState &state)
 	_type = std::get<static_cast<int>(ENEMY_STATE::TYPE)>(state);								// ﾀｲﾌﾟの設定
 	_pos = std::move(std::get<static_cast<int>(ENEMY_STATE::VECTOR)>(state));					// 座標の設定
 	_size = std::move(std::get<static_cast<int>(ENEMY_STATE::SIZE)>(state));					// ｻｲｽﾞの設定
-	_rad = std::move(std::get<static_cast<int>(ENEMY_STATE::RAD)>(state));
+	_rad = std::move(std::get<static_cast<int>(ENEMY_STATE::RAD)>(state));						// 角度の設定
 	_moveCtl.SetMoveState(std::get<static_cast<int>(ENEMY_STATE::AIM)>(state),true);			// 行動の設定
-	_unitID = UNIT_ID::ENEMY;
+	_unitID = UNIT_ID::ENEMY;																	// 識別ﾀｸﾞの設定
 	Init();
 }
 
 bool Enemy::exFlag(bool flag)
 {
+	// 動きがSCALEじゃ無かったら変更しない
 	if (_moveCtl.aimMove()!=MOVE_TYPE::SCALE)
 	{
 		return false;
@@ -59,7 +55,12 @@ void Enemy::Update(sharedObj plObj)
 		return;
 	}
 	_moveCtl.Update(plObj);
-
+	// 敵自機突撃時弾発射
+	if (_moveCtl.shotFlag() && rand() % 100 == 0)
+	{
+		lpSceneMng.AddActQue({ ACT_QUE::SHOT, *this });
+		_moveCtl.shotFlag(false);
+	}
 	_dbgDrawPixel(_pos.x+lpSceneMng.GameScreenOffset.x, _pos.y + lpSceneMng.GameScreenOffset.y, 0xffffff);
 }
 
@@ -68,6 +69,7 @@ Enemy::~Enemy()
 {
 	if (_moveCtl.aimMove() != MOVE_TYPE::LR)
 	{
+		// LR以外で死んだときSCALEがずれないようにするためのｶｳﾝﾄｱｯﾌﾟ
 		_moveCtl.InCount();
 	}
 }

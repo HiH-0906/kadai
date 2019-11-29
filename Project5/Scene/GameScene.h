@@ -6,12 +6,12 @@
 
 using funcAct = std::function<bool(ActQueT&, std::vector<sharedObj>&)>;		// 引数と返り値が同じものを放り込める
 
-#define FORMATION 3
-#define WAIT_TIME 50.0
-#define CHAR_SIZE_X 30
-#define CHAR_SIZE_Y 32
-#define ENEMY_OFFSET_X  (CHAR_SIZE_X*2.5)
-#define ENEMY_OFFSET_Y  40.0
+#define FORMATION 3															// 敵編隊隊員数
+#define WAIT_TIME 50.0														// 編隊ごとの待ち時間
+#define CHAR_SIZE_X 30														// 自機や敵のsize x
+#define CHAR_SIZE_Y 32														// 自機や敵のsize y
+#define ENEMY_OFFSET_X  (CHAR_SIZE_X*2.5)									// 敵ﾃﾞﾌｫﾙﾄ位置のx方向ｵﾌｾｯﾄ
+#define ENEMY_OFFSET_Y  40.0												// 敵ﾃﾞﾌｫﾙﾄ位置のy方向ｵﾌｾｯﾄ
 
 class GameScene :
 	public BaseScene
@@ -19,11 +19,12 @@ class GameScene :
 public:
 	GameScene();
 	~GameScene();
-	virtual unipueBase Update(unipueBase own) override final;
+	unipueBase Update(unipueBase own) override final;
 private:
 	std::vector<sharedObj> _objList;							// ListではなくVector
-	void RunActQue(std::vector<ActQueT> actList) override;
-	void initFunc(void);
-	std::map<ACT_QUE, funcAct> funcQue;
+	void RunActQue(std::vector<ActQueT> actList) override;		// ActQueの実行
+	void initFunc(void);										// funcQueへの関数ｵﾌﾞｼﾞｪｸﾄ代入
+	std::map<ACT_QUE, funcAct> funcQue;							// 関数ｵﾌﾞｼﾞｪｸﾄ管理
+	Vector2Dbl _enemyDefFomation;								// 敵ﾃﾞﾌｫﾙﾄ配置
 };
 

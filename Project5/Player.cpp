@@ -31,11 +31,6 @@ void Player::Init(void)
 	state(STATE::NORMAL);
 }
 
-Player::Player()
-{
-	_unitID = UNIT_ID::PLAYER;
-	Init();
-}
 
 Player::Player(Vector2Dbl pos, Vector2Dbl size)
 {
@@ -71,14 +66,17 @@ void Player::Update(sharedObj plObj)
 			}
 		}
 	};
-	// ç∂
-	move(_input, INPUT_ID::LEFT, _pos.x, -2);
-	// âE
-	move(_input, INPUT_ID::RIGHT, _pos.x, +2);
-	// è„
-	move(_input, INPUT_ID::UP, _pos.y, -2);
-	// â∫
-	move(_input, INPUT_ID::DOWN, _pos.y, +2);
+	// à⁄ìÆêßå¿
+	if (_pos.x - (_size.x / 2.0) > 0)
+	{
+		// ç∂
+		move(_input, INPUT_ID::LEFT, _pos.x, -2);
+	}
+	if (_pos.x + (_size.x / 2.0) < lpSceneMng.GameScreenSize.x)
+	{
+		// âE
+		move(_input, INPUT_ID::RIGHT, _pos.x, +2);
+	}
 
 	// shotÇÃî≠éÀ
 	if ((*_input).state(INPUT_ID::BTN_1).first&&!(*_input).state(INPUT_ID::BTN_1).second)

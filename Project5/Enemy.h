@@ -6,9 +6,9 @@
 
 enum class ENEMY_TYPE
 {
-	A,
-	B,
-	C,
+	A,						// 蜂？
+	B,						// 蛾？
+	C,						// 蛾？
 	MAX
 };
 
@@ -28,14 +28,13 @@ class Enemy :
 	public Obj
 {
 public:
-	Enemy();
 	Enemy(EnemyState &state);
-	bool exFlag(bool flag);
 	void Update(sharedObj plObj) override;
 	~Enemy();
+	bool exFlag(bool flag)override;									// 攻撃命令Flag変更
 private:
 	EnemyMove _moveCtl{ _pos ,_rad,_speed,_exFlag};					// ｴﾈﾐｰの動き管理用Obj
 	void Init();
-	ENEMY_TYPE _type;							// ｴﾈﾐｰtype識別用
+	ENEMY_TYPE _type;												// ｴﾈﾐｰtype識別用
 };
 

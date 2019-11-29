@@ -3,17 +3,13 @@
 #include <SceneMng.h>
 
 
-Bullet::Bullet()
-{
-	init();
-}
 
 Bullet::Bullet(UNIT_ID unitID,Vector2Dbl pos)
 {
 	_unitID = unitID;
 	_pos = pos;
 	_size = { 8,3 };
-	_rad = 270.0 * (PI / 180.0);
+	_rad = _unitID == UNIT_ID::PL_BULLET ? 270.0 * (PI / 180.0) : 90.0 * (PI / 180.0);
 	_zOrder = 10;
 	init();
 }
