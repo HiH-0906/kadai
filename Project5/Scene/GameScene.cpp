@@ -10,6 +10,7 @@
 #include <Bullet.h>
 #include <Scene/func/FuncBullet.h>
 #include <Scene/func/FuncCheckHit.h>
+#include <Scene/func/FuncShake.h>
 
 GameScene::GameScene()
 {
@@ -53,6 +54,7 @@ GameScene::GameScene()
 			new Enemy(state)
 		);
 	}
+	_shakeCount = 0;
 }
 
 
@@ -104,6 +106,17 @@ unipueBase GameScene::Update(unipueBase own)
 		[](sharedObj& obj) {return (*obj).isDead() && (*obj).unitID() != UNIT_ID::PLAYER; }				// ﾚｯﾂﾗﾑﾀﾞ式 死んでる物があるか確認 Player消すと例外参照してしまうので消さない
 						), 
 					_objList.end());
+	if (_shakeCount)
+	{
+		_shakeCount--;
+		_screenPos = { rand() % 20 - 10,rand() % 20 - 10 };
+		if (!_shakeCount)
+		{
+			// ずれたままにならないように補正
+			_screenPos = { 0,0 };
+		}
+	}
+
 	return std::move(own);
 }
 
@@ -115,7 +128,7 @@ void GameScene::RunActQue(std::vector<ActQueT> actList)
 		// ｱｸｼｮﾝ種別によって変更
 		try
 		{
-			funcQue.at(data.first)(data,_objList);
+			funcQue.at(data.first)(data,this);
 		}
 		catch (...)
 		{
@@ -128,4 +141,5 @@ void GameScene::initFunc(void)
 {
 	funcQue[ACT_QUE::SHOT] = FuncBullet();
 	funcQue[ACT_QUE::CHECK_HIT] = FuncCheckHit();
+	funcQue[ACT_QUE::SHAKE] = FuncShake();
 }

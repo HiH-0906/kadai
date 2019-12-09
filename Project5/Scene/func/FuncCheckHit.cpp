@@ -1,11 +1,11 @@
 #include "FuncCheckHit.h"
-#include <cmath>
+#include <GameScene.h>
 
-bool FuncCheckHit::operator()(ActQueT & actQue, std::vector<sharedObj>& objList)
+bool FuncCheckHit::operator()(ActQueT & actQue, void* scene)
 {
 	UNIT_ID tmpID = (actQue.second.unitID() == UNIT_ID::PL_BULLET ? UNIT_ID::ENEMY : UNIT_ID::PLAYER);
 	
-	for (auto List : objList)
+	for (auto List : ((GameScene*)scene)->_objList)
 	{
 		if ((*List).unitID() == tmpID)
 		{

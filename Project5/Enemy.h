@@ -34,6 +34,7 @@ public:
 	bool exFlag(bool flag)override;									// UŒ‚–½—ßFlag•ÏX
 private:
 	EnemyMove _moveCtl{ _pos ,_rad,_speed,_exFlag};					// ´ÈĞ°‚Ì“®‚«ŠÇ——pObj
+	bool SetAlive(bool alive)override final;
 	void Init();
 	ENEMY_TYPE _type;												// ´ÈĞ°type¯•Ê—p
 };

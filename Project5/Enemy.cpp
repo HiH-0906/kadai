@@ -4,6 +4,16 @@
 #include "_DebugDispOut.h"
 
 
+bool Enemy::SetAlive(bool alive)
+{
+	if (!alive)
+	{
+		// ‰æ–Ê—h‚ç‚µ‚ÌQue‚ğ“Š‚°‚é
+		lpSceneMng.AddActQue({ ACT_QUE::SHAKE,*this });
+	}
+	return Obj::SetAlive(alive);
+}
+
 void Enemy::Init()
 {
 	// ´ÈĞ°±ÆÒ°¼®İÃŞ°Àì¬

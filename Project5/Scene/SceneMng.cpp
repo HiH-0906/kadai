@@ -67,11 +67,14 @@ void SceneMng::Draw(void)
 	}
 	SetDrawScreen(DX_SCREEN_BACK);
 	ClsDrawScreen();
+
+	// ‰æ–Ê—h‚ç‚µŒø‰Ê—p•Ï”
+	auto layPos = ScreenCenter + (*_activeScene)._screenPos;
+
 	// ŠeÚ²Ô°‚ğ•`‰æ
-	for (auto layer : LAYER())
-	{
-		DrawRotaGraph(ScreenCenter.x, ScreenCenter.y ,1.0, 0, _screenID[layer], true);	
-	}
+	DrawRotaGraph(layPos.x, layPos.y ,1.0, 0, _screenID[LAYER::BG], true);					// BG‚ÆCHAR‚¾‚¯—h‚ç‚·
+	DrawRotaGraph(layPos.x, layPos.y, 1.0, 0, _screenID[LAYER::CHAR], true);
+	DrawRotaGraph(ScreenCenter.x, ScreenCenter.y, 1.0, 0, _screenID[LAYER::UI], true);
 
 	ScreenFlip();
 }
@@ -88,7 +91,7 @@ void SceneMng::Ran(void)
 		_drawList.clear();														// Ø½Ä‚Ìíœ
 		AddDrawQue({IMAGE_ID("˜g")[0],400.0,300.0,0.0,0,LAYER::UI});			// ˜gQUE“o˜^
 		_activeScene = (*_activeScene).Update(std::move(_activeScene));
-		(*_activeScene).RunActQue(std::move(_actList));							// ActionÀs
+		(*_activeScene).RunActQue(std::move(_actList));						// ActionÀs
 		Draw();																	// •`‰æ
 		fCnt++;																	// ÌÚ°Ñ¶³İÄ
 	}

@@ -45,7 +45,7 @@ public:
 	const UNIT_ID unitID(void);									// _unitIDGetﾀﾞｾﾞ!
 
 	bool SetAnim(const STATE state, AnimVector& data);			// ﾃﾞｰﾀ格納用関数
-	bool SetAlive(bool alive);									// 生きてるﾌﾗｸﾞ変更
+	virtual bool SetAlive(bool alive);							// 生きてるﾌﾗｸﾞ変更
 	virtual bool exFlag(bool flag);								// 継承先で使い道が違うのでとりあえず仮想関数
 	const bool exFlag(void)const;											// FlagのGet
 	bool isAlive(void) { return _alive; }						// 生きているか取得

@@ -83,6 +83,7 @@ void Player::Update(sharedObj plObj)
 	{
 		lpSceneMng.AddActQue({ ACT_QUE::SHOT,*this });
 	}
+	return;
 }
 
 
