@@ -81,15 +81,18 @@ unipueBase GameScene::Update(unipueBase own)
 		}
 		return false;
 	};
-	// ”ÍˆÍfor•¶
-	for (auto data : _objList)
+	if (!FadeUpDate())
 	{
-		if (SetAtack(data))
+		// ”ÍˆÍfor•¶
+		for (auto data : _objList)
 		{
-			// 3000/1‚Ì“ËŒ‚–½—ß
-			(*data).exFlag(true);
+			if (SetAtack(data))
+			{
+				// 3000/1‚Ì“ËŒ‚–½—ß
+				(*data).exFlag(true);
+			}
+			(*data).Update(*plObj);
 		}
-		(*data).Update(*plObj);
 	}
 
 
