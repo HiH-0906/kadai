@@ -10,7 +10,9 @@ public:
 	Player(Vector2Dbl pos, Vector2Dbl size);		// ÌßÚ²Ô°”z’uˆø”•t‚«ºİ½Ä×¸À°
 	void Update(sharedObj plObj) override final;
 	~Player();
+	void Draw(void)override;
 private:
+	int _glowID;
 	void Init(void);
 	std::shared_ptr<InputState>_input;				// ²İÌß¯Ä‚ÌÕÆ°¸Îß²İÀéŒ¾
 };

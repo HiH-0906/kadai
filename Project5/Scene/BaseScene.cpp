@@ -6,7 +6,7 @@
 
 BaseScene::BaseScene()
 {
-	_fadeScrID = MakeScreen(lpSceneMng.ScreenSize.x, lpSceneMng.ScreenSize.y, true);
+	_fadeScrID = MakeScreen(lpSceneMng.ScreenSize.x, lpSceneMng.ScreenSize.y, false);
 	FadeInit("”’");
 }
 

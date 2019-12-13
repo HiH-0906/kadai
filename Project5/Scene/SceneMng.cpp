@@ -105,7 +105,6 @@ void SceneMng::Ran(void)
 		_dbgStartDraw();
 		_drawList.clear();																				// ÿΩƒÇÃçÌèú
 		AddDrawQue({ IMAGE_ID("òg")[0],400.0,300.0,0.0,0,LAYER::UI,DX_BLENDMODE_NOBLEND,255 });			// ògQUEìoò^
-		AddDrawQue({ IMAGE_ID("çï")[0],400.0,300.0,0.0,0,LAYER::BG,DX_BLENDMODE_NOBLEND,255 });			// îwåiQUEìoò^
 		_activeScene = (*_activeScene).Update(std::move(_activeScene));
 		(*_activeScene).RunActQue(std::move(_actList));													// Actioné¿çs
 		Draw();																							// ï`âÊ

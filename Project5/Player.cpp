@@ -38,6 +38,8 @@ Player::Player(Vector2Dbl pos, Vector2Dbl size)
 	_size = size;
 	_unitID = UNIT_ID::PLAYER;
 
+	_glowID = MakeScreen(static_cast<int>(_size.x*2.0), static_cast<int>(_size.y*2.0), false);
+
 	Init();
 }
 
@@ -77,6 +79,8 @@ void Player::Update(sharedObj plObj)
 		// ‰E
 		move(_input, INPUT_ID::RIGHT, _pos.x, +2);
 	}
+	move(_input, INPUT_ID::UP, _pos.y, -2);
+	move(_input, INPUT_ID::DOWN, _pos.y, +2);
 
 	// shot‚Ì”­ŽË
 	if ((*_input).state(INPUT_ID::BTN_1).first&&!(*_input).state(INPUT_ID::BTN_1).second)
@@ -89,4 +93,18 @@ void Player::Update(sharedObj plObj)
 
 Player::~Player()
 {
+}
+
+void Player::Draw(void)
+{
+	Obj::Draw();
+
+	SetDrawScreen(_glowID);
+	ClsDrawScreen();
+	SetDrawBright(255, 0, 0);
+	DrawRotaGraph(static_cast<int>(_size.x), static_cast<int>(_size.y), 1.0, 0, _animMap[_state][_animFrame].first, true);
+	SetDrawBright(255, 255, 255);
+	GraphFilter(_glowID, DX_GRAPH_FILTER_GAUSS, 8, 100);
+	GraphFilter(_glowID, DX_GRAPH_FILTER_TWO_COLOR, 10,0,255,0x00ff00,255);
+	lpSceneMng.AddDrawQue({ _glowID, lpSceneMng.GameScreenOffset.x + _pos.x, lpSceneMng.GameScreenOffset.y + _pos.y, _rad, _zOrder - 1, LAYER::CHAR, DX_BLENDMODE_ADD, 255 });
 }
