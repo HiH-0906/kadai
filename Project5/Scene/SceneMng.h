@@ -17,13 +17,15 @@ enum class DRAW_QUE
 	Y,						// YÀ•W
 	RAD,					// Šp“x
 	ZORDER,					// Ú²Ô°“à•`‰æ‡ ”š‚Ì’á‚¢‚Ù‚¤‚ªæ “¯‚¶”š‚Ìê‡“o˜^‡
-	LAYER					// ‚Ç‚±‚ÌÚ²Ô°‚© ID‚ª¬‚³‚¢‚Ù‚¤‚ªŒã‚ë‚É•`‰æ
+	LAYER,					// ‚Ç‚±‚ÌÚ²Ô°‚© ID‚ª¬‚³‚¢‚Ù‚¤‚ª‰œ‚É•`‰æ
+	DRAW_MODE,				// •`‰æÓ°ÄŞ
+	DRAW_NUM				// •`‰æÓ°ÄŞ‚É“n‚·’l
 };
 
 
 
-//							image  x		y	‰ñ“]Šp	zOrder Ú²Ô°
-using DrawQueT = std::tuple<int, double, double, double,int,LAYER>;
+//							image  x		y	‰ñ“]Šp	zOrder Ú²Ô° •`‰æÓ°ÄŞ •`‰æÓ°ÄŞ‚É“n‚·’l
+using DrawQueT = std::tuple<int, double, double, double,int,LAYER,int,int>;
 
 class SceneMng
 {
@@ -69,7 +71,7 @@ private:
 
 	void Draw(void);							// •`‰æ
 
-	std::map<LAYER, int> _screenID;				// •`‰æ—p½¸Ø°İ•Û‘¶—p•Ï”
+	int _layerGID;								// •`‰æ—p½¸Ø°İ
 
 	std::vector<DrawQueT> _drawList;			// •`‰æ—p·­°
 	std::vector<ActQueT> _actList;				// ±¸¼®İ—p·­°

@@ -26,5 +26,12 @@ public:
 	virtual unipueBase Update(unipueBase own) = 0;			// どのｼｰﾝにもあるので純粋仮想
 	virtual void RunActQue(std::vector<ActQueT> actList);	// 必要ないｼｰﾝもあるので仮想
 	Vector2 _screenPos;
+protected:
+	void FadeInit(std::string fadeType);									// ﾌｪｰﾄﾞｲﾝｱｳﾄ用初期化
+	bool FadeUpDate(void);									// ﾌｪｰﾄﾞｲﾝｱｳﾄ更新
+private:
+	int _fadeScrID;
+	int _fadeCount;
+	std::string _fadeType;
 };
 

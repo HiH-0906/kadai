@@ -6,6 +6,7 @@ enum class LAYER
 	BG,						// ”wŒi
 	CHAR,					// ·¬×
 	UI,						// UI
+	EX,						// “ÁŽêŒø‰Ê—p
 	MAX
 };
 
